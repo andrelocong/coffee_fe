@@ -1,0 +1,14 @@
+.contact {
+	width: 100%;
+	text-align: center;
+}
+
+.contact-body {
+	width: 80%;
+	margin: 0 auto 0 auto;
+	text-align: left;
+}
+
+.contact .sosmed {
+	display: flex;
+}

@@ -1,0 +1,259 @@
+.home .container {
+	padding: 60px 0 60px 0;
+	width: 100%;
+	height: auto;
+}
+
+.home .container-body {
+	width: 90%;
+	margin: auto;
+}
+
+.home .bg-grey {
+	background-color: #e7e7e7;
+}
+
+.home .row {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.home-title {
+	text-transform: uppercase;
+	font-family: "Wendy One", sans-serif;
+	margin: 0 0 50px 0;
+	font-size: 25px;
+}
+
+.home-text {
+	margin-top: 10px !important;
+	font-size: 18px;
+	font-weight: 100;
+	line-height: 30px;
+}
+
+.home .heros {
+	width: 100%;
+	height: 821px;
+	position: static;
+}
+
+.home .heros-img {
+	width: 100%;
+	height: 100%;
+	z-index: 1;
+}
+
+.home .heros .logo {
+	width: 100%;
+	height: 100%;
+	position: absolute;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 2;
+	background-color: rgba(0, 0, 0, 0.6);
+}
+
+.home .heros-logo {
+	width: 300px;
+	height: auto;
+}
+
+.about-us {
+	width: 100%;
+	height: 821px;
+	display: flex;
+	background-color: #eec897;
+}
+
+.about-right img {
+	width: 100%;
+	height: auto;
+}
+
+.side-desc {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+}
+
+.side-img {
+	width: 50%;
+	height: 100%;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.side-img img {
+	width: 75%;
+	height: auto;
+}
+
+.side-body {
+	width: 90%;
+	height: auto;
+	margin: auto;
+}
+
+.vision {
+	width: 100%;
+	height: 500px;
+	display: flex;
+}
+
+.mission {
+	width: 100%;
+	height: 500px;
+	display: flex;
+}
+
+.product {
+	text-align: center;
+}
+
+.product .container-body {
+	width: 70%;
+	margin: 0 auto 60px auto;
+}
+
+.product-img {
+	display: flex;
+	justify-content: center;
+	margin-bottom: 60px;
+}
+
+.product-img-group {
+	width: auto;
+	height: auto;
+}
+
+.product-img-group img {
+	width: 400px;
+	height: 400px;
+	object-position: center;
+	object-fit: cover;
+}
+
+.product-name {
+	font-family: "Wendy One", sans-serif;
+	font-size: 20px;
+	margin: 30px 0 0 0;
+}
+
+.gallery-img {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.gallery-img-body {
+	width: 412px;
+	height: 300px;
+	margin-bottom: 30px;
+}
+
+.gallery-img-body img {
+	width: 100%;
+	height: 100%;
+	object-position: center;
+	object-fit: cover;
+	cursor: pointer;
+}
+
+.team .row {
+	width: 100%;
+	justify-content: center;
+}
+
+.team .modal {
+	background-color: rgba(0, 0, 0, 0.9) !important;
+}
+
+.team-group {
+	width: auto;
+	height: auto;
+	margin: 15px;
+}
+
+.team-img {
+	width: 300px;
+	height: 380px;
+}
+
+.team-img img {
+	width: 100%;
+	height: 100%;
+	object-fit: cover;
+	object-position: center;
+	cursor: pointer;
+}
+
+.team-name {
+	font-family: "Wendy One", sans-serif;
+	font-size: 25px;
+	margin-bottom: 10px;
+}
+
+.team-position {
+	font-family: "Nunito", sans-serif;
+	font-size: 18px;
+	margin-bottom: 20px !important;
+	font-weight: 600;
+}
+
+.team-desc {
+	font-family: "Nunito", sans-serif;
+	font-size: 16px;
+	line-height: 25px;
+}
+
+.team .modal-body {
+	width: 60%;
+	display: flex;
+	justify-content: space-between;
+	color: #ffffff;
+}
+
+.team .modal-left {
+	width: 35%;
+}
+
+.team .modal-right {
+	width: 60%;
+}
+
+.team .modal-img {
+	width: 100%;
+}
+
+.team .modal-title {
+	margin-bottom: 20px;
+}
+
+.question-list {
+	width: 60%;
+	margin: 40px auto 0 auto;
+	text-align: left;
+}
+
+.question-group {
+	margin-bottom: 20px;
+	border-bottom: 1px solid #cfcfcf;
+	padding-bottom: 10px;
+}
+
+.question-title {
+	cursor: pointer;
+}
+
+.question-answer {
+	display: none;
+	margin-top: 15px;
+}
+
+.question-answer.active {
+	display: block;
+}
