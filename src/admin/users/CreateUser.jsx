@@ -8,6 +8,7 @@ import { TextField, SelectField } from "../components/InputField";
 const CreateUser = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 	const [showRoles, setShowRoles] = useState([]);
+	const [errors, setErrors] = useState("");
 
 	const showRole = async () => {
 		const roles = await axios.get("http://localhost:5000/role");
@@ -38,7 +39,8 @@ const CreateUser = (props) => {
 			}, 1500);
 			resetForm();
 		} catch (error) {
-			console.log(error);
+			console.log(error.response);
+			setErrors("Username already used!");
 		}
 	};
 
@@ -68,6 +70,9 @@ const CreateUser = (props) => {
 								</div>
 
 								<Form>
+									<p className="color-red text-center">
+										{errors}
+									</p>
 									<div className="border-bottom-1 border-grey justify-center">
 										<div className="block">
 											<TextField
