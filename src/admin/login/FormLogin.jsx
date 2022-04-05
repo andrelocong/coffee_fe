@@ -35,17 +35,17 @@ const FormLogin = () => {
 									name="username"
 									type="text"
 									placeholder="Username"
-									className="width-338 pb-10"
+									className="width-full pb-10"
 								/>
 								<TextField
 									name="password"
 									type="password"
 									placeholder="Password"
-									className="width-338 pb-10"
+									className="width-full pb-10"
 								/>
 								<div className="width-full justify-center mb-20">
 									<button
-										className="width-300 bg-orange border-none border-radius-20 font-16 color-white height-40 cursor-pointer"
+										className="width-300 bg-orange border-none border-radius-20 font-16 color-white height-40 cursor-pointer outline-none"
 										type="submit"
 									>
 										Login

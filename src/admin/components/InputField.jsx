@@ -5,16 +5,18 @@ export const TextField = ({ className, ...props }) => {
 	const [field, meta] = useField(props);
 	return (
 		<div className={className}>
-			<input
-				className={`px-10 py-10 width-full font-16 outline-orange border-radius-5 border-1 ${
-					meta.touched &&
-					meta.error &&
-					"outline-red border-red border-2"
+			<div
+				className={`py-8 width-99percen justify-center border-radius-5 border-1 ${
+					meta.touched && meta.error && "border-red border-2"
 				}`}
-				{...field}
-				{...props}
-				autoComplete="off"
-			/>
+			>
+				<input
+					className="border-none outline-none font-16 width-95percen"
+					{...field}
+					{...props}
+					autoComplete="off"
+				/>
+			</div>
 			<ErrorMessage
 				component="div"
 				name={field.name}

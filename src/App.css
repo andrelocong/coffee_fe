@@ -95,6 +95,10 @@
 	border-bottom: 1px solid;
 }
 
+.border-top-1 {
+	border-top: 1px solid;
+}
+
 .border-grey {
 	border-color: #e4e4e4;
 }
@@ -722,7 +726,7 @@
 	outline: none;
 }
 
-.outline-orange {
+.outline-orange:hover {
 	outline-color: #e6ad1e;
 }
 
@@ -814,6 +818,11 @@
 .py-5 {
 	padding-top: 5px;
 	padding-bottom: 5px;
+}
+
+.py-8 {
+	padding-top: 8px;
+	padding-bottom: 8px;
 }
 
 .py-9 {
@@ -1047,6 +1056,14 @@
 
 .width-1125 {
 	width: 1165px;
+}
+
+.width-95percen {
+	width: 95%;
+}
+
+.width-99percen {
+	width: 99%;
 }
 
 .width-full {
