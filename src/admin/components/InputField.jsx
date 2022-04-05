@@ -1,7 +1,7 @@
 import React from "react";
 import { ErrorMessage, useField } from "formik";
 
-export const TextField = ({ className, ...props }) => {
+export const TextField = ({ className, value, ...props }) => {
 	const [field, meta] = useField(props);
 	return (
 		<div className={className}>
@@ -14,6 +14,7 @@ export const TextField = ({ className, ...props }) => {
 					className="border-none outline-none font-16 width-95percen"
 					{...field}
 					{...props}
+					value={value}
 					autoComplete="off"
 				/>
 			</div>
