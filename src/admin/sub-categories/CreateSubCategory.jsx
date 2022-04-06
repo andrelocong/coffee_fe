@@ -6,7 +6,6 @@ import { validate } from "./validate";
 import { TextField } from "../components/InputField";
 
 const CreateSubCategory = (props) => {
-	const [name, setName] = useState("");
 	const [isAlert, setIsAlert] = useState(false);
 
 	const storeData = async (values) => {
@@ -51,7 +50,7 @@ const CreateSubCategory = (props) => {
 							<TextField
 								name="name"
 								type="text"
-								placeholder="Input main-category name"
+								placeholder="Input sub-category name"
 								containerClassName="width-268 mx-auto my-20"
 								onChange={formik.handleChange}
 								value={formik.values.name}

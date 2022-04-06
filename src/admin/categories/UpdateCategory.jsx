@@ -51,7 +51,7 @@ const UpdateCategory = (props) => {
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 							<div className="border-bottom-1 border-grey">
 								<p className="ml-20 font-20 my-20">
-									Create Main Category
+									Update Main Category
 								</p>
 							</div>
 
@@ -59,7 +59,7 @@ const UpdateCategory = (props) => {
 								name="name"
 								type="text"
 								value={formik.values.name}
-								placeholder="Input main-category name"
+								placeholder="Input category name"
 								containerClassName="width-268 mx-auto py-20"
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}

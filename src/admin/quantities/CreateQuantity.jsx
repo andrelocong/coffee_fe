@@ -1,20 +1,21 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
+import { useFormik } from "formik";
+import { validate } from "./validate";
+import { TextField } from "../components/InputField";
 
 const CreateQuantity = (props) => {
-	const [quantity, setQuantity] = useState("");
 	const [isAlert, setIsAlert] = useState(false);
 
-	const storeData = async (e) => {
-		e.preventDefault();
+	const storeData = async (values) => {
 		await axios.post("http://localhost:5000/quantity", {
-			quantity: quantity,
+			quantity: values.quantity,
 		});
 
 		props.setIsModal(false);
 		setTimeout(() => {
-			setQuantity("");
+			formik.resetForm();
 			setIsAlert(true);
 			props.showData();
 		}, 200);
@@ -23,19 +24,22 @@ const CreateQuantity = (props) => {
 		}, 1500);
 	};
 
-	const handleCancel = () => {
-		props.setIsModal(false);
-		setTimeout(() => {
-			setQuantity("");
-		}, 200);
-	};
+	const formik = useFormik({
+		initialValues: {
+			quantity: "",
+		},
+		validationSchema: validate,
+		onSubmit: (values) => {
+			storeData(values);
+		},
+	});
 
 	return (
 		<div className="create-quantity">
 			<SuccessAlert isAlert={isAlert} text="Quantity was created!" />
 
 			<div className={props.isModal ? "modal active" : "modal"}>
-				<form onSubmit={storeData}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 							<div className="border-bottom-1 border-grey">
@@ -44,19 +48,19 @@ const CreateQuantity = (props) => {
 								</p>
 							</div>
 
-							<div className="height-auto justify-center py-20 border-bottom-1 border-grey">
-								<input
-									className="width-268 py-10 px-15 font-18"
-									type="text"
-									placeholder="Input quantity, ex: 1 ton"
-									value={quantity}
-									onChange={(e) =>
-										setQuantity(e.target.value)
-									}
-								/>
-							</div>
+							<TextField
+								name="quantity"
+								type="text"
+								placeholder="Input quantity"
+								containerClassName="width-268 mx-auto my-20"
+								onChange={formik.handleChange}
+								value={formik.values.quantity}
+								onBlur={formik.handleBlur}
+								errorMessage={formik.errors.quantity}
+								touched={formik.touched.quantity}
+							/>
 
-							<div className="flex py-20">
+							<div className="flex py-20 border-top-1 border-grey">
 								<button
 									className="bg-orange px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="submit"
@@ -65,7 +69,9 @@ const CreateQuantity = (props) => {
 								</button>
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
-									onClick={() => handleCancel()}
+									onClick={() => {
+										props.setIsModal(false);
+									}}
 									type="button"
 								>
 									Cancel

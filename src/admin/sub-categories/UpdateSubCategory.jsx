@@ -55,7 +55,7 @@ const UpdateSubCategory = (props) => {
 								name="name"
 								type="text"
 								value={formik.values.name}
-								placeholder="Input main-category name"
+								placeholder="Input sub-category name"
 								containerClassName="width-268 mx-auto py-20"
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
