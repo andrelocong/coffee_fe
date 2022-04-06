@@ -42,6 +42,7 @@ const DangerAlert = (props) => {
 								onClick={() => {
 									props.deleteData();
 									props.setIsAlert({
+										bgAlert: true,
 										dangerAlert: false,
 									});
 									setIsNotifAlert(true);
