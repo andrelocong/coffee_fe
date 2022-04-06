@@ -1,20 +1,22 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
+import { useFormik } from "formik";
+import { validate } from "./validate";
+import { TextField } from "../components/InputField";
 
 const CreateSubCategory = (props) => {
 	const [name, setName] = useState("");
 	const [isAlert, setIsAlert] = useState(false);
 
-	const storeData = async (e) => {
-		e.preventDefault();
+	const storeData = async (values) => {
 		await axios.post("http://localhost:5000/sub-category", {
-			name: name,
+			name: values.name,
 		});
 
 		props.setIsModal(false);
 		setTimeout(() => {
-			setName("");
+			formik.resetForm();
 			setIsAlert(true);
 		}, 200);
 		setTimeout(() => {
@@ -23,37 +25,42 @@ const CreateSubCategory = (props) => {
 		props.showData();
 	};
 
-	const handleCancel = () => {
-		props.setIsModal(false);
-		setTimeout(() => {
-			setName("");
-		}, 200);
-	};
+	const formik = useFormik({
+		initialValues: {
+			name: "",
+		},
+		validationSchema: validate,
+		onSubmit: (values) => {
+			storeData(values);
+		},
+	});
 
 	return (
 		<div className="create-category">
 			<SuccessAlert isAlert={isAlert} text="Category was created!" />
 			<div className={props.isModal ? "modal active" : "modal"}>
-				<form onSubmit={storeData}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 							<div className="border-bottom-1 border-grey">
 								<p className="ml-20 font-20 my-20">
-									Update Sub Category
+									Create Sub Category
 								</p>
 							</div>
 
-							<div className="height-auto justify-center py-20 border-bottom-1 border-grey">
-								<input
-									className="width-268 py-10 px-15 font-18"
-									type="text"
-									placeholder="Input sub category"
-									value={name}
-									onChange={(e) => setName(e.target.value)}
-								/>
-							</div>
+							<TextField
+								name="name"
+								type="text"
+								placeholder="Input main-category name"
+								containerClassName="width-268 mx-auto my-20"
+								onChange={formik.handleChange}
+								value={formik.values.name}
+								onBlur={formik.handleBlur}
+								errorMessage={formik.errors.name}
+								touched={formik.touched.name}
+							/>
 
-							<div className="flex py-20">
+							<div className="flex py-20 border-top-1 border-grey">
 								<button
 									className="bg-orange px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="submit"
@@ -62,7 +69,12 @@ const CreateSubCategory = (props) => {
 								</button>
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
-									onClick={() => handleCancel()}
+									onClick={() => {
+										props.setIsModal(false);
+										setTimeout(() => {
+											formik.resetForm();
+										}, 200);
+									}}
 									type="button"
 								>
 									Cancel
