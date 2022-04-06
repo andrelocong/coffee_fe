@@ -1,43 +1,57 @@
 import React from "react";
-import { ErrorMessage, useField } from "formik";
 
-export const TextField = ({ className, value, ...props }) => {
-	const [field, meta] = useField(props);
+export const TextField = ({
+	containerClassName,
+	errorMessage,
+	touched,
+	...props
+}) => {
+	let isError = "";
+
+	if (touched === true) {
+		isError = errorMessage;
+	}
+
 	return (
-		<div className={className}>
+		<div className={containerClassName}>
 			<div
 				className={`py-8 width-99percen justify-center border-radius-5 border-1 ${
-					meta.touched && meta.error && "border-red border-2"
+					isError && "border-red border-2"
 				}`}
 			>
 				<input
 					className="border-none outline-none font-16 width-95percen"
-					{...field}
 					{...props}
-					value={value}
 					autoComplete="off"
 				/>
 			</div>
-			<ErrorMessage
-				component="div"
-				name={field.name}
-				className="font-13 color-red"
-			/>
+			{isError ? (
+				<div className="font-13 color-red">{errorMessage}</div>
+			) : null}
 		</div>
 	);
 };
 
-export const SelectField = ({ className, placeholder, option, ...props }) => {
-	const [field, meta] = useField(props);
+export const SelectField = ({
+	containerClassName,
+	placeholder,
+	option,
+	errorMessage,
+	touched,
+	...props
+}) => {
+	let isError = "";
+
+	if (touched === true) {
+		isError = errorMessage;
+	}
+
 	return (
-		<div className={className}>
+		<div className={containerClassName}>
 			<select
-				className={`px-10 py-10 width-full font-16 outline-orange border-radius-5 border-1 cursor-pointer appearance-none ${
-					meta.touched &&
-					meta.error &&
-					"outline-red border-red border-2"
+				className={`px-10 py-10 width-full font-16 outline-none border-radius-5 border-1 cursor-pointer appearance-none ${
+					isError && "outline-red border-red border-2"
 				}`}
-				{...field}
 				{...props}
 			>
 				<option value="" hidden>
@@ -45,11 +59,10 @@ export const SelectField = ({ className, placeholder, option, ...props }) => {
 				</option>
 				{option}
 			</select>
-			<ErrorMessage
-				component="div"
-				name={field.name}
-				className="font-13 color-red"
-			/>
+			<div></div>
+			{isError ? (
+				<div className="font-13 color-red">{errorMessage}</div>
+			) : null}
 		</div>
 	);
 };
