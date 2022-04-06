@@ -9,14 +9,16 @@ const DangerAlert = (props) => {
 		<div className="danger-alert">
 			<div
 				className={
-					props.isBgAlert ? "alert active bg-black-02" : "alert"
+					props.isAlert.bgAlert ? "alert active bg-black-02" : "alert"
 				}
 			></div>
-			<div className={props.isDangerAlert ? "alert active" : "alert"}>
+			<div
+				className={props.isAlert.dangerAlert ? "alert active" : "alert"}
+			>
 				<div className="width-full height-100vh flex-center">
 					<div
 						className={
-							props.isDangerAlert
+							props.isAlert.dangerAlert
 								? "alert-body active"
 								: "alert-body"
 						}
@@ -39,17 +41,22 @@ const DangerAlert = (props) => {
 								className="px-15 py-10 mx-10 border-none border-radius-5 bg-orange color-white font-20 cursor-pointer"
 								onClick={() => {
 									props.deleteData();
-									props.setIsDangerAlert(false);
+									props.setIsAlert({
+										dangerAlert: false,
+									});
 									setIsNotifAlert(true);
 								}}
+								type="submit"
 							>
 								Yes, delete it!
 							</button>
 							<button
 								className="px-15 py-10 mx-10 border-none border-radius-5 bg-grey color-white font-20 cursor-pointer"
 								onClick={() => {
-									props.setIsBgAlert(false);
-									props.setIsDangerAlert(false);
+									props.setIsAlert({
+										bgAlert: false,
+										dangerAlert: false,
+									});
 								}}
 							>
 								Cancel
@@ -84,8 +91,11 @@ const DangerAlert = (props) => {
 								className="px-15 py-10 mx-10 border-none border-radius-5 bg-grey color-white font-20 cursor-pointer"
 								onClick={() => {
 									setIsNotifAlert(false);
-									props.setIsBgAlert(false);
+									props.setIsAlert({
+										bgAlert: false,
+									});
 								}}
+								type="submit"
 							>
 								Oke
 							</button>
