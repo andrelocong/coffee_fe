@@ -8,8 +8,10 @@ function UserList() {
 	const [isModal, setIsModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [id, setId] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
 	const showData = async () => {
 		const user = await axios.get("http://localhost:5000/user");
@@ -39,10 +41,8 @@ function UserList() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -114,8 +114,10 @@ function UserList() {
 											<div
 												onClick={() => {
 													setId(user.user_id);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												<button
