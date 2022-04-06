@@ -10,10 +10,10 @@ function Category() {
 	const [categoryId, setCategoryId] = useState("");
 	const [name, setName] = useState("");
 	const [isUpdateModal, setIsUpdateModal] = useState(false);
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
-
-	console.log(data);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
 	const showData = async () => {
 		const category = await axios.get("http://localhost:5000/category");
@@ -49,10 +49,8 @@ function Category() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -119,8 +117,10 @@ function Category() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 													setCategoryId(
 														category.category_id
 													);

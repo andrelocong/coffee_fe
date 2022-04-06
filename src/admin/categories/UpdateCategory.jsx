@@ -1,16 +1,18 @@
 import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
+import { useFormik } from "formik";
+import { validate } from "./validate";
+import { TextField } from "../components/InputField";
 
 const UpdateCategory = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
-	const updateDataCategory = async (e) => {
-		e.preventDefault();
+	const updateDataCategory = async (values) => {
 		await axios.patch(
 			`http://localhost:5000/category/${props.categoryId}`,
 			{
-				name: props.name,
+				name: values.name,
 			}
 		);
 
@@ -28,12 +30,23 @@ const UpdateCategory = (props) => {
 		props.setIsUpdateModal(false);
 	};
 
+	const formik = useFormik({
+		initialValues: {
+			name: props.name,
+		},
+		enableReinitialize: true,
+		validationSchema: validate,
+		onSubmit: (values) => {
+			updateDataCategory(values);
+		},
+	});
+
 	return (
 		<div className="update-main-category">
 			<SuccessAlert isAlert={isAlert} text="Category was updated!" />
 
 			<div className={props.isUpdateModal ? "modal active" : "modal"}>
-				<form onSubmit={updateDataCategory}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 							<div className="border-bottom-1 border-grey">
@@ -42,19 +55,19 @@ const UpdateCategory = (props) => {
 								</p>
 							</div>
 
-							<div className="height-auto justify-center py-20 border-bottom-1 border-grey">
-								<input
-									className="width-268 py-10 px-15 font-18"
-									type="text"
-									placeholder="Input main category"
-									value={props.name}
-									onChange={(e) =>
-										props.setName(e.target.value)
-									}
-								/>
-							</div>
+							<TextField
+								name="name"
+								type="text"
+								value={formik.values.name}
+								placeholder="Input main-category name"
+								containerClassName="width-268 mx-auto py-20"
+								onChange={formik.handleChange}
+								onBlur={formik.handleBlur}
+								errorMessage={formik.errors.name}
+								touched={formik.touched.name}
+							/>
 
-							<div className="flex py-20">
+							<div className="flex py-20 border-top-1 border-grey">
 								<button
 									className="bg-orange px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="submit"
