@@ -10,8 +10,10 @@ function MainCategory() {
 	const [data, setData] = useState([]);
 	const [categoryId, setCategoryId] = useState("");
 	const [name, setName] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
 	const showData = async () => {
 		const category = await axios.get("http://localhost:5000/main-category");
@@ -47,10 +49,8 @@ function MainCategory() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -117,8 +117,10 @@ function MainCategory() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 													setCategoryId(
 														category.main_category_id
 													);
