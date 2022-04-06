@@ -34,8 +34,6 @@ const CreateMainCategory = (props) => {
 		},
 	});
 
-	console.log(formik);
-
 	return (
 		<div className="create-main-category">
 			<SuccessAlert isAlert={isAlert} text="Main category was created!" />
@@ -58,9 +56,7 @@ const CreateMainCategory = (props) => {
 								value={formik.values.name}
 								onBlur={formik.handleBlur}
 								errorMessage={formik.errors.name}
-								// isError={
-								// 	formik.errors.name && formik.errors.name
-								// }
+								touched={formik.touched.name}
 							/>
 
 							<div className="width-full border-top-1 border-grey">

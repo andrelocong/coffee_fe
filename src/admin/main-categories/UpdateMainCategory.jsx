@@ -7,7 +7,7 @@ import { TextField } from "../components/InputField";
 
 const UpdateMainCategory = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
-	console.log(props.name);
+
 	const updateDataMainCategory = async (values) => {
 		await axios.patch(
 			`http://localhost:5000/main-category/${props.categoryId}`,
@@ -46,7 +46,7 @@ const UpdateMainCategory = (props) => {
 					<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 						<div className="border-bottom-1 border-grey">
 							<p className="ml-20 font-20 my-20">
-								Update Main Category
+								Edit Main Category
 							</p>
 						</div>
 						<form onSubmit={formik.handleSubmit}>
@@ -58,9 +58,11 @@ const UpdateMainCategory = (props) => {
 								containerClassName="width-268 mx-auto py-20"
 								onChange={formik.handleChange}
 								onBlur={formik.handleBlur}
+								errorMessage={formik.errors.name}
+								touched={formik.touched.name}
 							/>
 
-							<div className="flex py-20">
+							<div className="flex py-20 border-top-1 border-grey">
 								<button
 									className="bg-orange px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="submit"
