@@ -1,5 +1,5 @@
 import * as Yup from "yup";
 
-export const validate = Yup.object({
+export const validation = Yup.object({
 	name: Yup.string().required("Name is required"),
 });

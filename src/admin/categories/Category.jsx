@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CreateCategory from "./CreateCategory";
-import UpdateCategory from "./UpdateCategory";
+import CategoryCreate from "./category.create";
+import CategoryUpdate from "./category.update";
 import DangerAlert from "../components/DangerAlert";
 
 function Category() {
@@ -33,13 +33,13 @@ function Category() {
 
 	return (
 		<div className="category">
-			<CreateCategory
+			<CategoryCreate
 				isModal={isModal}
 				setIsModal={setIsModal}
 				showData={showData}
 			/>
 
-			<UpdateCategory
+			<CategoryUpdate
 				isUpdateModal={isUpdateModal}
 				setIsUpdateModal={setIsUpdateModal}
 				categoryId={categoryId}

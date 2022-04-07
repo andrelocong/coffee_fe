@@ -2,10 +2,10 @@ import React, { useState } from "react";
 import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
-import { validate } from "./validate";
+import { validation } from "./category.validation";
 import { TextField } from "../components/InputField";
 
-const CreateCategory = (props) => {
+const CategoryCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const storeData = async (values, resetForm) => {
@@ -28,7 +28,7 @@ const CreateCategory = (props) => {
 		initialValues: {
 			name: "",
 		},
-		validationSchema: validate,
+		validationSchema: validation,
 		onSubmit: (values) => {
 			storeData(values);
 		},
@@ -90,4 +90,4 @@ const CreateCategory = (props) => {
 	);
 };
 
-export default CreateCategory;
+export default CategoryCreate;

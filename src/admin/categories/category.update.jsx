@@ -2,10 +2,10 @@ import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
-import { validate } from "./validate";
+import { validation } from "./category.validation";
 import { TextField } from "../components/InputField";
 
-const UpdateCategory = (props) => {
+const CategoryUpdate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const updateDataCategory = async (values) => {
@@ -35,7 +35,7 @@ const UpdateCategory = (props) => {
 			name: props.name,
 		},
 		enableReinitialize: true,
-		validationSchema: validate,
+		validationSchema: validation,
 		onSubmit: (values) => {
 			updateDataCategory(values);
 		},
@@ -90,4 +90,4 @@ const UpdateCategory = (props) => {
 	);
 };
 
-export default UpdateCategory;
+export default CategoryUpdate;
