@@ -9,8 +9,10 @@ function DetailRole() {
 	const [name, setName] = useState("");
 	const [data, setData] = useState([]);
 	const [isModal, setIsModal] = useState(false);
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 	const [roleAccessId, setRoleAccessId] = useState("");
 
 	const showData = async () => {
@@ -73,16 +75,14 @@ function DetailRole() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
 			<h1 className="my-40">Detail Role</h1>
 
-			<div className="width-full bg-white border-radius-20 height-100vh mb-10">
+			<div className="width-full bg-white border-radius-20 min-height-100vh mb-10">
 				<div className="p-30">
 					<div className="flex">
 						<p className="my-10 width-150 font-weight-700">Id</p>
@@ -188,8 +188,10 @@ function DetailRole() {
 													setRoleAccessId(
 														role.role_access_id
 													);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete

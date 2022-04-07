@@ -1,16 +1,18 @@
 import React, { useState } from "react";
 import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
+import { useFormik } from "formik";
+import { validate } from "./validate";
+import { TextField } from "../components/InputField";
 
 const UpdateQuantity = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
-	const UpdateQuantity = async (e) => {
-		e.preventDefault();
+	const UpdateQuantity = async (values) => {
 		await axios.patch(
 			`http://localhost:5000/quantity/${props.quantityId}`,
 			{
-				quantity: props.quantity,
+				quantity: values.quantity,
 			}
 		);
 
@@ -24,15 +26,23 @@ const UpdateQuantity = (props) => {
 		}, 1500);
 	};
 
-	const handleCancel = () => {
-		props.setIsUpdateModal(false);
-	};
+	const formik = useFormik({
+		initialValues: {
+			quantity: props.quantity,
+		},
+		enableReinitialize: true,
+		validationSchema: validate,
+		onSubmit: (values) => {
+			UpdateQuantity(values);
+		},
+	});
+
 	return (
 		<div className="update-quantity">
 			<SuccessAlert isAlert={isAlert} text="Quantity was updated!" />
 
 			<div className={props.isUpdateModal ? "modal active" : "modal"}>
-				<form onSubmit={UpdateQuantity}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 							<div className="border-bottom-1 border-grey">
@@ -41,17 +51,17 @@ const UpdateQuantity = (props) => {
 								</p>
 							</div>
 
-							<div className="height-auto justify-center py-20 border-bottom-1 border-grey">
-								<input
-									className="width-268 py-10 px-15 font-18"
-									type="text"
-									placeholder="Input main category"
-									value={props.quantity}
-									onChange={(e) =>
-										props.setQuantity(e.target.value)
-									}
-								/>
-							</div>
+							<TextField
+								name="quantity"
+								type="text"
+								placeholder="Input quantity"
+								containerClassName="width-268 mx-auto my-20"
+								onChange={formik.handleChange}
+								value={formik.values.quantity}
+								onBlur={formik.handleBlur}
+								errorMessage={formik.errors.quantity}
+								touched={formik.touched.quantity}
+							/>
 
 							<div className="flex py-20">
 								<button
@@ -62,7 +72,9 @@ const UpdateQuantity = (props) => {
 								</button>
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
-									onClick={() => handleCancel()}
+									onClick={() => {
+										props.setIsUpdateModal(false);
+									}}
 									type="button"
 								>
 									Cancel

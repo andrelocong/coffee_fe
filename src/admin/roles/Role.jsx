@@ -8,8 +8,10 @@ function Role() {
 	const [isModal, setIsModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [roleId, setRoleId] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
 	const showData = async () => {
 		const category = await axios.get("http://localhost:5000/role");
@@ -36,10 +38,8 @@ function Role() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 			<h1 className="my-40">Roles</h1>
@@ -86,7 +86,9 @@ function Role() {
 										key={index}
 									>
 										<td className="py-15">{index + 1}</td>
-										<td className="py-15 text-capitalize">{role.name}</td>
+										<td className="py-15 text-capitalize">
+											{role.name}
+										</td>
 										<td className="py-15">
 											<Link
 												className="bg-orange px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer text-decoration-none mr-10"
@@ -98,8 +100,10 @@ function Role() {
 												className="bg-red px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer"
 												onClick={() => {
 													setRoleId(role.role_id);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete
