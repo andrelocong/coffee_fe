@@ -1,15 +1,15 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+// import axios from "axios";
+import React, { useState } from "react";
 import CreateTeam from "./CreateTeam";
 import DetailTeam from "./DetailTeam";
 import EditTeam from "./EditTeam";
 import EditImageTeam from "./EditImageTeam";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch, useDelete } from "./Team.hooks";
 
 function TeamList() {
 	const [isModal, setIsModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [teamId, setTeamId] = useState("");
+	const [id, setId] = useState("");
 	const [isDetailModal, setIsDetailModal] = useState(false);
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [name, setName] = useState("");
@@ -18,25 +18,16 @@ function TeamList() {
 	const [isImageModal, setIsImageModal] = useState(false);
 	const [image, setImage] = useState("");
 	const [imageUpload, setImageUpload] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	const showData = async (e) => {
-		const team = await axios.get("http://localhost:5000/team");
+	// console.log(id);
 
-		setData(team.data.data);
-	};
+	const { data, showData } = useFetch();
 
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/team/${teamId}`);
-
-		showData();
-		setIsDetailModal(false);
-	};
+	const { deleteData } = useDelete(id);
 
 	return (
 		<div className="team-list">
@@ -49,15 +40,14 @@ function TeamList() {
 			<DetailTeam
 				isDetailModal={isDetailModal}
 				setIsDetailModal={setIsDetailModal}
-				teamId={teamId}
+				id={id}
 				setIsEditModal={setIsEditModal}
 				setName={setName}
 				setPosition={setPosition}
 				setDesc={setDesc}
 				setIsImageModal={setIsImageModal}
 				setImage={setImage}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				showData={showData}
 			/>
 
 			<EditTeam
@@ -69,7 +59,7 @@ function TeamList() {
 				setName={setName}
 				setPosition={setPosition}
 				setDesc={setDesc}
-				teamId={teamId}
+				id={id}
 				showData={showData}
 			/>
 
@@ -80,14 +70,12 @@ function TeamList() {
 				setIsImageModal={setIsImageModal}
 				setImage={setImage}
 				setImageUpload={setImageUpload}
-				teamId={teamId}
+				id={id}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -145,7 +133,7 @@ function TeamList() {
 												type="button"
 												onClick={() => {
 													setIsDetailModal(true);
-													setTeamId(team.team_id);
+													setId(team.team_id);
 												}}
 											>
 												Detail
@@ -158,7 +146,7 @@ function TeamList() {
 													setName(team.name);
 													setPosition(team.position);
 													setDesc(team.desc);
-													setTeamId(team.team_id);
+													setId(team.team_id);
 												}}
 											>
 												Edit
@@ -169,7 +157,7 @@ function TeamList() {
 												onClick={() => {
 													setIsImageModal(true);
 													setImage(team.image);
-													setTeamId(team.team_id);
+													setId(team.team_id);
 												}}
 											>
 												Edit Image
@@ -178,9 +166,11 @@ function TeamList() {
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												type="button"
 												onClick={() => {
-													setTeamId(team.team_id);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setId(team.team_id);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete

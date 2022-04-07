@@ -16,7 +16,7 @@ import SosmedList from "./admin/sosmeds/SosmedList";
 import TeamList from "./admin/teams/TeamList";
 import UserList from "./admin/users/UserList";
 import DetailUser from "./admin/users/DetailUser";
-import MainCategory from "./admin/main-categories/MainCategory";
+import MainCategory from "./admin/main-categories/mainCategory";
 import Category from "./admin/categories/Category";
 import SubCategory from "./admin/sub-categories/SubCategory";
 import Quantity from "./admin/quantities/Quantity";

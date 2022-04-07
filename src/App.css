@@ -485,6 +485,10 @@
 	font-weight: 800;
 }
 
+.line-height-22 {
+	line-height: 22px;
+}
+
 .list-none {
 	list-style: none;
 }
@@ -891,6 +895,10 @@
 	position: relative;
 }
 
+.resize-none {
+	resize: none;
+}
+
 .sticky {
 	position: fixed;
 }
@@ -1042,6 +1050,14 @@
 	width: 510px;
 }
 
+.width-530 {
+	width: 530px;
+}
+
+.width-550 {
+	width: 550px;
+}
+
 .width-700 {
 	width: 700px;
 }
@@ -1060,6 +1076,10 @@
 
 .width-95percen {
 	width: 95%;
+}
+
+.width-98percen {
+	width: 98%;
 }
 
 .width-99percen {

@@ -1,34 +1,28 @@
 import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
+import { useFormik } from "formik";
+import { validate } from "./validate";
+import { TextField, TextAreaField } from "../components/InputField";
 
 const CreateTeam = (props) => {
-	const [name, setName] = useState("");
-	const [position, setPosition] = useState("");
-	const [desc, setDesc] = useState("");
-	const [image, setImage] = useState("");
-	const [imageUpload, setImageUpload] = useState("");
 	const [isShowImage, setIsShowImage] = useState(false);
-	const [imageTmp, setImageTmp] = useState("");
+	const [imagePreview, setImagePreview] = useState("");
 	const [isAlert, setIsAlert] = useState(false);
 
-	const storeData = async (e) => {
-		e.preventDefault();
+	const storeData = async (values) => {
+		console.log(values);
 		const formData = new FormData();
-		formData.append("name", name);
-		formData.append("position", position);
-		formData.append("desc", desc);
-		formData.append("image", imageUpload);
+		formData.append("name", values.name);
+		formData.append("position", values.position);
+		formData.append("desc", values.desc);
+		formData.append("image", values.image);
 
 		await axios.post("http://localhost:5000/team", formData);
 
 		props.setIsModal(false);
-		setName("");
-		setPosition("");
-		setDesc("");
-		setImage("");
-		setImageUpload("");
-		setImageTmp("");
+		formik.resetForm();
+		setImagePreview("");
 		setIsShowImage(false);
 		setIsAlert(true);
 		setTimeout(() => {
@@ -37,12 +31,25 @@ const CreateTeam = (props) => {
 		props.showData();
 	};
 
+	const formik = useFormik({
+		initialValues: {
+			name: "",
+			position: "",
+			desc: "",
+			image: "",
+		},
+		validationSchema: validate,
+		onSubmit: (values) => {
+			storeData(values);
+		},
+	});
+
 	return (
 		<div className="create-team">
 			<SuccessAlert isAlert={isAlert} text="Team was created!" />
 
 			<div className={props.isModal ? "modal active" : "modal"}>
-				<form onSubmit={storeData}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div
 							className={
@@ -52,66 +59,69 @@ const CreateTeam = (props) => {
 							}
 						>
 							<img
-								className="width-auto height-full object-fit-cover object-position-center"
-								src={imageTmp}
+								className="width-auto height-full object-fit-cover object-position-center border-radius-10"
+								src={imagePreview}
 								alt="user"
 							/>
 						</div>
-						<div className="block width-500 heigth-auto bg-white border-radius-10 mt-100">
+						<div className="block width-550 heigth-auto bg-white border-radius-10 mt-100">
 							<div className="height-60 border-bottom-1 border-grey alig-item-center">
 								<p className="ml-20 font-20">Input Team Data</p>
 							</div>
 
 							<div className="border-bottom-1 border-grey">
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
-										type="text"
-										placeholder="Name, ex: Lala Lalisa."
-										value={name}
-										onChange={(e) =>
-											setName(e.target.value)
-										}
-									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
-										type="text"
-										placeholder="Positions, ex: Co-Founder."
-										value={position}
-										onChange={(e) =>
-											setPosition(e.target.value)
-										}
-									/>
-								</div>
-								<div className="width-464 min-height-113 alig-item-center ml-20 pt-20">
-									<textarea
-										className="min-width-431 max-width-431 min-height-113 font-16 px-15 py-10"
-										placeholder="Descriptions"
-										value={desc}
-										onChange={(e) =>
-											setDesc(e.target.value)
-										}
-									></textarea>
-								</div>
-								<div className="width-464 height-39 ml-20 my-20 alig-item-center">
-									<input
-										className="width-full height-full font-18"
-										type="file"
-										value={image}
-										onChange={(e) => {
-											setImage(e.target.value);
-											setImageUpload(e.target.files[0]);
-											setImageTmp(
-												URL.createObjectURL(
-													e.target.files[0]
-												)
-											);
-											setIsShowImage(true);
-										}}
-									/>
-								</div>
+								<TextField
+									name="name"
+									type="text"
+									placeholder="Name, ex: Lala Lalisa."
+									containerClassName="width-530 mx-auto my-10"
+									onChange={formik.handleChange}
+									value={formik.values.name}
+									onBlur={formik.handleBlur}
+									errorMessage={formik.errors.name}
+									touched={formik.touched.name}
+								/>
+								<TextField
+									name="position"
+									type="text"
+									placeholder="Positions, ex: Co-Founder."
+									containerClassName="width-530 mx-auto my-10"
+									onChange={formik.handleChange}
+									value={formik.values.position}
+									onBlur={formik.handleBlur}
+									errorMessage={formik.errors.position}
+									touched={formik.touched.position}
+								/>
+								<TextAreaField
+									name="desc"
+									placeholder="Descriptions"
+									containerClassName="width-530 mx-auto my-10"
+									onChange={formik.handleChange}
+									value={formik.values.desc}
+									onBlur={formik.handleBlur}
+									errorMessage={formik.errors.desc}
+									touched={formik.touched.desc}
+								/>
+								<TextField
+									type="file"
+									name="image"
+									containerClassName="width-530 mx-auto my-10"
+									onBlur={formik.handleBlur}
+									errorMessage={formik.errors.image}
+									touched={formik.touched.image}
+									onChange={(e) => {
+										formik.setFieldValue(
+											"image",
+											e.target.files[0]
+										);
+										setImagePreview(
+											URL.createObjectURL(
+												e.target.files[0]
+											)
+										);
+										setIsShowImage(true);
+									}}
+								/>
 							</div>
 
 							<div className="height-60 alig-item-center">
@@ -126,12 +136,8 @@ const CreateTeam = (props) => {
 									type="button"
 									onClick={() => {
 										props.setIsModal(false);
-										setName("");
-										setPosition("");
-										setDesc("");
-										setImage("");
-										setImageUpload("");
-										setImageTmp("");
+										formik.resetForm();
+										setImagePreview("");
 										setIsShowImage(false);
 									}}
 								>

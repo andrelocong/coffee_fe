@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import CreateMainCategory from "./CreateMainCategory";
-import UpdateMainCategory from "./UpdateMainCategory";
+import MainCategoryCreate from "./mainCategory.create";
+import MainCategoryUpdate from "./mainCategory.update";
 import DangerAlert from "../components/DangerAlert";
 
 function MainCategory() {
@@ -33,13 +33,13 @@ function MainCategory() {
 
 	return (
 		<div className="main-category">
-			<CreateMainCategory
+			<MainCategoryCreate
 				isModal={isModal}
 				setIsModal={setIsModal}
 				showData={showData}
 			/>
 
-			<UpdateMainCategory
+			<MainCategoryUpdate
 				isUpdateModal={isUpdateModal}
 				setIsUpdateModal={setIsUpdateModal}
 				categoryId={categoryId}

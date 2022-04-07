@@ -2,13 +2,13 @@ import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
-import { validate } from "./validate";
+import { validation } from "./mainCategory.validation";
 import { TextField } from "../components/InputField";
 
-const CreateMainCategory = (props) => {
+const MainCategoryCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
-	const storeData = async (values, resetForm) => {
+	const storeData = async (values) => {
 		await axios.post("http://localhost:5000/main-category", {
 			name: values.name,
 		});
@@ -28,7 +28,7 @@ const CreateMainCategory = (props) => {
 		initialValues: {
 			name: "",
 		},
-		validationSchema: validate,
+		validationSchema: validation,
 		onSubmit: (values) => {
 			storeData(values);
 		},
@@ -89,4 +89,4 @@ const CreateMainCategory = (props) => {
 	);
 };
 
-export default CreateMainCategory;
+export default MainCategoryCreate;
