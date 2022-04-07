@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import CreateRole from "./CreateRole";
+import RoleCreate from "./role.create";
 import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
 
@@ -31,7 +31,7 @@ function Role() {
 
 	return (
 		<div className="role">
-			<CreateRole
+			<RoleCreate
 				isModal={isModal}
 				setIsModal={setIsModal}
 				showData={showData}

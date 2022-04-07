@@ -7,22 +7,22 @@ import Product from "./products/Product";
 import Gallery from "./galleries/Gallery";
 import Contact from "./contact/Contact";
 import Admin from "./admin/Index";
-import OrderList from "./admin/order-lists/OrderList";
-import DetailOrder from "./admin/order-lists/DetailOrder";
-import ProductList from "./admin/product-list/ProductList";
-import DetailProduct from "./admin/product-list/DetailProduct";
-import InputGallery from "./admin/input-gallery/InputGallery";
-import SosmedList from "./admin/sosmeds/SosmedList";
-import TeamList from "./admin/teams/TeamList";
-import UserList from "./admin/users/UserList";
-import DetailUser from "./admin/users/DetailUser";
-import MainCategory from "./admin/main-categories/mainCategory";
+import OrderList from "./admin/orderLists/OrderList";
+import DetailOrder from "./admin/orderLists/order.detail";
+import ProductList from "./admin/productList/product";
+import DetailProduct from "./admin/productList/product.detail";
+import GalleryList from "./admin/galleries/gallery";
+import Sosmed from "./admin/sosmeds/sosmed";
+import Team from "./admin/teams/team";
+import User from "./admin/users/user";
+import DetailUser from "./admin/users/user.detail";
+import MainCategory from "./admin/mainCategories/mainCategory";
 import Category from "./admin/categories/category";
-import SubCategory from "./admin/sub-categories/SubCategory";
-import Quantity from "./admin/quantities/Quantity";
-import Role from "./admin/roles/Role";
-import DetailRole from "./admin/roles/DetailRole";
-import Login from "./admin/login/Logins";
+import SubCategory from "./admin/subCategories/SubCategory";
+import Quantity from "./admin/quantities/quantity";
+import Role from "./admin/roles/role";
+import DetailRole from "./admin/roles/role.detail";
+import Login from "./admin/login/login";
 
 function App() {
 	return (
@@ -52,15 +52,12 @@ function App() {
 							element={<DetailProduct />}
 						/>
 						<Route
-							path="/admin/input-gallery"
-							element={<InputGallery />}
+							path="/admin/gallery"
+							element={<GalleryList />}
 						/>
-						<Route
-							path="/admin/sosmed-list"
-							element={<SosmedList />}
-						/>
-						<Route path="/admin/team-list" element={<TeamList />} />
-						<Route path="/admin/user-list" element={<UserList />} />
+						<Route path="/admin/sosmed-list" element={<Sosmed />} />
+						<Route path="/admin/team-list" element={<Team />} />
+						<Route path="/admin/user-list" element={<User />} />
 						<Route
 							path="/admin/user-list/detail/:id"
 							element={<DetailUser />}

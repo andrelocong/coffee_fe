@@ -1,14 +1,14 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
-import QuantityCreate from "./quantity.create";
-import QuantityEdit from "./quantity.edit";
+import SubCategoryCreate from "./subCategory.create";
+import SubCategoryEdit from "./subCategory.edit";
 import DangerAlert from "../components/DangerAlert";
 
-function Quantity() {
+function SubCategory() {
 	const [isModal, setIsModal] = useState(false);
 	const [data, setData] = useState([]);
-	const [quantityId, setQuantityId] = useState("");
-	const [quantity, setQuantity] = useState("");
+	const [categoryId, setCategoryId] = useState("");
+	const [name, setName] = useState("");
 	const [isUpdateModal, setIsUpdateModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
@@ -16,9 +16,9 @@ function Quantity() {
 	});
 
 	const showData = async () => {
-		const quantity = await axios.get("http://localhost:5000/quantity");
+		const category = await axios.get("http://localhost:5000/sub-category");
 
-		setData(quantity.data.data);
+		setData(category.data.data);
 	};
 
 	useEffect(() => {
@@ -26,26 +26,25 @@ function Quantity() {
 	}, []);
 
 	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/quantity/${quantityId}`);
-		setTimeout(() => {
-			showData();
-		}, 200);
+		await axios.delete(`http://localhost:5000/sub-category/${categoryId}`);
+
+		showData();
 	};
 
 	return (
-		<div className="quantity">
-			<QuantityCreate
+		<div className="sub-category">
+			<SubCategoryCreate
 				isModal={isModal}
 				setIsModal={setIsModal}
 				showData={showData}
 			/>
 
-			<QuantityEdit
+			<SubCategoryEdit
 				isUpdateModal={isUpdateModal}
 				setIsUpdateModal={setIsUpdateModal}
-				setQuantity={setQuantity}
-				quantity={quantity}
-				quantityId={quantityId}
+				categoryId={categoryId}
+				name={name}
+				setName={setName}
 				showData={showData}
 			/>
 
@@ -55,7 +54,7 @@ function Quantity() {
 				deleteData={deleteData}
 			/>
 
-			<h1 className="my-40">Quantities</h1>
+			<h1 className="my-40">Sub Categories</h1>
 
 			<div className="width-full bg-white border-radius-20 height-100vh mb-10">
 				<div className="p-30 flex">
@@ -85,14 +84,14 @@ function Quantity() {
 								<th className="border-radius-left-10 py-11">
 									No
 								</th>
-								<th className="py-11">Quantity</th>
+								<th className="py-11">Name</th>
 								<th className="py-11 border-radius-right-10">
 									Action
 								</th>
 							</tr>
 						</thead>
-						<tbody id="table-body">
-							{data.map((quantity, index) => {
+						<tbody>
+							{data.map((category, index) => {
 								return (
 									<tr
 										className="border-bottom-1 border-grey"
@@ -100,18 +99,16 @@ function Quantity() {
 									>
 										<td className="py-15">{index + 1}</td>
 										<td className="py-15 text-capitalize">
-											{quantity.quantity}
+											{category.name}
 										</td>
 										<td className="py-15">
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setQuantityId(
-														quantity.quantity_id
+													setCategoryId(
+														category.sub_category_id
 													);
-													setQuantity(
-														quantity.quantity
-													);
+													setName(category.name);
 													setIsUpdateModal(true);
 												}}
 											>
@@ -124,8 +121,8 @@ function Quantity() {
 														bgAlert: true,
 														dangerAlert: true,
 													});
-													setQuantityId(
-														quantity.quantity_id
+													setCategoryId(
+														category.sub_category_id
 													);
 												}}
 											>
@@ -143,4 +140,4 @@ function Quantity() {
 	);
 }
 
-export default Quantity;
+export default SubCategory;
