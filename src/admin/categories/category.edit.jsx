@@ -1,41 +1,22 @@
-import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { useFormik } from "formik";
-import { validation } from "./category.validation";
 import { TextField } from "../components/formField";
+import { useUpdate } from "./category.hook";
 
 const CategoryEdit = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
+	const setIsEditModal = props.setIsEditModal;
+	const showData = props.showData;
+	const name = props.name;
+	const id = props.id;
 
-	const updateDataCategory = async (values) => {
-		await axios.patch(
-			`http://localhost:5000/category/${props.categoryId}`,
-			{
-				name: values.name,
-			}
-		);
-
-		props.setIsEditModal(false);
-		setTimeout(() => {
-			setIsAlert(true);
-			props.showData();
-		}, 200);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			name: props.name,
-		},
-		enableReinitialize: true,
-		validationSchema: validation,
-		onSubmit: (values) => {
-			updateDataCategory(values);
-		},
-	});
+	const { formik } = useUpdate(
+		setIsEditModal,
+		showData,
+		name,
+		id,
+		setIsAlert
+	);
 
 	return (
 		<div className="update-main-category">

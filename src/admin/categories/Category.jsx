@@ -1,13 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import CategoryCreate from "./category.create";
 import CategoryEdit from "./category.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./category.hook";
 
 function Category() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [categoryId, setCategoryId] = useState("");
+	const [id, setId] = useState("");
 	const [name, setName] = useState("");
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
@@ -15,21 +14,7 @@ function Category() {
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/category");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/category/${categoryId}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="category">
@@ -42,7 +27,7 @@ function Category() {
 			<CategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				categoryId={categoryId}
+				id={id}
 				name={name}
 				setName={setName}
 				showData={showData}
@@ -105,9 +90,7 @@ function Category() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setCategoryId(
-														category.category_id
-													);
+													setId(category.category_id);
 													setName(category.name);
 													setIsEditModal(true);
 												}}
@@ -121,9 +104,7 @@ function Category() {
 														bgAlert: true,
 														dangerAlert: true,
 													});
-													setCategoryId(
-														category.category_id
-													);
+													setId(category.category_id);
 												}}
 											>
 												Delete
