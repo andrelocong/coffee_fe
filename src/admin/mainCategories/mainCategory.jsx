@@ -1,35 +1,20 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import MainCategoryCreate from "./mainCategory.create";
 import MainCategoryEdit from "./mainCategory.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./mainCategory.hook";
 
 function MainCategory() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [isEditModal, setIsEditModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [categoryId, setCategoryId] = useState("");
+	const [id, setId] = useState("");
 	const [name, setName] = useState("");
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/main-category");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/main-category/${categoryId}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="main-category">
@@ -42,7 +27,7 @@ function MainCategory() {
 			<MainCategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				categoryId={categoryId}
+				id={id}
 				name={name}
 				setName={setName}
 				showData={showData}
@@ -105,7 +90,7 @@ function MainCategory() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setCategoryId(
+													setId(
 														category.main_category_id
 													);
 													setName(category.name);
@@ -121,7 +106,7 @@ function MainCategory() {
 														bgAlert: true,
 														dangerAlert: true,
 													});
-													setCategoryId(
+													setId(
 														category.main_category_id
 													);
 												}}
