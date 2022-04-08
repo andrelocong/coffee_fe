@@ -1,6 +1,6 @@
 import React from "react";
 import { Formik, Form } from "formik";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 import { validation } from "./login.validation";
 import axios from "axios";
 

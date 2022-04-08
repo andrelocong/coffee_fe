@@ -5,7 +5,7 @@ import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
 
 function Role() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [roleId, setRoleId] = useState("");
 	const [isAlert, setIsAlert] = useState({
@@ -32,8 +32,8 @@ function Role() {
 	return (
 		<div className="role">
 			<RoleCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
@@ -49,7 +49,7 @@ function Role() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>

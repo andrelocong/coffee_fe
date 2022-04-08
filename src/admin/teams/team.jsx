@@ -8,14 +8,14 @@ import DangerAlert from "../components/DangerAlert";
 import { useFetch, useDelete } from "./team.hooks";
 
 function Team() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [id, setId] = useState("");
 	const [isDetailModal, setIsDetailModal] = useState(false);
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [name, setName] = useState("");
 	const [position, setPosition] = useState("");
 	const [desc, setDesc] = useState("");
-	const [isImageModal, setIsImageModal] = useState(false);
+	const [isEditImageModal, setIsEditImageModal] = useState(false);
 	const [image, setImage] = useState("");
 	const [imageUpload, setImageUpload] = useState("");
 	const [isAlert, setIsAlert] = useState({
@@ -32,8 +32,8 @@ function Team() {
 	return (
 		<div className="team-list">
 			<TeamCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
@@ -45,7 +45,7 @@ function Team() {
 				setName={setName}
 				setPosition={setPosition}
 				setDesc={setDesc}
-				setIsImageModal={setIsImageModal}
+				setIsEditImageModal={setIsEditImageModal}
 				setImage={setImage}
 				showData={showData}
 			/>
@@ -64,10 +64,10 @@ function Team() {
 			/>
 
 			<TeamEditImage
-				isImageModal={isImageModal}
+				isEditImageModal={isEditImageModal}
 				image={image}
 				imageUpload={imageUpload}
-				setIsImageModal={setIsImageModal}
+				setIsEditImageModal={setIsEditImageModal}
 				setImage={setImage}
 				setImageUpload={setImageUpload}
 				id={id}
@@ -86,7 +86,7 @@ function Team() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -155,7 +155,7 @@ function Team() {
 												className="bg-white px-10 py-5 border-1 cursor-pointer font-16 color-black mr-5 border-radius-5"
 												type="button"
 												onClick={() => {
-													setIsImageModal(true);
+													setIsEditImageModal(true);
 													setImage(team.image);
 													setId(team.team_id);
 												}}

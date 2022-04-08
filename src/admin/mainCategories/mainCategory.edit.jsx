@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./mainCategory.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
-const MainCategoryUpdate = (props) => {
+const MainCategoryEdit = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const updateDataMainCategory = async (values) => {
@@ -16,7 +16,7 @@ const MainCategoryUpdate = (props) => {
 			}
 		);
 
-		props.setIsUpdateModal(false);
+		props.setIsEditModal(false);
 		setTimeout(() => {
 			setIsAlert(true);
 			props.showData();
@@ -41,7 +41,7 @@ const MainCategoryUpdate = (props) => {
 		<div className="update-main-category">
 			<SuccessAlert isAlert={isAlert} text="Main category was updated!" />
 
-			<div className={props.isUpdateModal ? "modal active" : "modal"}>
+			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<div className="flex-center">
 					<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 						<div className="border-bottom-1 border-grey">
@@ -72,7 +72,7 @@ const MainCategoryUpdate = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsUpdateModal(false);
+										props.setIsEditModal(false);
 									}}
 									type="button"
 								>
@@ -87,4 +87,4 @@ const MainCategoryUpdate = (props) => {
 	);
 };
 
-export default MainCategoryUpdate;
+export default MainCategoryEdit;

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Order.css";
+import "./order.css";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 // import Image from "../img/iStock-93431682.f1aecd79.jpeg";
@@ -135,25 +135,29 @@ function Order() {
 					<div className="order-card">
 						<div className="order-card-body">
 							<p className="order-text font-nunito">
-								Please send us an inquiry for any products that you
-								are looking to purchase by filling out the order
-								form below. You can add any specifications or
-								additional information in the comments section and
-								we will make this work for you. Let’s do business
-								together.
+								Please send us an inquiry for any products that
+								you are looking to purchase by filling out the
+								order form below. You can add any specifications
+								or additional information in the comments
+								section and we will make this work for you.
+								Let’s do business together.
 							</p>
 							<div className="order-content">
 								<div className="left-content">
 									{/* <img className="order-img" src={Image} alt="order" /> */}
 									<div className="form-order">
 										<div className="form-group">
-											<p className="form-title">Full Name</p>
+											<p className="form-title">
+												Full Name
+											</p>
 											<input
 												className="form-input"
 												type="text"
 												placeholder="Ex. Locong"
 												value={name}
-												onChange={(e) => setName(e.target.value)}
+												onChange={(e) =>
+													setName(e.target.value)
+												}
 											/>
 										</div>
 
@@ -164,50 +168,76 @@ function Order() {
 												type="email"
 												placeholder="abcs@mail.com"
 												value={email}
-												onChange={(e) => setEmail(e.target.value)}
+												onChange={(e) =>
+													setEmail(e.target.value)
+												}
 											/>
 										</div>
 
 										<div className="form-group">
-											<p className="form-title">Main category</p>
+											<p className="form-title">
+												Main category
+											</p>
 											<select
 												className="form-select"
-												disabled={isMainCategory ? "" : "disabled"}
+												disabled={
+													isMainCategory
+														? ""
+														: "disabled"
+												}
 												value={mainCategoryValue}
 												onChange={(e) =>
-													setMainCategoryValue(e.target.value)
+													setMainCategoryValue(
+														e.target.value
+													)
 												}
 											>
 												<option value="">
 													Choose main category
 												</option>
-												{mainCategory.map((data, index) => {
-													return (
-														<option
-															value={data.main_category_id}
-															key={index}
-														>
-															{data.main_category.name}
-														</option>
-													);
-												})}
+												{mainCategory.map(
+													(data, index) => {
+														return (
+															<option
+																value={
+																	data.main_category_id
+																}
+																key={index}
+															>
+																{
+																	data
+																		.main_category
+																		.name
+																}
+															</option>
+														);
+													}
+												)}
 											</select>
 										</div>
 
 										<div className="form-group">
-											<p className="form-title">Quantity</p>
+											<p className="form-title">
+												Quantity
+											</p>
 											<select
 												className="form-select"
 												value={quantityValue}
 												onChange={(e) =>
-													setQuantityValue(e.target.value)
+													setQuantityValue(
+														e.target.value
+													)
 												}
 											>
-												<option value="">Choose quantity</option>
+												<option value="">
+													Choose quantity
+												</option>
 												{quantity.map((data, index) => {
 													return (
 														<option
-															value={data.quantity_id}
+															value={
+																data.quantity_id
+															}
 															key={index}
 														>
 															{data.quantity}
@@ -218,19 +248,27 @@ function Order() {
 										</div>
 
 										<div className="form-group">
-											<p className="form-title">Quantity</p>
+											<p className="form-title">
+												Quantity
+											</p>
 											<select
 												className="form-select"
 												value={quantityValue}
 												onChange={(e) =>
-													setQuantityValue(e.target.value)
+													setQuantityValue(
+														e.target.value
+													)
 												}
 											>
-												<option value="">Choose quantity</option>
+												<option value="">
+													Choose quantity
+												</option>
 												{quantity.map((data, index) => {
 													return (
 														<option
-															value={data.quantity_id}
+															value={
+																data.quantity_id
+															}
 															key={index}
 														>
 															{data.quantity}
@@ -239,37 +277,48 @@ function Order() {
 												})}
 											</select>
 										</div>
-
 									</div>
 								</div>
 
 								<div className="right-content">
-									<div className="form-order">										
+									<div className="form-order">
 										<div className="form-group">
-											<p className="form-title">Phone Number</p>
+											<p className="form-title">
+												Phone Number
+											</p>
 											<input
 												className="form-input"
 												type="text"
 												placeholder="82132xxxxx"
 												value={phone}
-												onChange={(e) => setPhone(e.target.value)}
+												onChange={(e) =>
+													setPhone(e.target.value)
+												}
 											/>
 										</div>
-										
+
 										<div className="form-group">
-											<p className="form-title">Product</p>
+											<p className="form-title">
+												Product
+											</p>
 											<select
 												className="form-select"
 												value={productValue}
 												onChange={(e) => {
-													handleChangeProduct(e.target.value);
+													handleChangeProduct(
+														e.target.value
+													);
 												}}
 											>
-												<option value="">Choose products</option>
+												<option value="">
+													Choose products
+												</option>
 												{product.map((data, index) => {
 													return (
 														<option
-															value={data.product_id}
+															value={
+																data.product_id
+															}
 															key={index}
 														>
 															{data.name}
@@ -278,22 +327,32 @@ function Order() {
 												})}
 											</select>
 										</div>
-										
+
 										<div className="form-group">
-											<p className="form-title">Category</p>
+											<p className="form-title">
+												Category
+											</p>
 											<select
 												className="form-select"
-												disabled={isCategory ? "" : "disabled"}
+												disabled={
+													isCategory ? "" : "disabled"
+												}
 												value={categoryValue}
 												onChange={(e) =>
-													setCategoryValue(e.target.value)
+													setCategoryValue(
+														e.target.value
+													)
 												}
 											>
-												<option value="">Choose category</option>
+												<option value="">
+													Choose category
+												</option>
 												{category.map((data, index) => {
 													return (
 														<option
-															value={data.category_id}
+															value={
+																data.category_id
+															}
 															key={index}
 														>
 															{data.category.name}
@@ -303,40 +362,59 @@ function Order() {
 											</select>
 										</div>
 										<div className="form-group">
-											<p className="form-title">Sub-category</p>
+											<p className="form-title">
+												Sub-category
+											</p>
 											<select
 												className="form-select"
-												disabled={isSubCategory ? "" : "disabled"}
+												disabled={
+													isSubCategory
+														? ""
+														: "disabled"
+												}
 												value={subCategoryValue}
 												onChange={(e) =>
-													setSubCategoryValue(e.target.value)
+													setSubCategoryValue(
+														e.target.value
+													)
 												}
 											>
 												<option value="">
 													Choose Sub-category
 												</option>
-												{subCategory.map((data, index) => {
-													return (
-														<option
-															value={data.sub_category_id}
-															key={index}
-														>
-															{data.sub_category.name}
-														</option>
-													);
-												})}
+												{subCategory.map(
+													(data, index) => {
+														return (
+															<option
+																value={
+																	data.sub_category_id
+																}
+																key={index}
+															>
+																{
+																	data
+																		.sub_category
+																		.name
+																}
+															</option>
+														);
+													}
+												)}
 											</select>
 										</div>
-										
+
 										<div className="form-group">
-											<p className="form-title">Comment</p>
+											<p className="form-title">
+												Comment
+											</p>
 											<textarea
 												className="form-textarea"
 												value={note}
-												onChange={(e) => setNote(e.target.value)}
+												onChange={(e) =>
+													setNote(e.target.value)
+												}
 											></textarea>
 										</div>
-
 									</div>
 								</div>
 							</div>

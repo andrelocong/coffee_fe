@@ -16,8 +16,6 @@ function ProductDetail() {
 	const [isSubCategoriesModal, setIsSubCategoriesModal] = useState(false);
 	const [subCategories, setSubCategories] = useState([]);
 
-	console.log(subCategories);
-
 	const showProductById = async () => {
 		const product = await axios.get(`http://localhost:5000/product/${id}`);
 		setProduct(product.data.data.name);

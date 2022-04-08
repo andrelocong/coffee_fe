@@ -5,7 +5,7 @@ import SosmedEdit from "./sosmed.edit.jsx";
 import DangerAlert from "../components/DangerAlert.jsx";
 
 function SosmedList() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [sosmedId, setSosmedId] = useState("");
@@ -36,8 +36,8 @@ function SosmedList() {
 	return (
 		<div className="sosmed-list width-full">
 			<SosmedCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
@@ -68,7 +68,7 @@ function SosmedList() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>

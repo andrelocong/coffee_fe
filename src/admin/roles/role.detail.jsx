@@ -8,7 +8,7 @@ function RoleDetail() {
 	const { id } = useParams();
 	const [name, setName] = useState("");
 	const [data, setData] = useState([]);
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateAccessModal, setIsCreateAccessModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
@@ -68,8 +68,8 @@ function RoleDetail() {
 	return (
 		<div className="detail-role">
 			<CreateRoleAccess
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateAccessModal={isCreateAccessModal}
+				setIsCreateAccessModal={setIsCreateAccessModal}
 				id={id}
 				showData={showData}
 			/>
@@ -103,7 +103,7 @@ function RoleDetail() {
 				<div className="px-30 pb-20">
 					<button
 						className="bg-orange px-15 py-10 border-none border-radius-5 cursor-pointer font-16 color-white mr-10"
-						onClick={() => setIsModal(true)}
+						onClick={() => setIsCreateAccessModal(true)}
 					>
 						Add Menu
 					</button>

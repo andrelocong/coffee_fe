@@ -3,7 +3,7 @@ import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./quantity.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const QuantityCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -13,7 +13,7 @@ const QuantityCreate = (props) => {
 			quantity: values.quantity,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setTimeout(() => {
 			formik.resetForm();
 			setIsAlert(true);
@@ -38,7 +38,7 @@ const QuantityCreate = (props) => {
 		<div className="create-quantity">
 			<SuccessAlert isAlert={isAlert} text="Quantity was created!" />
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -70,7 +70,7 @@ const QuantityCreate = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateModal(false);
 									}}
 									type="button"
 								>

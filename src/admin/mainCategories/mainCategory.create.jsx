@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./mainCategory.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const MainCategoryCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -13,7 +13,7 @@ const MainCategoryCreate = (props) => {
 			name: values.name,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setTimeout(() => {
 			formik.resetForm();
 			setIsAlert(true);
@@ -38,7 +38,7 @@ const MainCategoryCreate = (props) => {
 		<div className="create-main-category">
 			<SuccessAlert isAlert={isAlert} text="Main category was created!" />
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<div className="flex-center">
 					<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 						<div className="border-bottom-1 border-grey">
@@ -70,7 +70,7 @@ const MainCategoryCreate = (props) => {
 									<button
 										className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 										onClick={() => {
-											props.setIsModal(false);
+											props.setIsCreateModal(false);
 											setTimeout(() => {
 												formik.resetForm();
 											}, 200);

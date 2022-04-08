@@ -1,15 +1,15 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import CategoryCreate from "./category.create";
-import CategoryUpdate from "./category.update";
+import CategoryEdit from "./category.edit";
 import DangerAlert from "../components/DangerAlert";
 
 function Category() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [categoryId, setCategoryId] = useState("");
 	const [name, setName] = useState("");
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
@@ -34,14 +34,14 @@ function Category() {
 	return (
 		<div className="category">
 			<CategoryCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
-			<CategoryUpdate
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
+			<CategoryEdit
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
 				categoryId={categoryId}
 				name={name}
 				setName={setName}
@@ -61,7 +61,7 @@ function Category() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -109,7 +109,7 @@ function Category() {
 														category.category_id
 													);
 													setName(category.name);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit

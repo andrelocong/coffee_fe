@@ -3,7 +3,7 @@ import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./quantity.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const QuantityEdit = (props) => {
 	const [isAlert, setIsAlert] = useState(false);

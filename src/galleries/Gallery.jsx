@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import "./Gallery.css";
+import "./gallery.css";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import ButtonExtend from "../components/ButtonExtend";

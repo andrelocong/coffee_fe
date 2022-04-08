@@ -20,8 +20,10 @@ function UserDetail() {
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [isChangeImageModal, setIsChangeImageModal] = useState(false);
 	const navigate = useNavigate();
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
 	const showDataById = async () => {
 		let users = await axios.get(`http://localhost:5000/user/${id}`);
@@ -74,10 +76,8 @@ function UserDetail() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={handleDelete}
 			/>
 
@@ -146,8 +146,10 @@ function UserDetail() {
 							<button
 								className="bg-red px-10 py-5 border-none cursor-pointer font-16 mr-5 border-radius-5 color-white"
 								onClick={() => {
-									setIsBgAlert(true);
-									setIsDangerAlert(true);
+									setIsAlert({
+										bgAlert: true,
+										dangerAlert: true,
+									});
 								}}
 							>
 								Delete

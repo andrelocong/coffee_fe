@@ -25,7 +25,7 @@ const ProductCreate = (props) => {
 			category: values.category,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setIsAlert(true);
 		setTimeout(() => {
 			setIsAlert(false);
@@ -38,7 +38,7 @@ const ProductCreate = (props) => {
 	};
 
 	const handleCancel = () => {
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setValues({
 			product: "",
 			category: "",
@@ -52,7 +52,7 @@ const ProductCreate = (props) => {
 				text="Product created successfully!"
 			/>
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={storeData}>
 					<div className="flex-center">
 						<div className="block">

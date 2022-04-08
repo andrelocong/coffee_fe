@@ -5,7 +5,7 @@ import UserCreate from "./user.create";
 import DangerAlert from "../components/DangerAlert";
 
 function User() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [id, setId] = useState("");
 	const [isAlert, setIsAlert] = useState({
@@ -35,8 +35,8 @@ function User() {
 	return (
 		<div className="user-list">
 			<UserCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
@@ -53,7 +53,7 @@ function User() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>

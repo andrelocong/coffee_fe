@@ -5,11 +5,11 @@ import QuantityEdit from "./quantity.edit";
 import DangerAlert from "../components/DangerAlert";
 
 function Quantity() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [quantityId, setQuantityId] = useState("");
 	const [quantity, setQuantity] = useState("");
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
@@ -35,14 +35,14 @@ function Quantity() {
 	return (
 		<div className="quantity">
 			<QuantityCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
 			<QuantityEdit
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
 				setQuantity={setQuantity}
 				quantity={quantity}
 				quantityId={quantityId}
@@ -62,7 +62,7 @@ function Quantity() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -112,7 +112,7 @@ function Quantity() {
 													setQuantity(
 														quantity.quantity
 													);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit

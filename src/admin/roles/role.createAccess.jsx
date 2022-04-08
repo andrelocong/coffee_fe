@@ -3,7 +3,7 @@ import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validationMenu } from "./role.validation";
-import { SelectField } from "../components/InputField";
+import { SelectField } from "../components/formField";
 
 const RoleCreateAccess = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -52,7 +52,7 @@ const RoleCreateAccess = (props) => {
 				roleId: props.id,
 			});
 
-			props.setIsModal(false);
+			props.setIsCreateAccessModal(false);
 			setTimeout(() => {
 				formik.resetForm();
 				setIsAlert(true);
@@ -82,7 +82,9 @@ const RoleCreateAccess = (props) => {
 		<div className="create-role-access">
 			<SuccessAlert isAlert={isAlert} text="Main category was created!" />
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div
+				className={props.isCreateAccessModal ? "modal active" : "modal"}
+			>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -126,7 +128,7 @@ const RoleCreateAccess = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateAccessModal(false);
 										setTimeout(() => {
 											formik.resetForm();
 											setErrors("");

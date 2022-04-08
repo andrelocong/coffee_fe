@@ -3,7 +3,7 @@ import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./category.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const CategoryCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -13,7 +13,7 @@ const CategoryCreate = (props) => {
 			name: values.name,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setTimeout(() => {
 			formik.resetForm(values);
 			setIsAlert(true);
@@ -37,7 +37,7 @@ const CategoryCreate = (props) => {
 	return (
 		<div className="create-category">
 			<SuccessAlert isAlert={isAlert} text="Category was created!" />
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<div className="flex-center">
 					<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
 						<div className="border-bottom-1 border-grey">
@@ -69,12 +69,9 @@ const CategoryCreate = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateModal(false);
 										setTimeout(() => {
-											// formik.resetForm(
-											// 	formik.values
-											// );
-											formik.handleReset();
+											formik.resetForm();
 										}, 200);
 									}}
 									type="button"

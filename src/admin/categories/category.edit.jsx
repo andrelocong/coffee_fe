@@ -3,9 +3,9 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./category.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
-const CategoryUpdate = (props) => {
+const CategoryEdit = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const updateDataCategory = async (values) => {
@@ -16,7 +16,7 @@ const CategoryUpdate = (props) => {
 			}
 		);
 
-		props.setIsUpdateModal(false);
+		props.setIsEditModal(false);
 		setTimeout(() => {
 			setIsAlert(true);
 			props.showData();
@@ -24,10 +24,6 @@ const CategoryUpdate = (props) => {
 		setTimeout(() => {
 			setIsAlert(false);
 		}, 1500);
-	};
-
-	const handleCancel = () => {
-		props.setIsUpdateModal(false);
 	};
 
 	const formik = useFormik({
@@ -45,7 +41,7 @@ const CategoryUpdate = (props) => {
 		<div className="update-main-category">
 			<SuccessAlert isAlert={isAlert} text="Category was updated!" />
 
-			<div className={props.isUpdateModal ? "modal active" : "modal"}>
+			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -76,7 +72,7 @@ const CategoryUpdate = (props) => {
 								</button>
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
-									onClick={() => handleCancel()}
+									onClick={() => props.setIsEditModal(false)}
 									type="button"
 								>
 									Cancel
@@ -90,4 +86,4 @@ const CategoryUpdate = (props) => {
 	);
 };
 
-export default CategoryUpdate;
+export default CategoryEdit;

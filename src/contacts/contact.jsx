@@ -1,5 +1,5 @@
 import React from "react";
-import "./Contact.css";
+import "./contact.css";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import ButtonExtend from "../components/ButtonExtend";

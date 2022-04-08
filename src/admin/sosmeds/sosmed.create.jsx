@@ -25,7 +25,7 @@ const CreateSosmed = (props) => {
 			address: values.address,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setValues({
 			sosmed: "",
 			address: "",
@@ -38,7 +38,7 @@ const CreateSosmed = (props) => {
 	};
 
 	const handleCancel = () => {
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setValues({
 			sosmed: "",
 			address: "",
@@ -48,7 +48,7 @@ const CreateSosmed = (props) => {
 	return (
 		<div className="create-sosmed">
 			<SuccessAlert isAlert={isAlert} text="Sosial media was created!" />
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={storeData}>
 					<div className="flex-center">
 						<div className="block width-500 heigth-auto bg-white border-radius-10 mt-100">

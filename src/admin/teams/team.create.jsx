@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./team.validation";
-import { TextField, TextAreaField } from "../components/InputField";
+import { TextField, TextAreaField } from "../components/formField";
 
 const TeamCreate = (props) => {
 	const [isShowImage, setIsShowImage] = useState(false);
@@ -20,7 +20,7 @@ const TeamCreate = (props) => {
 
 		await axios.post("http://localhost:5000/team", formData);
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		formik.resetForm();
 		setImagePreview("");
 		setIsShowImage(false);
@@ -48,7 +48,7 @@ const TeamCreate = (props) => {
 		<div className="create-team">
 			<SuccessAlert isAlert={isAlert} text="Team was created!" />
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div
@@ -135,7 +135,7 @@ const TeamCreate = (props) => {
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="button"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateModal(false);
 										formik.resetForm();
 										setImagePreview("");
 										setIsShowImage(false);

@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { validation } from "./user.validation";
 import { useFormik } from "formik";
-import { TextField, SelectField } from "../components/InputField";
+import { TextField, SelectField } from "../components/formField";
 
 const UserCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -29,7 +29,7 @@ const UserCreate = (props) => {
 				role: values.role,
 			});
 
-			props.setIsModal(false);
+			props.setIsCreateModal(false);
 			setTimeout(() => {
 				setIsAlert(true);
 				props.showData();
@@ -62,7 +62,7 @@ const UserCreate = (props) => {
 		<div className="create-user">
 			<SuccessAlert isAlert={isAlert} text="User was created!" />
 
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<div className="flex-center">
 					<div className="block width-350 heigth-auto bg-white border-radius-10 mt-100">
 						<div className="height-60 border-bottom-1 border-grey alig-item-center mb-10">
@@ -151,7 +151,7 @@ const UserCreate = (props) => {
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="button"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateModal(false);
 										setTimeout(() => {
 											formik.resetForm();
 										}, 200);

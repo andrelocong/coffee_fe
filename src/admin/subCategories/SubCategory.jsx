@@ -5,11 +5,11 @@ import SubCategoryEdit from "./subCategory.edit";
 import DangerAlert from "../components/DangerAlert";
 
 function SubCategory() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [categoryId, setCategoryId] = useState("");
 	const [name, setName] = useState("");
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
@@ -34,14 +34,14 @@ function SubCategory() {
 	return (
 		<div className="sub-category">
 			<SubCategoryCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
 			<SubCategoryEdit
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
 				categoryId={categoryId}
 				name={name}
 				setName={setName}
@@ -61,7 +61,7 @@ function SubCategory() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -109,7 +109,7 @@ function SubCategory() {
 														category.sub_category_id
 													);
 													setName(category.name);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit

@@ -3,7 +3,7 @@ import axios from "axios";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./subCategory.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const SubCategoryCreate = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -13,7 +13,7 @@ const SubCategoryCreate = (props) => {
 			name: values.name,
 		});
 
-		props.setIsModal(false);
+		props.setIsCreateModal(false);
 		setTimeout(() => {
 			formik.resetForm();
 			setIsAlert(true);
@@ -37,7 +37,7 @@ const SubCategoryCreate = (props) => {
 	return (
 		<div className="create-category">
 			<SuccessAlert isAlert={isAlert} text="Category was created!" />
-			<div className={props.isModal ? "modal active" : "modal"}>
+			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -69,7 +69,7 @@ const SubCategoryCreate = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsModal(false);
+										props.setIsCreateModal(false);
 										setTimeout(() => {
 											formik.resetForm();
 										}, 200);

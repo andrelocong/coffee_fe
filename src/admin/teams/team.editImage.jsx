@@ -16,7 +16,7 @@ const TeamEditImage = (props) => {
 			formData
 		);
 
-		props.setIsImageModal(false);
+		props.setIsEditImageModal(false);
 		setIsAlert(true);
 		setTimeout(() => {
 			setIsAlert(false);
@@ -29,7 +29,7 @@ const TeamEditImage = (props) => {
 		<div className="edit-image-team">
 			<SuccessAlert isAlert={isAlert} text="Team image was updated!" />
 
-			<div className={props.isImageModal ? "modal active" : "modal"}>
+			<div className={props.isEditImageModal ? "modal active" : "modal"}>
 				<form onSubmit={updateImage}>
 					<div className="flex-center">
 						<div className="block width-auto height-auto bg-white border-radius-10 mt-80">
@@ -66,7 +66,9 @@ const TeamEditImage = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 color-white font-16 cursor-pointer"
 									type="button"
-									onClick={() => props.setIsImageModal(false)}
+									onClick={() =>
+										props.setIsEditImageModal(false)
+									}
 								>
 									Cancel
 								</button>

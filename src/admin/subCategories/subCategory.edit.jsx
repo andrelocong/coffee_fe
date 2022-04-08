@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { useFormik } from "formik";
 import { validation } from "./subCategory.validation";
-import { TextField } from "../components/InputField";
+import { TextField } from "../components/formField";
 
 const SubCategoryEdit = (props) => {
 	const [isAlert, setIsAlert] = useState(false);
@@ -16,7 +16,7 @@ const SubCategoryEdit = (props) => {
 			}
 		);
 
-		props.setIsUpdateModal(false);
+		props.setIsEditModal(false);
 		setTimeout(() => {
 			setIsAlert(true);
 			props.showData();
@@ -41,7 +41,7 @@ const SubCategoryEdit = (props) => {
 		<div className="update-main-category">
 			<SuccessAlert isAlert={isAlert} text="Category was updated!" />
 
-			<div className={props.isUpdateModal ? "modal active" : "modal"}>
+			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -72,9 +72,7 @@ const SubCategoryEdit = (props) => {
 								</button>
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
-									onClick={() =>
-										props.setIsUpdateModal(false)
-									}
+									onClick={() => props.setIsEditModal(false)}
 									type="button"
 								>
 									Cancel

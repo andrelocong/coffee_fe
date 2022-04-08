@@ -82,7 +82,7 @@ const TeamDetail = (props) => {
 									onClick={() => {
 										props.setIsDetailModal(false);
 										setTimeout(() => {
-											props.setIsImageModal(true);
+											props.setIsEditImageModal(true);
 										}, 150);
 										props.setImage(image);
 									}}

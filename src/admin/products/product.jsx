@@ -6,10 +6,12 @@ import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
 
 function ProductList() {
-	const [isModal, setIsModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
 	const [isEditModal, setIsEditModal] = useState(false);
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 	const [data, setData] = useState([]);
 	const [values, setValues] = useState({
 		id: "",
@@ -44,8 +46,8 @@ function ProductList() {
 	return (
 		<div className="product-list width-full">
 			<ProductCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
@@ -58,10 +60,8 @@ function ProductList() {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -72,7 +72,7 @@ function ProductList() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -147,8 +147,10 @@ function ProductList() {
 														product: "",
 														category: "",
 													});
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete

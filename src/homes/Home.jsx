@@ -1,10 +1,10 @@
 import React from "react";
-import "./Home.css";
+import "./home.css";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
-import Gallery from "./Gallery";
-import Team from "./Team";
-import Question from "./Question";
+import Gallery from "./home.gallery";
+import Team from "./home.team";
+import Question from "./home.question";
 import ButtonExtend from "../components/ButtonExtend";
 import ImgCoffee1 from "../img/pexels-michael-burrows-7125709.jpg";
 import ImgLogo from "../img/logo.8dfda37d.png";

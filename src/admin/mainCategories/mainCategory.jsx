@@ -1,12 +1,12 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import MainCategoryCreate from "./mainCategory.create";
-import MainCategoryUpdate from "./mainCategory.update";
+import MainCategoryEdit from "./mainCategory.edit";
 import DangerAlert from "../components/DangerAlert";
 
 function MainCategory() {
-	const [isModal, setIsModal] = useState(false);
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
 	const [data, setData] = useState([]);
 	const [categoryId, setCategoryId] = useState("");
 	const [name, setName] = useState("");
@@ -34,14 +34,14 @@ function MainCategory() {
 	return (
 		<div className="main-category">
 			<MainCategoryCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
-			<MainCategoryUpdate
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
+			<MainCategoryEdit
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
 				categoryId={categoryId}
 				name={name}
 				setName={setName}
@@ -61,7 +61,7 @@ function MainCategory() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -109,7 +109,7 @@ function MainCategory() {
 														category.main_category_id
 													);
 													setName(category.name);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit
