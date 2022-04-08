@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import QuantityCreate from "./quantity.create";
 import QuantityEdit from "./quantity.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./quantity.hook";
 
 function Quantity() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [quantityId, setQuantityId] = useState("");
+	const [id, setId] = useState("");
 	const [quantity, setQuantity] = useState("");
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
@@ -15,22 +14,7 @@ function Quantity() {
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const quantity = await axios.get("http://localhost:5000/quantity");
-
-		setData(quantity.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/quantity/${quantityId}`);
-		setTimeout(() => {
-			showData();
-		}, 200);
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="quantity">
@@ -45,7 +29,7 @@ function Quantity() {
 				setIsEditModal={setIsEditModal}
 				setQuantity={setQuantity}
 				quantity={quantity}
-				quantityId={quantityId}
+				id={id}
 				showData={showData}
 			/>
 
@@ -106,9 +90,7 @@ function Quantity() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setQuantityId(
-														quantity.quantity_id
-													);
+													setId(quantity.quantity_id);
 													setQuantity(
 														quantity.quantity
 													);
@@ -124,9 +106,7 @@ function Quantity() {
 														bgAlert: true,
 														dangerAlert: true,
 													});
-													setQuantityId(
-														quantity.quantity_id
-													);
+													setId(quantity.quantity_id);
 												}}
 											>
 												Delete

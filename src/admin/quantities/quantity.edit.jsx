@@ -1,47 +1,26 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { useFormik } from "formik";
-import { validation } from "./quantity.validation";
 import { TextField } from "../components/formField";
+import { useUpdate } from "./quantity.hook";
 
 const QuantityEdit = (props) => {
-	const [isAlert, setIsAlert] = useState(false);
+	const setIsEditModal = props.setIsEditModal;
+	const showData = props.showData;
+	const quantity = props.quantity;
+	const id = props.id;
 
-	const UpdateQuantity = async (values) => {
-		await axios.patch(
-			`http://localhost:5000/quantity/${props.quantityId}`,
-			{
-				quantity: values.quantity,
-			}
-		);
-
-		props.setIsUpdateModal(false);
-		setTimeout(() => {
-			setIsAlert(true);
-			props.showData();
-		}, 200);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			quantity: props.quantity,
-		},
-		enableReinitialize: true,
-		validationSchema: validation,
-		onSubmit: (values) => {
-			UpdateQuantity(values);
-		},
-	});
+	const { formik, isAlert } = useUpdate(
+		setIsEditModal,
+		showData,
+		quantity,
+		id
+	);
 
 	return (
 		<div className="update-quantity">
 			<SuccessAlert isAlert={isAlert} text="Quantity was updated!" />
 
-			<div className={props.isUpdateModal ? "modal active" : "modal"}>
+			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div className="block width-338 height-auto bg-white border-radius-10 mt-100">
@@ -73,7 +52,7 @@ const QuantityEdit = (props) => {
 								<button
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									onClick={() => {
-										props.setIsUpdateModal(false);
+										props.setIsEditModal(false);
 									}}
 									type="button"
 								>
