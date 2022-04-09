@@ -1,13 +1,12 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import CreateRoleAccess from "./role.createAccess";
 import DangerAlert from "../components/DangerAlert";
+import { useFetchRoleAccess, useChange } from "./role.hook";
 
 function RoleDetail() {
 	const { id } = useParams();
-	const [name, setName] = useState("");
-	const [data, setData] = useState([]);
+
 	const [isCreateAccessModal, setIsCreateAccessModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
@@ -15,55 +14,13 @@ function RoleDetail() {
 	});
 	const [roleAccessId, setRoleAccessId] = useState("");
 
-	const showData = async () => {
-		const role = await axios.get(`http://localhost:5000/role/${id}`);
-		setName(role.data.data.name);
-		setData(role.data.data.role_accesses);
-	};
+	const { name, data, showData, deleteData } = useFetchRoleAccess(
+		id,
+		roleAccessId
+	);
 
-	useEffect(() => {
-		showData();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const updateCanInsert = async (e, id) => {
-		const value = e.target.value;
-		if (value >= "0") {
-			await axios.patch(`http://localhost:5000/role-access/${id}`, {
-				canInsert: value,
-			});
-
-			showData();
-		}
-	};
-
-	const updateCanUpdate = async (e, id) => {
-		const value = e.target.value;
-		if (value >= "0") {
-			await axios.patch(`http://localhost:5000/role-access/${id}`, {
-				canUpdate: value,
-			});
-
-			showData();
-		}
-	};
-
-	const updateCanDelete = async (e, id) => {
-		const value = e.target.value;
-		if (value >= "0") {
-			await axios.patch(`http://localhost:5000/role-access/${id}`, {
-				canDelete: value,
-			});
-
-			showData();
-		}
-	};
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/role-access/${roleAccessId}`);
-
-		showData();
-	};
+	const { changeCanInsert, changeCanUpdate, changeCanDelete } =
+		useChange(showData);
 
 	return (
 		<div className="detail-role">
@@ -141,7 +98,7 @@ function RoleDetail() {
 												className="font-16 border-none cursor-pointer appearance-none outline-none"
 												value={role.can_insert}
 												onChange={(e) =>
-													updateCanInsert(
+													changeCanInsert(
 														e,
 														role.role_access_id
 													)
@@ -156,7 +113,7 @@ function RoleDetail() {
 												className="font-16 border-none cursor-pointer appearance-none outline-none"
 												value={role.can_update}
 												onChange={(e) =>
-													updateCanUpdate(
+													changeCanUpdate(
 														e,
 														role.role_access_id
 													)
@@ -171,7 +128,7 @@ function RoleDetail() {
 												className="font-16 border-none cursor-pointer appearance-none outline-none"
 												value={role.can_delete}
 												onChange={(e) =>
-													updateCanDelete(
+													changeCanDelete(
 														e,
 														role.role_access_id
 													)

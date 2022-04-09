@@ -1,38 +1,13 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { useFormik } from "formik";
-import { validationName } from "./role.validation";
 import { TextField } from "../components/formField";
+import { useCreateRole } from "./role.hook";
 
 const RoleCreate = (props) => {
-	const [isAlert, setIsAlert] = useState(false);
+	const setIsCreateModal = props.setIsCreateModal;
+	const showData = props.showData;
 
-	const storeData = async (values) => {
-		await axios.post("http://localhost:5000/role", {
-			name: values.name,
-		});
-
-		props.setIsCreateModal(false);
-		setTimeout(() => {
-			formik.resetForm();
-			setIsAlert(true);
-		}, 200);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-		props.showData();
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			name: "",
-		},
-		validationSchema: validationName,
-		onSubmit: (values) => {
-			storeData(values);
-		},
-	});
+	const { formik, isAlert } = useCreateRole(setIsCreateModal, showData);
 
 	return (
 		<div className="create-role">

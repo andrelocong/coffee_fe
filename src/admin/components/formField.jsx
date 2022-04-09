@@ -49,12 +49,12 @@ export const SelectField = ({
 	return (
 		<div className={containerClassName}>
 			<div
-				className={`py-10 width-99percen justify-center font-16 outline-none border-radius-5 border-1 cursor-pointer ${
+				className={`width-99percen justify-center font-16 outline-none border-radius-5 border-1 ${
 					isError && "outline-red border-red border-2"
 				}`}
 			>
 				<select
-					className="font-16 outline-none border-none width-98percen appearance-none"
+					className="py-10 font-16 outline-none border-none width-95percen appearance-none cursor-pointer"
 					{...props}
 				>
 					<option value="" hidden>

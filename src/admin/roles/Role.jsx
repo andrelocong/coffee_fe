@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import RoleCreate from "./role.create";
 import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
+import { useFetchRole } from "./role.hook";
 
 function Role() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [roleId, setRoleId] = useState("");
+	const [id, setId] = useState("");
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/role");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/role/${roleId}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetchRole(id);
 
 	return (
 		<div className="role">
@@ -99,7 +84,7 @@ function Role() {
 											<button
 												className="bg-red px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer"
 												onClick={() => {
-													setRoleId(role.role_id);
+													setId(role.role_id);
 													setIsAlert({
 														bgAlert: true,
 														dangerAlert: true,

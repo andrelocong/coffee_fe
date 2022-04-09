@@ -1,82 +1,18 @@
-import React, { useState } from "react";
-import axios from "axios";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { useFormik } from "formik";
-import { validationMenu } from "./role.validation";
 import { SelectField } from "../components/formField";
+import { useCreateRoleAccess } from "./role.hook";
 
 const RoleCreateAccess = (props) => {
-	const [isAlert, setIsAlert] = useState(false);
-	const [errors, setErrors] = useState("");
+	const setIsCreateAccessModal = props.setIsCreateAccessModal;
+	const showData = props.showData;
+	const roleId = props.id;
 
-	const menu = [
-		{
-			value: "product",
-		},
-		{
-			value: "order list",
-		},
-		{
-			value: "gallery",
-		},
-		{
-			value: "sosial media",
-		},
-		{
-			value: "team",
-		},
-		{
-			value: "user",
-		},
-		{
-			value: "main category",
-		},
-		{
-			value: "category",
-		},
-		{
-			value: "sub category",
-		},
-		{
-			value: "quantity",
-		},
-		{
-			value: "role",
-		},
-	];
-
-	const storeData = async (values) => {
-		try {
-			await axios.post("http://localhost:5000/role-access", {
-				menu: values.menu,
-				roleId: props.id,
-			});
-
-			props.setIsCreateAccessModal(false);
-			setTimeout(() => {
-				formik.resetForm();
-				setIsAlert(true);
-				setErrors("");
-			}, 200);
-			setTimeout(() => {
-				setIsAlert(false);
-			}, 1500);
-			props.showData();
-		} catch (error) {
-			console.log(error.response);
-			setErrors("Menu has been used!");
-		}
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			menu: "",
-		},
-		validationSchema: validationMenu,
-		onSubmit: (values) => {
-			storeData(values);
-		},
-	});
+	const { menu, formik, errors, setErrors, isAlert } = useCreateRoleAccess(
+		setIsCreateAccessModal,
+		showData,
+		roleId
+	);
 
 	return (
 		<div className="create-role-access">
@@ -102,6 +38,7 @@ const RoleCreateAccess = (props) => {
 								containerClassName="width-268 mx-auto my-20"
 								value={formik.values.menu}
 								onChange={formik.handleChange}
+								onClick={() => setErrors("")}
 								onBlur={formik.handleBlur}
 								errorMessage={formik.errors.menu}
 								touched={formik.touched.menu}
