@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import SubCategoryCreate from "./subCategory.create";
 import SubCategoryEdit from "./subCategory.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./subCategory.hook";
 
 function SubCategory() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [categoryId, setCategoryId] = useState("");
+	const [id, setId] = useState("");
 	const [name, setName] = useState("");
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [isAlert, setIsAlert] = useState({
@@ -15,21 +14,7 @@ function SubCategory() {
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/sub-category");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/sub-category/${categoryId}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="sub-category">
@@ -42,7 +27,7 @@ function SubCategory() {
 			<SubCategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				categoryId={categoryId}
+				id={id}
 				name={name}
 				setName={setName}
 				showData={showData}
@@ -105,7 +90,7 @@ function SubCategory() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setCategoryId(
+													setId(
 														category.sub_category_id
 													);
 													setName(category.name);
@@ -121,7 +106,7 @@ function SubCategory() {
 														bgAlert: true,
 														dangerAlert: true,
 													});
-													setCategoryId(
+													setId(
 														category.sub_category_id
 													);
 												}}
