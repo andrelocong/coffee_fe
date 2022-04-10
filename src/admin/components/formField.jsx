@@ -15,12 +15,12 @@ export const TextField = ({
 	return (
 		<div className={containerClassName}>
 			<div
-				className={`py-8 width-99percen justify-center border-radius-5 border-1 ${
+				className={`width-99percen justify-center border-radius-5 border-1 ${
 					isError && "border-red border-2"
 				}`}
 			>
 				<input
-					className="border-none outline-none font-16 width-95percen"
+					className="py-8 border-none outline-none font-16 width-95percen"
 					{...props}
 					autoComplete="off"
 				/>
@@ -91,12 +91,12 @@ export const TextAreaField = ({
 	return (
 		<div className={containerClassName}>
 			<div
-				className={`py-8 width-99percen justify-center border-radius-5 border-1 height-auto ${
+				className={`width-99percen justify-center border-radius-5 border-1 height-auto ${
 					isError && "border-red border-2"
 				}`}
 			>
 				<textarea
-					className="border-none outline-none font-16 width-95percen height-full resize-none overflow-hidden line-height-22"
+					className="py-8 border-none outline-none font-16 width-95percen height-full resize-none overflow-hidden line-height-22"
 					onKeyUp={(e) => handleAutoRize(e)}
 					{...props}
 				></textarea>

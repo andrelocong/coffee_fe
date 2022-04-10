@@ -1,48 +1,20 @@
-import axios from "axios";
-import React, { useState } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { useFormik } from "formik";
-import { validation } from "./team.validation";
 import { TextField, TextAreaField } from "../components/formField";
+import { useCreate } from "./team.hook";
 
 const TeamCreate = (props) => {
-	const [isShowImage, setIsShowImage] = useState(false);
-	const [imagePreview, setImagePreview] = useState("");
-	const [isAlert, setIsAlert] = useState(false);
+	const setIsCreateModal = props.setIsCreateModal;
+	const showData = props.showData;
 
-	const storeData = async (values) => {
-		console.log(values);
-		const formData = new FormData();
-		formData.append("name", values.name);
-		formData.append("position", values.position);
-		formData.append("desc", values.desc);
-		formData.append("image", values.image);
-
-		await axios.post("http://localhost:5000/team", formData);
-
-		props.setIsCreateModal(false);
-		formik.resetForm();
-		setImagePreview("");
-		setIsShowImage(false);
-		setIsAlert(true);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-		props.showData();
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			name: "",
-			position: "",
-			desc: "",
-			image: "",
-		},
-		validationSchema: validation,
-		onSubmit: (values) => {
-			storeData(values);
-		},
-	});
+	const {
+		formik,
+		isShowImage,
+		imagePreview,
+		isAlert,
+		setIsShowImage,
+		setImagePreview,
+	} = useCreate(setIsCreateModal, showData);
 
 	return (
 		<div className="create-team">

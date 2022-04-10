@@ -1,33 +1,32 @@
-// import axios from "axios";
 import React, { useState } from "react";
 import TeamCreate from "./team.create";
 import TeamDetail from "./team.detail";
 import TeamEdit from "./team.edit";
 import TeamEditImage from "./team.editImage";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch, useDelete } from "./team.hooks";
+import { useFetch, useDelete } from "./team.hook";
 
 function Team() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [isDetailModal, setIsDetailModal] = useState(false);
 	const [isEditModal, setIsEditModal] = useState(false);
-	const [name, setName] = useState("");
-	const [position, setPosition] = useState("");
-	const [desc, setDesc] = useState("");
 	const [isEditImageModal, setIsEditImageModal] = useState(false);
-	const [image, setImage] = useState("");
+	const [isDetailModal, setIsDetailModal] = useState(false);
 	const [imageUpload, setImageUpload] = useState("");
+	const [values, setValues] = useState({
+		id: "",
+		name: "",
+		position: "",
+		desc: "",
+		image: "",
+	});
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	// console.log(id);
-
 	const { data, showData } = useFetch();
 
-	const { deleteData } = useDelete(id);
+	const { deleteData } = useDelete(values.id, setIsDetailModal, showData);
 
 	return (
 		<div className="team-list">
@@ -40,37 +39,27 @@ function Team() {
 			<TeamDetail
 				isDetailModal={isDetailModal}
 				setIsDetailModal={setIsDetailModal}
-				id={id}
 				setIsEditModal={setIsEditModal}
-				setName={setName}
-				setPosition={setPosition}
-				setDesc={setDesc}
 				setIsEditImageModal={setIsEditImageModal}
-				setImage={setImage}
+				values={values}
 				showData={showData}
 			/>
 
 			<TeamEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				name={name}
-				position={position}
-				desc={desc}
-				setName={setName}
-				setPosition={setPosition}
-				setDesc={setDesc}
-				id={id}
+				setValues={setValues}
+				values={values}
 				showData={showData}
 			/>
 
 			<TeamEditImage
 				isEditImageModal={isEditImageModal}
-				image={image}
 				imageUpload={imageUpload}
 				setIsEditImageModal={setIsEditImageModal}
-				setImage={setImage}
 				setImageUpload={setImageUpload}
-				id={id}
+				values={values}
+				showData={showData}
 			/>
 
 			<DangerAlert
@@ -133,7 +122,13 @@ function Team() {
 												type="button"
 												onClick={() => {
 													setIsDetailModal(true);
-													setId(team.team_id);
+													setValues({
+														id: team.team_id,
+														name: team.name,
+														position: team.position,
+														desc: team.desc,
+														image: team.image,
+													});
 												}}
 											>
 												Detail
@@ -143,10 +138,12 @@ function Team() {
 												type="button"
 												onClick={() => {
 													setIsEditModal(true);
-													setName(team.name);
-													setPosition(team.position);
-													setDesc(team.desc);
-													setId(team.team_id);
+													setValues({
+														id: team.team_id,
+														name: team.name,
+														position: team.position,
+														desc: team.desc,
+													});
 												}}
 											>
 												Edit
@@ -156,8 +153,13 @@ function Team() {
 												type="button"
 												onClick={() => {
 													setIsEditImageModal(true);
-													setImage(team.image);
-													setId(team.team_id);
+													setValues({
+														id: team.team_id,
+														name: "",
+														position: "",
+														desc: "",
+														image: team.image,
+													});
 												}}
 											>
 												Edit Image
@@ -166,7 +168,12 @@ function Team() {
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												type="button"
 												onClick={() => {
-													setId(team.team_id);
+													setValues({
+														id: team.team_id,
+														name: "",
+														position: "",
+														desc: "",
+													});
 													setIsAlert({
 														bgAlert: true,
 														dangerAlert: true,
