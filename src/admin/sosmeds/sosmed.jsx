@@ -1,37 +1,23 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SosmedCreate from "./sosmed.create.jsx";
 import SosmedEdit from "./sosmed.edit.jsx";
 import DangerAlert from "../components/DangerAlert.jsx";
+import { useFetch } from "./sosmed.hook.jsx";
 
 function SosmedList() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
 	const [isEditModal, setIsEditModal] = useState(false);
-	const [sosmedId, setSosmedId] = useState("");
-	const [sosmed, setSosmed] = useState("");
-	const [address, setAddress] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [id, setId] = useState("");
+	const [values, setValues] = useState({
+		sosmed: "",
+		address: "",
+	});
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	console.log(data);
-
-	const showData = async () => {
-		const sosmed = await axios.get("http://localhost:5000/sosmed");
-
-		setData(sosmed.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/sosmed/${sosmedId}`);
-
-		setSosmedId("");
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="sosmed-list width-full">
@@ -43,21 +29,16 @@ function SosmedList() {
 
 			<SosmedEdit
 				isEditModal={isEditModal}
-				sosmedId={sosmedId}
-				sosmed={sosmed}
-				address={address}
 				setIsEditModal={setIsEditModal}
-				setSosmedId={setSosmedId}
-				setSosmed={setSosmed}
-				setAddress={setAddress}
+				id={id}
+				values={values}
+				setValues={setValues}
 				showData={showData}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -107,7 +88,7 @@ function SosmedList() {
 									>
 										<td className="py-15">{index + 1}</td>
 										<td className="py-15 text-capitalize">
-											{sosmed.name}
+											{sosmed.sosmed}
 										</td>
 										<td className="py-15">
 											{sosmed.address}
@@ -117,11 +98,11 @@ function SosmedList() {
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												type="button"
 												onClick={() => {
-													setSosmedId(
-														sosmed.sosmed_id
-													);
-													setSosmed(sosmed.name);
-													setAddress(sosmed.address);
+													setId(sosmed.sosmed_id);
+													setValues({
+														sosmed: sosmed.sosmed,
+														address: sosmed.address,
+													});
 													setIsEditModal(true);
 												}}
 											>
@@ -131,11 +112,11 @@ function SosmedList() {
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white border-radius-5"
 												type="button"
 												onClick={() => {
-													setSosmedId(
-														sosmed.sosmed_id
-													);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setId(sosmed.sosmed_id);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete
