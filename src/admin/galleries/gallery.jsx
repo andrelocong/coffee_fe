@@ -1,47 +1,31 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import GalleryCreate from "./gallery.create";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./gallery.hook";
 
 function GalleryList() {
-	const [isModal, setIsModal] = useState(false);
-	const [galleries, setGalleries] = useState([]);
-	const [galleryId, setGalleryId] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
+	const [id, setId] = useState("");
 	const [isShowImage, setIsShowImage] = useState(false);
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 	const [image, setImage] = useState("");
 
-	const showData = async () => {
-		const data = await axios.get("http://localhost:5000/gallery");
-
-		setGalleries(data.data.gallery);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/gallery/${galleryId}`);
-
-		setGalleryId("");
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="input-gallery">
 			<GalleryCreate
-				isModal={isModal}
-				setIsModal={setIsModal}
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 
@@ -51,7 +35,7 @@ function GalleryList() {
 					onClick={() => setIsShowImage(false)}
 				>
 					<img
-						className="width-auto height-600"
+						className="width-auto height-600 border-radius-10"
 						src={image}
 						alt="product"
 						onClick={(e) => e.stopPropagation()}
@@ -66,7 +50,7 @@ function GalleryList() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -86,7 +70,7 @@ function GalleryList() {
 						</thead>
 
 						<tbody>
-							{galleries.map((gallery, index) => {
+							{data.map((gallery, index) => {
 								return (
 									<tr
 										className="border-bottom-1 border-grey"
@@ -95,24 +79,24 @@ function GalleryList() {
 										<td className="py-15">{index + 1}</td>
 										<td className="py-15">
 											<img
-												className="width-250 height-auto cursor-pointer"
+												className="width-250 height-auto cursor-pointer border-radius-10"
 												src={gallery.image}
 												onClick={() => {
 													setImage(gallery.image);
 													setIsShowImage(true);
 												}}
-												alt="coffee"
+												alt="product"
 											/>
 										</td>
 										<td className="py-15">
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white border-radius-5"
 												onClick={() => {
-													setGalleryId(
-														gallery.gallery_id
-													);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setId(gallery.gallery_id);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete

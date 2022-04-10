@@ -51,7 +51,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/input-gallery"
+							to="/admin/gallery"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-images"></i>
