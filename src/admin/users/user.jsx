@@ -1,36 +1,18 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import UserCreate from "./user.create";
 import DangerAlert from "../components/DangerAlert";
+import { useFetch } from "./user.hook";
 
 function User() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [data, setData] = useState([]);
 	const [id, setId] = useState("");
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const showData = async () => {
-		const user = await axios.get("http://localhost:5000/user");
-		if (user.data.data === null) {
-			console.log("data empty");
-		} else {
-			setData(user.data.data);
-		}
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/user/${id}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetch(id);
 
 	return (
 		<div className="user-list">

@@ -1,62 +1,16 @@
-import axios from "axios";
-import React, { useState, useEffect } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
-import { validation } from "./user.validation";
-import { useFormik } from "formik";
 import { TextField, SelectField } from "../components/formField";
+import { useCreate } from "./user.hook";
 
 const UserCreate = (props) => {
-	const [isAlert, setIsAlert] = useState(false);
-	const [showRoles, setShowRoles] = useState([]);
-	const [errors, setErrors] = useState("");
+	const setIsCreateModal = props.setIsCreateModal;
+	const showData = props.showData;
 
-	const showRole = async () => {
-		const roles = await axios.get("http://localhost:5000/role");
-		setShowRoles(roles.data.data);
-	};
-
-	useEffect(() => {
-		showRole();
-	}, []);
-
-	const createData = async (values) => {
-		try {
-			await axios.post("http://localhost:5000/user", {
-				firstName: values.first_name,
-				lastName: values.last_name,
-				username: values.username,
-				password: values.password,
-				role: values.role,
-			});
-
-			props.setIsCreateModal(false);
-			setTimeout(() => {
-				setIsAlert(true);
-				props.showData();
-				formik.resetForm();
-			}, 200);
-			setTimeout(() => {
-				setIsAlert(false);
-			}, 1500);
-		} catch (error) {
-			console.log(error.response);
-			setErrors("Username already used!");
-		}
-	};
-
-	const formik = useFormik({
-		initialValues: {
-			first_name: "",
-			last_name: "",
-			username: "",
-			password: "",
-			role: "",
-		},
-		validationSchema: validation,
-		onSubmit: (values) => {
-			createData(values);
-		},
-	});
+	const { showRoles, formik, errors, isAlert } = useCreate(
+		setIsCreateModal,
+		showData
+	);
 
 	return (
 		<div className="create-user">

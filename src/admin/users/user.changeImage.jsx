@@ -1,54 +1,24 @@
-import axios from "axios";
 import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
+import { TextField } from "../components/formField";
+import { useUpdateImage } from "./user.hook";
 
 const UserChangeImage = (props) => {
-	const [imgTmp, setImgTmp] = useState("");
-	const [imgUpload, setImgUpload] = useState("");
-	const [alt, setAlt] = useState("");
-	const [imageName, setImageName] = useState("");
-	const [isAlert, setIsAlert] = useState(false);
+	const [imagePreview, setImagePreview] = useState("");
+	const [isShowImage, setIsShowImage] = useState(false);
+	const [imageValue, setImageValue] = useState("");
+	const setIsChangeImageModal = props.setIsChangeImageModal;
+	const showDataById = props.showDataById;
+	const id = props.id;
 
-	const handleInput = (e) => {
-		let image = e.target.files[0];
-		setImgTmp(URL.createObjectURL(image));
-		setAlt("profil");
-		setImageName(e.target.value);
-		setImgUpload(image);
-	};
-
-	const updateData = async (e) => {
-		e.preventDefault();
-
-		const formData = new FormData();
-		formData.append("image", imgUpload);
-
-		await axios.patch(
-			`http://localhost:5000/user/image/${props.id}`,
-			formData
-		);
-
-		props.setIsChangeImageModal(false);
-		props.showDataById();
-		setTimeout(() => {
-			setIsAlert(true);
-			setImgTmp("");
-			setAlt("");
-			setImageName("");
-		}, 200);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-	};
-
-	const handleCancel = () => {
-		props.setIsChangeImageModal(false);
-		setTimeout(() => {
-			setImgTmp("");
-			setAlt("");
-			setImageName("");
-		}, 200);
-	};
+	const { formik, isAlert } = useUpdateImage(
+		setIsChangeImageModal,
+		showDataById,
+		id,
+		setImagePreview,
+		setImageValue,
+		setIsShowImage
+	);
 
 	return (
 		<div className="change-image">
@@ -57,29 +27,50 @@ const UserChangeImage = (props) => {
 			<div
 				className={props.isChangeImageModal ? "modal active" : "modal"}
 			>
-				<form onSubmit={updateData}>
+				<form onSubmit={formik.handleSubmit}>
 					<div className="justify-center">
-						<div className="block width-500 height-auto bg-white border-radius-10 mt-40">
+						<div className="block width-400 height-auto bg-white border-radius-10 mt-40">
 							<div className="width-full height-60 alig-item-center border-bottom-1 border-grey">
 								<p className="ml-20 font-20">
 									Change Photo Profil
 								</p>
 							</div>
-
-							<div className="width-full justify-center pt-20">
+							<div
+								className={
+									isShowImage
+										? "width-auto height-200 pt-10 visibility-visible justify-center"
+										: "visibility-hidden"
+								}
+							>
 								<img
-									className="width-342 height-auto object-fit-center object-posision-center"
-									src={imgTmp}
-									alt={alt}
+									className="width-auto height-full object-fit-center object-posision-center"
+									src={imagePreview}
+									alt="profile"
 								/>
 							</div>
 
-							<div className="width-full justify-center py-20 border-bottom-1 border-grey">
-								<input
-									className="width-400 px-20 py-5 font-16"
+							<div className="width-full justify-center pb-20 pt-10 border-bottom-1 border-grey">
+								<TextField
 									type="file"
-									value={imageName}
-									onChange={(e) => handleInput(e)}
+									name="image"
+									containerClassName="width-400 px-10 mx-auto my-10"
+									onBlur={formik.handleBlur}
+									value={imageValue}
+									errorMessage={formik.errors.image}
+									touched={formik.touched.image}
+									onChange={(e) => {
+										formik.setFieldValue(
+											"image",
+											e.target.files[0]
+										);
+										setImagePreview(
+											URL.createObjectURL(
+												e.target.files[0]
+											)
+										);
+										setIsShowImage(true);
+										setImageValue(e.target.value);
+									}}
 								/>
 							</div>
 							<div className="height-60 alig-item-center">
@@ -93,7 +84,12 @@ const UserChangeImage = (props) => {
 									className="bg-grey px-10 py-5 border-none border-radius-5 cursor-pointer font-16 ml-20 color-white"
 									type="button"
 									onClick={() => {
-										handleCancel();
+										props.setIsChangeImageModal(false);
+										setTimeout(() => {
+											setImageValue("");
+											setIsShowImage(false);
+											setImagePreview("");
+										}, 200);
 									}}
 								>
 									Cancel

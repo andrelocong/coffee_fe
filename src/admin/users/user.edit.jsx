@@ -1,140 +1,118 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
+import { TextField, SelectField } from "../components/formField";
+import { useUpdate } from "./user.hook";
+import SuccessAlert from "../components/SuccessAlert";
 
 const UserEdit = (props) => {
-	const [firstName, setFirstName] = useState("");
-	const [lastName, setLastName] = useState("");
-	const [username, setUsername] = useState("");
-	const [email, setEmail] = useState("");
-	const [phone, setPhone] = useState("");
-	const [status, setStatus] = useState("");
+	const setIsEditModal = props.setIsEditModal;
+	const showDataById = props.showDataById;
+	const id = props.id;
 
-	// const showDataEdit = async () => {
-	// 	let users = await axios.get(`http://localhost:5000/user/${props.id}`);
-	// 	const user = users.data.data;
-
-	// 	setFirstName(user.first_name);
-	// 	setLastName(user.last_name);
-	// 	setUsername(user.username);
-	// 	if (user.email === null) {
-	// 		setEmail("");
-	// 	} else {
-	// 		setEmail(user.email);
-	// 	}
-	// 	if (user.phone === null) {
-	// 		setPhone("");
-	// 	} else {
-	// 		setPhone(user.phone);
-	// 	}
-	// 	setStatus(user.status);
-	// };
-
-	useEffect(() => {
-		// showDataEdit();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const updateData = async (e) => {
-		e.preventDefault();
-		await axios.patch(`http://localhost:5000/user/${props.id}`, {
-			firstName: firstName,
-			lastName: lastName,
-			username: username,
-			email: email,
-			phone: phone,
-			status: status,
-		});
-
-		props.setIsEditModal(false);
-		props.showDataById();
-	};
+	const { showRoles, formik, handleNumeric, isAlert } = useUpdate(
+		setIsEditModal,
+		showDataById,
+		id
+	);
 
 	return (
 		<div className="edit-data-user">
+			<SuccessAlert isAlert={isAlert} text="Bio was updated!" />
+
 			<div className={props.isEditModal ? "modal active" : "modal"}>
-				<form onSubmit={updateData}>
+				<form onSubmit={formik.handleSubmit}>
 					<div
 						className="flex-center"
 						onClick={() => props.setIsEditModal(false)}
 					>
 						<div
-							className="block width-500 heigth-auto bg-white border-radius-10 mt-100"
+							className="block width-350 heigth-auto bg-white border-radius-10 mt-100"
 							onClick={(e) => e.stopPropagation()}
 						>
 							<div className="height-60 border-bottom-1 border-grey alig-item-center">
-								<p className="ml-20 font-20">Input Team Data</p>
+								<p className="ml-20 font-20">Edit User Bio</p>
 							</div>
 
-							<div className="border-bottom-1 border-grey">
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
+							<div className="border-bottom-1 border-grey justify-center">
+								<div className="block">
+									<TextField
+										name="first_name"
 										type="text"
-										placeholder="First name, ex: Lala"
-										value={firstName}
-										onChange={(e) =>
-											setFirstName(e.target.value)
-										}
+										placeholder="First name"
+										containerClassName="width-310 pb-10"
+										value={formik.values.first_name}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.first_name}
+										touched={formik.touched.first_name}
 									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
+
+									<TextField
+										name="last_name"
 										type="text"
-										placeholder="Last name, ex: Lalisa"
-										value={lastName}
-										onChange={(e) =>
-											setLastName(e.target.value)
-										}
+										placeholder="Last name"
+										containerClassName="width-310 pb-10"
+										value={formik.values.last_name}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.last_name}
+										touched={formik.touched.last_name}
 									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
+									<TextField
+										name="username"
 										type="text"
-										placeholder="Username, ex: lalalisa"
-										value={username}
-										onChange={(e) =>
-											setUsername(e.target.value)
-										}
+										placeholder="Username"
+										containerClassName="width-310 pb-10"
+										value={formik.values.username}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.username}
+										touched={formik.touched.username}
 									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
+									<TextField
+										name="email"
 										type="text"
-										placeholder="Email"
-										value={email}
-										onChange={(e) =>
-											setEmail(e.target.value)
-										}
+										placeholder="email, ex: abcd@email.co"
+										containerClassName="width-310 pb-10"
+										value={formik.values.email}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.email}
+										touched={formik.touched.email}
 									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<input
-										className="width-full height-full font-20 px-15"
+									<TextField
+										name="phone"
 										type="text"
-										placeholder="Phone"
-										value={phone}
-										onChange={(e) =>
-											setPhone(e.target.value)
-										}
+										placeholder="phone, ex: +62892381xxx"
+										containerClassName="width-310 pb-10"
+										value={formik.values.phone}
+										onChange={(e) => {
+											handleNumeric(e);
+										}}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.phone}
+										touched={formik.touched.phone}
 									/>
-								</div>
-								<div className="width-464 height-39 alig-item-center ml-20 pt-20">
-									<select
-										className="width-full height-full font-20 px-15 cursor-pointer"
-										value={status}
-										onChange={(e) =>
-											setStatus(e.target.value)
-										}
-									>
-										<option value="" hidden>
-											Choose status
-										</option>
-										<option value="master">Master</option>
-										<option value="admin">Admin</option>
-									</select>
+
+									<SelectField
+										name="role"
+										placeholder="Choose role"
+										containerClassName="width-310 pb-10"
+										value={formik.values.role}
+										onChange={formik.handleChange}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.role}
+										touched={formik.touched.role}
+										option={showRoles.map((role, index) => {
+											return (
+												<option
+													value={role.role_id}
+													key={index}
+												>
+													{role.name}
+												</option>
+											);
+										})}
+									/>
 								</div>
 							</div>
 
@@ -150,6 +128,9 @@ const UserEdit = (props) => {
 									type="button"
 									onClick={() => {
 										props.setIsEditModal(false);
+										setTimeout(() => {
+											formik.resetForm();
+										}, 200);
 									}}
 								>
 									Cancel

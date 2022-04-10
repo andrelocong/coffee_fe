@@ -1,63 +1,21 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import Photo from "../../img/—Pngtree—avatar icon profile icon member_5247852.png";
+import React, { useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import EditDataUser from "./user.edit";
 import ChangeImage from "./user.changeImage";
 import DangerAlert from "../components/DangerAlert";
+import { useFetchDetail } from "./user.hook";
 
 function UserDetail() {
 	const { id } = useParams();
-	const [data, setData] = useState({
-		firstName: "",
-		lastName: "",
-		username: "",
-		email: "",
-		phone: "",
-		role: "",
-	});
-	const [image, setImage] = useState("");
+
 	const [isEditModal, setIsEditModal] = useState(false);
 	const [isChangeImageModal, setIsChangeImageModal] = useState(false);
-	const navigate = useNavigate();
 	const [isAlert, setIsAlert] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const showDataById = async () => {
-		let users = await axios.get(`http://localhost:5000/user/${id}`);
-		const user = users.data.data;
-		if (users.data.data === null) {
-			console.log("empty");
-		} else {
-			setData({
-				firstName: user.first_name,
-				lastName: user.last_name,
-				username: user.username,
-				email: user.email,
-				phone: user.phone,
-				role: user.role.name,
-			});
-			if (user.image === null) {
-				setImage(Photo);
-			} else {
-				setImage(user.image);
-			}
-		}
-	};
-
-	useEffect(() => {
-		showDataById();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const handleDelete = async () => {
-		await axios.delete(`http://localhost:5000/user/${id}`);
-
-		navigate("/admin/user-list");
-		showDataById();
-	};
+	const { data, image, deleteData, showDataById } = useFetchDetail(id);
 
 	return (
 		<div className="detail-user">
@@ -78,7 +36,7 @@ function UserDetail() {
 			<DangerAlert
 				isAlert={isAlert}
 				setIsAlert={setIsAlert}
-				deleteData={handleDelete}
+				deleteData={deleteData}
 			/>
 
 			<h1 className="my-40">Detail User</h1>
