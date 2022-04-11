@@ -7,7 +7,7 @@ import Product from "./products/product";
 import Gallery from "./galleries/gallery";
 import Contact from "./contacts/contact";
 import Admin from "./admin/Index";
-import OrderList from "./admin/orders/orderList";
+import OrderList from "./admin/orders/order";
 import DetailOrder from "./admin/orders/order.detail";
 import ProductList from "./admin/products/product";
 import DetailProduct from "./admin/products/product.detail";
@@ -35,16 +35,13 @@ function App() {
 					<Route path="/gallery" element={<Gallery />} />
 					<Route path="/contact" element={<Contact />} />
 					<Route path="/admin" element={<Admin />}>
-						<Route
-							path="/admin/order-list"
-							element={<OrderList />}
-						/>
+						<Route path="/admin/order" element={<OrderList />} />
 						<Route
 							path="/admin/order-list/detail/:id"
 							element={<DetailOrder />}
 						/>
 						<Route
-							path="/admin/product-list"
+							path="/admin/product"
 							element={<ProductList />}
 						/>
 						<Route
@@ -55,9 +52,9 @@ function App() {
 							path="/admin/gallery"
 							element={<GalleryList />}
 						/>
-						<Route path="/admin/sosmed-list" element={<Sosmed />} />
-						<Route path="/admin/team-list" element={<Team />} />
-						<Route path="/admin/user-list" element={<User />} />
+						<Route path="/admin/sosmed" element={<Sosmed />} />
+						<Route path="/admin/team" element={<Team />} />
+						<Route path="/admin/user" element={<User />} />
 						<Route
 							path="/admin/user-list/detail/:id"
 							element={<DetailUser />}

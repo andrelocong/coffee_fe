@@ -19,7 +19,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/order-list"
+							to="/admin/order"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-list"></i>
@@ -35,7 +35,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/product-list"
+							to="/admin/product"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-boxes"></i>
@@ -67,7 +67,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/sosmed-list"
+							to="/admin/sosmed"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-share-alt"></i>
@@ -83,7 +83,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/team-list"
+							to="/admin/team"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-users"></i>
@@ -99,7 +99,7 @@ const Sidebar = () => {
 									: "width-full height-50 my-10 border-radius-10 flex alig-item-center font-20 font-weight-700 color-black cursor-pointer decoration-none"
 							}
 							exact="true"
-							to="/admin/user-list"
+							to="/admin/user"
 						>
 							<div className="ml-20 width-70 justify-center">
 								<i className="fas fa-user"></i>

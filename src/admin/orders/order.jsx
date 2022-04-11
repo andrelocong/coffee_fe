@@ -1,31 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
+import { useFetch } from "./order.hook";
 
 function OrderList() {
-	const [data, setData] = useState([]);
-
-	const showData = async () => {
-		const order = await axios.get("http://localhost:5000/order");
-		setData(order.data.data);
-	};
-
-	const formatter = new Intl.DateTimeFormat("en-GB", {
-		year: "numeric",
-		month: "long",
-		day: "2-digit",
-	});
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const isPending = (status) => {
-		if (status === "pending") {
-			return true;
-		}
-		return false;
-	};
+	const { data, isStatus, formatter } = useFetch();
 	return (
 		<div className="content width-full">
 			<h1 className="my-40">Order Lists</h1>
@@ -80,12 +58,14 @@ function OrderList() {
 										<td className="py-15">
 											<span
 												className={`py-10 px-15 border-radius-20 color-white text-capitalize font-weight-700 ${
-													isPending(order.status)
+													isStatus(order.status)
 														? "bg-red"
 														: "bg-green"
 												}`}
 											>
-												{order.status}
+												{isStatus(order.status)
+													? "pending"
+													: "approved"}
 											</span>
 										</td>
 										<td className="py-15">
