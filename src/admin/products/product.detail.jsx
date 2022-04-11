@@ -1,57 +1,26 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import { useParams } from "react-router-dom";
 import AddMainCategory from "./AddMainCategory";
 import AddCategories from "./AddCategories";
 import AddSubCategories from "./AddSubCategories";
+import { useFetchDetail } from "./product.hook";
 
 function ProductDetail() {
 	const { id } = useParams();
-	const [product, setProduct] = useState("");
-	const [category, setCategory] = useState("");
 	const [isMainCategoryModal, setIsMainCategoryModal] = useState(false);
-	const [mainCategories, setMainCategories] = useState([]);
 	const [isCategoriesModal, setIsCategoriesModal] = useState(false);
-	const [categories, setCategories] = useState([]);
 	const [isSubCategoriesModal, setIsSubCategoriesModal] = useState(false);
-	const [subCategories, setSubCategories] = useState([]);
 
-	const showProductById = async () => {
-		const product = await axios.get(`http://localhost:5000/product/${id}`);
-		setProduct(product.data.data.name);
-		setCategory(product.data.data.category);
-	};
-
-	const showMainCategory = async () => {
-		const mainCategory = await axios.get(
-			`http://localhost:5000/product-main-category/${id}`
-		);
-		setMainCategories(mainCategory.data.data);
-	};
-
-	const showCategories = async () => {
-		const categories = await axios.get(
-			`http://localhost:5000/product-category/${id}`
-		);
-
-		setCategories(categories.data.data);
-	};
-
-	const showSubCategories = async () => {
-		const subCategories = await axios.get(
-			`http://localhost:5000/product-sub-category/${id}`
-		);
-
-		setSubCategories(subCategories.data.data);
-	};
-
-	useEffect(() => {
-		showProductById();
-		showMainCategory();
-		showCategories();
-		showSubCategories();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+	const {
+		product,
+		category,
+		mainCategories,
+		categories,
+		subCategories,
+		showMainCategory,
+		showCategories,
+		showSubCategories,
+	} = useFetchDetail(id);
 
 	return (
 		<div className="detail-product">

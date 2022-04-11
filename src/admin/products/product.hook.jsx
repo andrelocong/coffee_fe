@@ -123,6 +123,62 @@ export const useUpdate = (setIsEditModal, showData, values) => {
 	return { formik, isAlert, categories };
 };
 
+export const useFetchDetail = (id) => {
+	const [product, setProduct] = useState("");
+	const [category, setCategory] = useState("");
+	const [mainCategories, setMainCategories] = useState([]);
+	const [categories, setCategories] = useState([]);
+	const [subCategories, setSubCategories] = useState([]);
+
+	const showProductById = async () => {
+		const product = await axios.get(`http://localhost:5000/product/${id}`);
+		setProduct(product.data.data.name);
+		setCategory(product.data.data.category);
+	};
+
+	const showMainCategory = async () => {
+		const mainCategory = await axios.get(
+			`http://localhost:5000/product-main-category/${id}`
+		);
+		setMainCategories(mainCategory.data.data);
+	};
+
+	const showCategories = async () => {
+		const categories = await axios.get(
+			`http://localhost:5000/product-category/${id}`
+		);
+
+		setCategories(categories.data.data);
+	};
+
+	const showSubCategories = async () => {
+		const subCategories = await axios.get(
+			`http://localhost:5000/product-sub-category/${id}`
+		);
+
+		setSubCategories(subCategories.data.data);
+	};
+
+	useEffect(() => {
+		showProductById();
+		showMainCategory();
+		showCategories();
+		showSubCategories();
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+	}, []);
+
+	return {
+		product,
+		category,
+		mainCategories,
+		categories,
+		subCategories,
+		showMainCategory,
+		showCategories,
+		showSubCategories,
+	};
+};
+
 export const useAddMainCategories = (id) => {
 	const [mainCategories, setMainCategories] = useState([]);
 	const [detail, setDetail] = useState([]);
