@@ -1,9 +1,9 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import ProductCreate from "./product.create";
 import ProductEdit from "./product.edit";
 import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
+import { useFetch } from "./product.hook";
 
 function ProductList() {
 	const [isCreateModal, setIsCreateModal] = useState(false);
@@ -12,36 +12,13 @@ function ProductList() {
 		bgAlert: false,
 		dangerAlert: false,
 	});
-	const [data, setData] = useState([]);
 	const [values, setValues] = useState({
 		id: "",
-		product: "",
+		name: "",
 		category: "",
 	});
 
-	const showData = async () => {
-		const dataProduct = await axios.get("http://localhost:5000/product");
-
-		setData(dataProduct.data.products);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/product/${values.id}`);
-
-		showData();
-	};
-
-	const handleSearch = async (search) => {
-		const product = await axios.get(
-			`http://localhost:5000/product/find?search=${search}`
-		);
-
-		setData(product.data.data);
-	};
+	const { data, showData, deleteData, handleSearch } = useFetch(values.id);
 
 	return (
 		<div className="product-list width-full">
@@ -129,7 +106,7 @@ function ProductList() {
 												onClick={() => {
 													setValues({
 														id: product.product_id,
-														product: product.name,
+														name: product.name,
 														category:
 															product.category,
 													});
@@ -144,7 +121,7 @@ function ProductList() {
 												onClick={() => {
 													setValues({
 														id: product.product_id,
-														product: "",
+														name: "",
 														category: "",
 													});
 													setIsAlert({

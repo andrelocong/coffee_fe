@@ -1,69 +1,25 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import DangerAlert from "../components/DangerAlert";
+import { SelectField } from "../components/formField";
+import { useAddSubCategories } from "./product.hook";
 
 const AddSubCategories = (props) => {
-	const [subCategories, setSubCategories] = useState([]);
-	const [valueSubCategory, setValueSubCategory] = useState("");
-	const [isAlert, setIsAlert] = useState(false);
-	const [detail, setDetail] = useState([]);
-	const [detailId, setDetailId] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isDanger, setIsDanger] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	const showDataSubCategories = async () => {
-		const category = await axios.get("http://localhost:5000/sub-category");
-
-		setSubCategories(category.data.data);
-	};
-
-	const showDetail = async () => {
-		const detail = await axios.get(
-			`http://localhost:5000/product-sub-category/${props.id}`
-		);
-
-		setDetail(detail.data.data);
-	};
-
-	useEffect(() => {
-		showDataSubCategories();
-		showDetail();
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
-
-	const storeData = async (e) => {
-		e.preventDefault();
-		await axios.post("http://localhost:5000/product-sub-category", {
-			productId: props.id,
-			subCategoryId: valueSubCategory,
-		});
-
-		setTimeout(() => {
-			setValueSubCategory("");
-			setIsAlert(true);
-			showDetail();
-		}, 200);
-		setTimeout(() => {
-			setIsAlert(false);
-		}, 1500);
-	};
-
-	const deleteData = async () => {
-		await axios.delete(
-			`http://localhost:5000/product-sub-category/${detailId}`
-		);
-
-		showDetail();
-	};
-
-	const handleClose = () => {
-		props.setIsSubCategoriesModal(false);
-		setTimeout(() => {
-			setValueSubCategory("");
-			props.showSubCategories();
-		});
-	};
+	const {
+		subCategories,
+		detail,
+		setDetailId,
+		isAlert,
+		formik,
+		deleteData,
+		errors,
+		setErrors,
+	} = useAddSubCategories(props.id);
 
 	return (
 		<div className="add-sub-categories">
@@ -73,10 +29,8 @@ const AddSubCategories = (props) => {
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -93,34 +47,37 @@ const AddSubCategories = (props) => {
 							</p>
 						</div>
 
-						<form onSubmit={storeData}>
+						<form onSubmit={formik.handleSubmit}>
 							<div className="height-auto justify-center py-20 border-bottom-1 border-grey">
 								<div className="block">
-									<select
-										className="width-388 py-10 px-15 font-18 cursor-pointer"
-										value={valueSubCategory}
-										onChange={(e) =>
-											setValueSubCategory(e.target.value)
-										}
-									>
-										<option value="" hidden>
-											Choose sub category
-										</option>
-										{subCategories.map(
-											(category, index) => {
+									<div className="text-center color-red mt-20">
+										{errors}
+									</div>
+									<SelectField
+										name="category"
+										placeholder="Choose category"
+										containerClassName="width-388 mx-auto my-10"
+										value={formik.values.category}
+										onChange={formik.handleChange}
+										onClick={() => setErrors("")}
+										onBlur={formik.handleBlur}
+										errorMessage={formik.errors.category}
+										touched={formik.touched.category}
+										option={subCategories.map(
+											(data, index) => {
 												return (
 													<option
-														key={index}
 														value={
-															category.sub_category_id
+															data.sub_category_id
 														}
+														key={index}
 													>
-														{category.name}
+														{data.name}
 													</option>
 												);
 											}
 										)}
-									</select>
+									/>
 									<div>
 										<button
 											className="bg-orange py-5 px-15 border-none border-radius-5 cursor-pointer color-white font-16 mt-10"
@@ -152,7 +109,7 @@ const AddSubCategories = (props) => {
 												className="border-bottom-1 border-grey"
 												key={index}
 											>
-												<td className="py-15">
+												<td className="py-15 text-capitalize">
 													{data.sub_category.name}
 												</td>
 												<td className="py-15">
@@ -162,10 +119,10 @@ const AddSubCategories = (props) => {
 															setDetailId(
 																data.product_sub_category_id
 															);
-															setIsBgAlert(true);
-															setIsDangerAlert(
-																true
-															);
+															setIsDanger({
+																bgAlert: true,
+																dangerAlert: true,
+															});
 														}}
 													>
 														Delete
@@ -181,7 +138,14 @@ const AddSubCategories = (props) => {
 						<div className="flex py-20">
 							<button
 								className="bg-grey px-10 py-5 border-radiues-5 border-none color-white font-16 cursor-pointer ml-20"
-								onClick={() => handleClose()}
+								onClick={() => {
+									props.setIsSubCategoriesModal(false);
+									setTimeout(() => {
+										props.showSubCategories();
+										formik.resetForm();
+										setErrors("");
+									}, 200);
+								}}
 								type="button"
 							>
 								Close

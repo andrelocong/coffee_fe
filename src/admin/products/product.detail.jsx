@@ -136,14 +136,17 @@ function ProductDetail() {
 					<div className="width-full flex">
 						<div className="width-350 text-center">
 							<div className="bg-yellow border-radius-left-10">
-								<p className="py-11 m-0 font-weight-700">
+								<p className="py-11 m-0 font-weight-700 color-white">
 									Main-Categories
 								</p>
 							</div>
 							<div className="body">
 								{mainCategories.map((data, index) => {
 									return (
-										<p className="py-15 m-0" key={index}>
+										<p
+											className="py-15 m-0 text-capitalize"
+											key={index}
+										>
 											{data.main_category.name}
 										</p>
 									);
@@ -152,14 +155,17 @@ function ProductDetail() {
 						</div>
 						<div className="width-350 text-center">
 							<div className="bg-yellow">
-								<p className="py-11 m-0 font-weight-700">
+								<p className="py-11 m-0 font-weight-700 color-white">
 									Categories
 								</p>
 							</div>
 							<div className="body">
 								{categories.map((data, index) => {
 									return (
-										<p className="py-15 m-0" key={index}>
+										<p
+											className="py-15 m-0 text-capitalize"
+											key={index}
+										>
 											{data.category.name}
 										</p>
 									);
@@ -168,14 +174,17 @@ function ProductDetail() {
 						</div>
 						<div className="width-350 text-center">
 							<div className="bg-yellow border-radius-right-10">
-								<p className="py-11 m-0 font-weight-700">
+								<p className="py-11 m-0 font-weight-700 color-white">
 									Sub-Categories
 								</p>
 							</div>
 							<div className="body">
 								{subCategories.map((data, index) => {
 									return (
-										<p className="py-15 m-0" key={index}>
+										<p
+											className="py-15 m-0 text-capitalize"
+											key={index}
+										>
 											{data.sub_category.name}
 										</p>
 									);
