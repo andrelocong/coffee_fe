@@ -9,13 +9,11 @@ const Gallery = () => {
 
 	const showImage = async () => {
 		const image = await axios.get("http://localhost:5000/gallery/data");
-		console.log(image);
 		if (!image.data) {
 			console.log("image empty");
 		} else {
 			setImage(image.data.data);
 		}
-
 	};
 
 	useEffect(() => {
