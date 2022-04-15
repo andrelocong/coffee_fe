@@ -1,17 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useCreateRole } from "./role.hook";
 
 const RoleCreate = (props) => {
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { formik, isAlert } = useCreateRole(setIsCreateModal, showData);
+	const formik = props.formik;
 
 	return (
 		<div className="create-role">
-			<SuccessAlert isAlert={isAlert} text="Main category was created!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Main category was created!"
+			/>
 
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>

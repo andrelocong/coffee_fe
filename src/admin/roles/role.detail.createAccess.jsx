@@ -1,22 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { SelectField } from "../components/formField";
-import { useCreateRoleAccess } from "./role.hook";
 
 const RoleCreateAccess = (props) => {
-	const setIsCreateAccessModal = props.setIsCreateAccessModal;
-	const showData = props.showData;
-	const roleId = props.id;
-
-	const { menu, formik, errors, setErrors, isAlert } = useCreateRoleAccess(
-		setIsCreateAccessModal,
-		showData,
-		roleId
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="create-role-access">
-			<SuccessAlert isAlert={isAlert} text="Main category was created!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Main category was created!"
+			/>
 
 			<div
 				className={props.isCreateAccessModal ? "modal active" : "modal"}
@@ -30,7 +24,7 @@ const RoleCreateAccess = (props) => {
 								</p>
 							</div>
 							<div className="text-center color-red mt-20">
-								{errors}
+								{props.errors}
 							</div>
 							<SelectField
 								name="menu"
@@ -38,11 +32,11 @@ const RoleCreateAccess = (props) => {
 								containerClassName="width-268 mx-auto my-20"
 								value={formik.values.menu}
 								onChange={formik.handleChange}
-								onClick={() => setErrors("")}
+								onClick={() => props.setErrors("")}
 								onBlur={formik.handleBlur}
 								errorMessage={formik.errors.menu}
 								touched={formik.touched.menu}
-								option={menu.map((data, index) => {
+								option={props.menu.map((data, index) => {
 									return (
 										<option
 											value={data.value}
@@ -68,7 +62,7 @@ const RoleCreateAccess = (props) => {
 										props.setIsCreateAccessModal(false);
 										setTimeout(() => {
 											formik.resetForm();
-											setErrors("");
+											props.setErrors("");
 										}, 200);
 									}}
 									type="button"

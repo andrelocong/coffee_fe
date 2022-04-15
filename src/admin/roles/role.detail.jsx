@@ -1,39 +1,49 @@
 import React, { useState } from "react";
 import { useParams } from "react-router-dom";
-import CreateRoleAccess from "./role.createAccess";
+import CreateRoleAccess from "./role.detail.createAccess";
 import DangerAlert from "../components/DangerAlert";
-import { useFetchRoleAccess, useChange } from "./role.hook";
+import { useRoleDetail } from "./role.detail.hook";
 
 function RoleDetail() {
 	const { id } = useParams();
 
-	const [isCreateAccessModal, setIsCreateAccessModal] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
-	const [roleAccessId, setRoleAccessId] = useState("");
 
-	const { name, data, showData, deleteData } = useFetchRoleAccess(
-		id,
-		roleAccessId
-	);
-
-	const { changeCanInsert, changeCanUpdate, changeCanDelete } =
-		useChange(showData);
+	const {
+		name,
+		data,
+		setRoleAccessId,
+		isCreateAccessModal,
+		setIsCreateAccessModal,
+		menu,
+		formikStore,
+		errors,
+		setErrors,
+		isAlert,
+		deleteData,
+		changeCanDelete,
+		changeCanInsert,
+		changeCanUpdate,
+	} = useRoleDetail(id);
 
 	return (
 		<div className="detail-role">
 			<CreateRoleAccess
 				isCreateAccessModal={isCreateAccessModal}
 				setIsCreateAccessModal={setIsCreateAccessModal}
-				id={id}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
+				menu={menu}
+				errors={errors}
+				setErrors={setErrors}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -145,7 +155,7 @@ function RoleDetail() {
 													setRoleAccessId(
 														role.role_access_id
 													);
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

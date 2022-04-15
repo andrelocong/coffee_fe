@@ -2,29 +2,36 @@ import React, { useState } from "react";
 import RoleCreate from "./role.create";
 import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
-import { useFetchRole } from "./role.hook";
+import { useRole } from "./role.hook";
 
 function Role() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData, deleteData } = useFetchRole(id);
+	const {
+		data,
+		setId,
+		formikStore,
+		isAlert,
+		deleteData,
+		isCreateModal,
+		setIsCreateModal,
+	} = useRole();
 
 	return (
 		<div className="role">
 			<RoleCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 			<h1 className="my-40">Roles</h1>
@@ -85,7 +92,7 @@ function Role() {
 												className="bg-red px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer"
 												onClick={() => {
 													setId(role.role_id);
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});
