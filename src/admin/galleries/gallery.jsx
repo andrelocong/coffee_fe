@@ -1,38 +1,59 @@
 import React, { useState } from "react";
 import GalleryCreate from "./gallery.create";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch } from "./gallery.hook";
+import { useGallery } from "./gallery.hook";
 
 function GalleryList() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [isShowImage, setIsShowImage] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [image, setImage] = useState("");
+	const [isShow, setIsShow] = useState(false);
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
-	const [image, setImage] = useState("");
 
-	const { data, showData, deleteData } = useFetch(id);
+	const {
+		data,
+		setId,
+		isCreateModal,
+		setIsCreateModal,
+		isShowImage,
+		setIsShowImage,
+		isAlert,
+		categories,
+		formikStore,
+		deleteData,
+		setImageValue,
+		imageValue,
+		setImagePreview,
+		imagePreview,
+	} = useGallery();
 
 	return (
 		<div className="input-gallery">
 			<GalleryCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				isAlert={isAlert}
+				categories={categories}
+				formik={formikStore}
+				setIsShowImage={setIsShowImage}
+				isShowImage={isShowImage}
+				setImageValue={setImageValue}
+				imageValue={imageValue}
+				setImagePreview={setImagePreview}
+				imagePreview={imagePreview}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
-			<div className={isShowImage ? "modal active" : "modal"}>
+			<div className={isShow ? "modal active" : "modal"}>
 				<div
 					className="width-full height-100vh flex-center bg-black-02"
-					onClick={() => setIsShowImage(false)}
+					onClick={() => setIsShow(false)}
 				>
 					<img
 						className="width-auto height-600 border-radius-10"
@@ -83,7 +104,7 @@ function GalleryList() {
 												src={gallery.image}
 												onClick={() => {
 													setImage(gallery.image);
-													setIsShowImage(true);
+													setIsShow(true);
 												}}
 												alt="product"
 											/>
@@ -93,7 +114,7 @@ function GalleryList() {
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white border-radius-5"
 												onClick={() => {
 													setId(gallery.gallery_id);
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

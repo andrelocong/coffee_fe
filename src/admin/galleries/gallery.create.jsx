@@ -1,27 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField, SelectField } from "../components/formField";
-import { useCreate } from "./gallery.hook";
 
 const GalleryCreate = (props) => {
-	const [imagePreview, setImagePreview] = useState("");
-	const [isShowImage, setIsShowImage] = useState(false);
-	const [imageValue, setImageValue] = useState("");
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { formik, isAlert, categories } = useCreate(
-		setIsCreateModal,
-		showData,
-		setIsShowImage,
-		setImagePreview,
-		setImageValue
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="create-gallery">
 			<SuccessAlert
-				isAlert={isAlert}
+				isAlert={props.isAlert}
 				text="Gallery created successfully!"
 			/>
 
@@ -43,16 +30,18 @@ const GalleryCreate = (props) => {
 									onBlur={formik.handleBlur}
 									errorMessage={formik.errors.category}
 									touched={formik.touched.category}
-									option={categories.map((data, index) => {
-										return (
-											<option
-												value={data.value}
-												key={index}
-											>
-												{data.value}
-											</option>
-										);
-									})}
+									option={props.categories.map(
+										(data, index) => {
+											return (
+												<option
+													value={data.value}
+													key={index}
+												>
+													{data.value}
+												</option>
+											);
+										}
+									)}
 								/>
 
 								<TextField
@@ -67,27 +56,27 @@ const GalleryCreate = (props) => {
 											"image",
 											e.target.files[0]
 										);
-										setImagePreview(
+										props.setImagePreview(
 											URL.createObjectURL(
 												e.target.files[0]
 											)
 										);
-										setIsShowImage(true);
-										setImageValue(e.target.value);
+										props.setIsShowImage(true);
+										props.setImageValue(e.target.value);
 									}}
-									value={imageValue}
+									value={props.imageValue}
 								/>
 
 								<div
 									className={
-										isShowImage
+										props.isShowImage
 											? "width-360 height-auto my-20 mx-auto justify-center visibility-visible"
 											: "height-0 visibility-hidden"
 									}
 								>
 									<img
 										className="width-332 heigh-auto border-radius-10"
-										src={imagePreview}
+										src={props.imagePreview}
 										alt="product"
 									/>
 								</div>
@@ -107,9 +96,9 @@ const GalleryCreate = (props) => {
 										props.setIsCreateModal(false);
 										setTimeout(() => {
 											formik.resetForm();
-											setImageValue("");
+											props.setImageValue("");
 										}, 200);
-										setIsShowImage(false);
+										props.setIsShowImage(false);
 									}}
 								>
 									Cancel
