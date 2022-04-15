@@ -93,12 +93,12 @@ export const useMainCategory = () => {
 		setId,
 		setName,
 		deleteData,
-		isAlert,
 		isCreateModal,
 		setIsCreateModal,
 		isEditModal,
 		setIsEditModal,
 		formikStore,
 		formikUpdate,
+		isAlert,
 	};
 };
