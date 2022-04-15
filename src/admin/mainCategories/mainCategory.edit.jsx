@@ -1,19 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useUpdate } from "./mainCategory.hook";
 
 const MainCategoryEdit = (props) => {
-	const setIsEditModal = props.setIsEditModal;
-	const showData = props.showData;
-	const name = props.name;
-	const id = props.id;
-
-	const { formik, isAlert } = useUpdate(setIsEditModal, showData, name, id);
+	const formik = props.formik;
 
 	return (
 		<div className="update-main-category">
-			<SuccessAlert isAlert={isAlert} text="Main category was updated!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Main category was updated!"
+			/>
 
 			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<div className="flex-center">
