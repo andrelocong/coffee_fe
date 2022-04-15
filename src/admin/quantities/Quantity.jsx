@@ -1,57 +1,48 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import CreateQuantity from "./CreateQuantity";
-import UpdateQuantity from "./UpdateQuantity";
+import React, { useState } from "react";
+import QuantityCreate from "./quantity.create";
+import QuantityEdit from "./quantity.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useQuantity } from "./quantity.hook";
 
 function Quantity() {
-	const [isModal, setIsModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [quantityId, setQuantityId] = useState("");
-	const [quantity, setQuantity] = useState("");
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isDanger, setIsDanger] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	const showData = async () => {
-		const quantity = await axios.get("http://localhost:5000/quantity");
-
-		setData(quantity.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/quantity/${quantityId}`);
-		setTimeout(() => {
-			showData();
-		}, 200);
-	};
+	const {
+		data,
+		setId,
+		setQuantity,
+		isCreateModal,
+		setIsCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+		deleteData,
+	} = useQuantity();
 
 	return (
 		<div className="quantity">
-			<CreateQuantity
-				isModal={isModal}
-				setIsModal={setIsModal}
-				showData={showData}
+			<QuantityCreate
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
-			<UpdateQuantity
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
-				setQuantity={setQuantity}
-				quantity={quantity}
-				quantityId={quantityId}
-				showData={showData}
+			<QuantityEdit
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -62,7 +53,7 @@ function Quantity() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -106,13 +97,11 @@ function Quantity() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setQuantityId(
-														quantity.quantity_id
-													);
+													setId(quantity.quantity_id);
 													setQuantity(
 														quantity.quantity
 													);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit
@@ -120,11 +109,11 @@ function Quantity() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
-													setQuantityId(
-														quantity.quantity_id
-													);
+													setIsDanger({
+														bgAlert: true,
+														dangerAlert: true,
+													});
+													setId(quantity.quantity_id);
 												}}
 											>
 												Delete

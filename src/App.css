@@ -95,6 +95,10 @@
 	border-bottom: 1px solid;
 }
 
+.border-top-1 {
+	border-top: 1px solid;
+}
+
 .border-grey {
 	border-color: #e4e4e4;
 }
@@ -368,6 +372,10 @@
 	height: 100px;
 }
 
+.height-108 {
+	height: 108px;
+}
+
 .height-113 {
 	height: 113px;
 }
@@ -481,12 +489,24 @@
 	font-weight: 800;
 }
 
+.line-height-22 {
+	line-height: 22px;
+}
+
 .list-none {
 	list-style: none;
 }
 
 .max-width-431 {
 	max-width: 431px;
+}
+
+.max-height-500 {
+	max-height: 500px;
+}
+
+.max-height-full {
+	max-height: 100%;
 }
 
 .min-height-113 {
@@ -722,7 +742,7 @@
 	outline: none;
 }
 
-.outline-orange {
+.outline-orange:hover {
 	outline-color: #e6ad1e;
 }
 
@@ -816,6 +836,11 @@
 	padding-bottom: 5px;
 }
 
+.py-8 {
+	padding-top: 8px;
+	padding-bottom: 8px;
+}
+
 .py-9 {
 	padding-top: 9px;
 	padding-bottom: 9px;
@@ -880,6 +905,10 @@
 
 .relative {
 	position: relative;
+}
+
+.resize-none {
+	resize: none;
 }
 
 .sticky {
@@ -1033,6 +1062,14 @@
 	width: 510px;
 }
 
+.width-530 {
+	width: 530px;
+}
+
+.width-550 {
+	width: 550px;
+}
+
 .width-700 {
 	width: 700px;
 }
@@ -1047,6 +1084,18 @@
 
 .width-1125 {
 	width: 1165px;
+}
+
+.width-95percen {
+	width: 95%;
+}
+
+.width-98percen {
+	width: 98%;
+}
+
+.width-99percen {
+	width: 99%;
 }
 
 .width-full {

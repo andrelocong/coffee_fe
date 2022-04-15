@@ -1,44 +1,33 @@
-import React, { useEffect, useState } from "react";
-import "./Gallery.css";
+import React from "react";
+import "./gallery.css";
 import Hero from "../components/Hero";
 import Footer from "../components/Footer";
 import ButtonExtend from "../components/ButtonExtend";
-import axios from "axios";
+import { useFetch } from "./gallery.hook";
 
 function Gallery() {
-	const [isModal, setIsModal] = useState(false);
-	const [imgTmp, setImgTmp] = useState("");
-	const [image, setImage] = useState([]);
-
-	const showImage = async () => {
-		const image = await axios.get("http://localhost:5000/gallery");
-
-		setImage(image.data.gallery);
-	};
-
-	useEffect(() => {
-		showImage();
-	}, []);
-
-	const handleModal = (img) => {
-		setIsModal(true);
-		setImgTmp(img);
-	};
+	const {
+		isImageModal,
+		setIsImageModal,
+		imagePreview,
+		images,
+		handleImageModal,
+	} = useFetch();
 
 	return (
 		<div className="galleries">
 			<ButtonExtend />
 			<Hero />
 
-			<div className={isModal ? "modal active" : "modal"}>
+			<div className={isImageModal ? "modal active" : "modal"}>
 				<div
 					className="modal-content"
-					onClick={() => setIsModal(false)}
+					onClick={() => setIsImageModal(false)}
 				>
 					<div className="modal-body">
 						<img
 							className="modal-img"
-							src={imgTmp}
+							src={imagePreview}
 							alt="product"
 							onClick={(e) => e.stopPropagation()}
 						/>
@@ -48,14 +37,14 @@ function Gallery() {
 
 			<h1 className="galleries-title">Gallery</h1>
 			<div className="galleries-body">
-				{image.map((data, index) => {
+				{images.map((data, index) => {
 					return (
 						<div className="galleries-content" key={index}>
 							<img
 								className="galleries-img"
 								src={data.image}
 								alt="product"
-								onClick={() => handleModal(data.image)}
+								onClick={() => handleImageModal(data.image)}
 							/>
 						</div>
 					);

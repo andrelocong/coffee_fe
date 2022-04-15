@@ -1,45 +1,30 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import CreateRole from "./CreateRole";
+import React, { useState } from "react";
+import RoleCreate from "./role.create";
 import DangerAlert from "../components/DangerAlert";
 import { Link } from "react-router-dom";
+import { useFetchRole } from "./role.hook";
 
 function Role() {
-	const [isModal, setIsModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [roleId, setRoleId] = useState("");
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isCreateModal, setIsCreateModal] = useState(false);
+	const [id, setId] = useState("");
+	const [isAlert, setIsAlert] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/role");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/role/${roleId}`);
-
-		showData();
-	};
+	const { data, showData, deleteData } = useFetchRole(id);
 
 	return (
 		<div className="role">
-			<CreateRole
-				isModal={isModal}
-				setIsModal={setIsModal}
+			<RoleCreate
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
 				showData={showData}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isAlert}
+				setIsAlert={setIsAlert}
 				deleteData={deleteData}
 			/>
 			<h1 className="my-40">Roles</h1>
@@ -49,7 +34,7 @@ function Role() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -86,7 +71,9 @@ function Role() {
 										key={index}
 									>
 										<td className="py-15">{index + 1}</td>
-										<td className="py-15 text-capitalize">{role.name}</td>
+										<td className="py-15 text-capitalize">
+											{role.name}
+										</td>
 										<td className="py-15">
 											<Link
 												className="bg-orange px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer text-decoration-none mr-10"
@@ -97,9 +84,11 @@ function Role() {
 											<button
 												className="bg-red px-10 py-5 border-none border-radius-10 color-white font-16 cursor-pointer"
 												onClick={() => {
-													setRoleId(role.role_id);
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
+													setId(role.role_id);
+													setIsAlert({
+														bgAlert: true,
+														dangerAlert: true,
+													});
 												}}
 											>
 												Delete

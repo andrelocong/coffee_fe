@@ -1,58 +1,48 @@
-import axios from "axios";
-import React, { useEffect, useState } from "react";
-import CreateCategory from "./CreateCategory";
-import UpdateCategory from "./UpdateCategory";
+import React, { useState } from "react";
+import CategoryCreate from "./category.create";
+import CategoryEdit from "./category.edit";
 import DangerAlert from "../components/DangerAlert";
+import { useCategory } from "./category.hook";
 
 function Category() {
-	const [isModal, setIsModal] = useState(false);
-	const [data, setData] = useState([]);
-	const [categoryId, setCategoryId] = useState("");
-	const [name, setName] = useState("");
-	const [isUpdateModal, setIsUpdateModal] = useState(false);
-	const [isBgAlert, setIsBgAlert] = useState(false);
-	const [isDangerAlert, setIsDangerAlert] = useState(false);
+	const [isDanger, setIsDanger] = useState({
+		bgAlert: false,
+		dangerAlert: false,
+	});
 
-	console.log(data);
-
-	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/category");
-
-		setData(category.data.data);
-	};
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/category/${categoryId}`);
-
-		showData();
-	};
+	const {
+		setId,
+		data,
+		setName,
+		deleteData,
+		setIsCreateModal,
+		isCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+	} = useCategory();
 
 	return (
 		<div className="category">
-			<CreateCategory
-				isModal={isModal}
-				setIsModal={setIsModal}
-				showData={showData}
+			<CategoryCreate
+				isCreateModal={isCreateModal}
+				setIsCreateModal={setIsCreateModal}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
-			<UpdateCategory
-				isUpdateModal={isUpdateModal}
-				setIsUpdateModal={setIsUpdateModal}
-				categoryId={categoryId}
-				name={name}
-				setName={setName}
-				showData={showData}
+			<CategoryEdit
+				isEditModal={isEditModal}
+				setIsEditModal={setIsEditModal}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isBgAlert={isBgAlert}
-				isDangerAlert={isDangerAlert}
-				setIsBgAlert={setIsBgAlert}
-				setIsDangerAlert={setIsDangerAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -63,7 +53,7 @@ function Category() {
 					<div className="width-150">
 						<button
 							className="btn-orange cursor-pointer"
-							onClick={() => setIsModal(true)}
+							onClick={() => setIsCreateModal(true)}
 						>
 							Add New
 						</button>
@@ -107,11 +97,9 @@ function Category() {
 											<button
 												className="bg-orange px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setCategoryId(
-														category.category_id
-													);
+													setId(category.category_id);
 													setName(category.name);
-													setIsUpdateModal(true);
+													setIsEditModal(true);
 												}}
 											>
 												Edit
@@ -119,11 +107,11 @@ function Category() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsBgAlert(true);
-													setIsDangerAlert(true);
-													setCategoryId(
-														category.category_id
-													);
+													setIsDanger({
+														bgAlert: true,
+														dangerAlert: true,
+													});
+													setId(category.category_id);
 												}}
 											>
 												Delete
