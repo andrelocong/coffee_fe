@@ -1,18 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useCreate } from "./category.hook";
 
 const CategoryCreate = (props) => {
-	const [isAlert, setIsAlert] = useState(false);
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { formik } = useCreate(setIsCreateModal, showData, setIsAlert);
+	const formik = props.formik;
 
 	return (
 		<div className="create-category">
-			<SuccessAlert isAlert={isAlert} text="Category was created!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Category was created!"
+			/>
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<div className="flex-center">
 					<div className="block width-338 height-auto bg-white border-radius-10 mt-100">

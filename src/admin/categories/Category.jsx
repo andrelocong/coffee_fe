@@ -2,40 +2,50 @@ import React, { useState } from "react";
 import CategoryCreate from "./category.create";
 import CategoryEdit from "./category.edit";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch } from "./category.hook";
+import { useCategory } from "./category.hook";
 
 function Category() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [name, setName] = useState("");
-	const [isEditModal, setIsEditModal] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData, deleteData } = useFetch(id);
+	const {
+		setId,
+		data,
+		name,
+		setName,
+		deleteData,
+		setIsCreateModal,
+		isCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+	} = useCategory();
 
 	return (
 		<div className="category">
 			<CategoryCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
 			<CategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				id={id}
 				name={name}
 				setName={setName}
-				showData={showData}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -100,7 +110,7 @@ function Category() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});
