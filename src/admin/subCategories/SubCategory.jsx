@@ -2,40 +2,47 @@ import React, { useState } from "react";
 import SubCategoryCreate from "./subCategory.create";
 import SubCategoryEdit from "./subCategory.edit";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch } from "./subCategory.hook";
+import { useSubCategory } from "./subCategory.hook";
 
 function SubCategory() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [name, setName] = useState("");
-	const [isEditModal, setIsEditModal] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData, deleteData } = useFetch(id);
+	const {
+		data,
+		setId,
+		setName,
+		isCreateModal,
+		setIsCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+		deleteData,
+	} = useSubCategory();
 
 	return (
 		<div className="sub-category">
 			<SubCategoryCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
 			<SubCategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				id={id}
-				name={name}
-				setName={setName}
-				showData={showData}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -102,7 +109,7 @@ function SubCategory() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

@@ -1,17 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useCreate } from "./subCategory.hook";
 
 const SubCategoryCreate = (props) => {
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { formik, isAlert } = useCreate(setIsCreateModal, showData);
+	const formik = props.formik;
 
 	return (
 		<div className="create-category">
-			<SuccessAlert isAlert={isAlert} text="Category was created!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Category was created!"
+			/>
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">

@@ -1,41 +1,48 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { validation } from "./subCategory.validation";
+import {
+	findDataApi,
+	deleteDataApi,
+	storeDataApi,
+	updateDataApi,
+} from "../../api/sub-category.api";
 
-export const useFetch = (id) => {
+export const useSubCategory = () => {
 	const [data, setData] = useState([]);
+	const [id, setId] = useState("");
+	const [name, setName] = useState("");
+	const [isCreateModal, setIsCreateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
+	const [isAlert, setIsAlert] = useState(false);
 
+	//Show Data Start
 	const showData = async () => {
-		const category = await axios.get("http://localhost:5000/sub-category");
+		const category = await findDataApi();
 
 		setData(category.data.data);
 	};
+	//Show Data End
 
 	useEffect(() => {
 		showData();
 	}, []);
 
+	//Delete Data Start
 	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/sub-category/${id}`);
+		await deleteDataApi(id);
 
 		showData();
 	};
+	//Delete Data End
 
-	return { data, showData, deleteData };
-};
-
-export const useCreate = (setIsCreateModal, showData) => {
-	const [isAlert, setIsAlert] = useState(false);
-
+	//Store Data Start
 	const storeData = async (values) => {
-		await axios.post("http://localhost:5000/sub-category", {
-			name: values.name,
-		});
+		await storeDataApi(values.name);
 
 		setIsCreateModal(false);
 		setTimeout(() => {
-			formik.resetForm();
+			formikStore.resetForm();
 			setIsAlert(true);
 		}, 200);
 		setTimeout(() => {
@@ -44,7 +51,7 @@ export const useCreate = (setIsCreateModal, showData) => {
 		showData();
 	};
 
-	const formik = useFormik({
+	const formikStore = useFormik({
 		initialValues: {
 			name: "",
 		},
@@ -53,17 +60,11 @@ export const useCreate = (setIsCreateModal, showData) => {
 			storeData(values);
 		},
 	});
+	//Store Data End
 
-	return { formik, isAlert };
-};
-
-export const useUpdate = (setIsEditModal, showData, name, id) => {
-	const [isAlert, setIsAlert] = useState(false);
-
+	//Update Data Start
 	const updateDataCategory = async (values) => {
-		await axios.patch(`http://localhost:5000/sub-category/${id}`, {
-			name: values.name,
-		});
+		await updateDataApi(id, values.name);
 
 		setIsEditModal(false);
 		setTimeout(() => {
@@ -75,7 +76,7 @@ export const useUpdate = (setIsEditModal, showData, name, id) => {
 		}, 1500);
 	};
 
-	const formik = useFormik({
+	const formikUpdate = useFormik({
 		initialValues: {
 			name: name,
 		},
@@ -85,6 +86,19 @@ export const useUpdate = (setIsEditModal, showData, name, id) => {
 			updateDataCategory(values);
 		},
 	});
+	//Update Data End
 
-	return { formik, isAlert };
+	return {
+		data,
+		setId,
+		setName,
+		deleteData,
+		isCreateModal,
+		setIsCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+	};
 };
