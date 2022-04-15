@@ -91,7 +91,6 @@ export const useMainCategory = () => {
 	return {
 		data,
 		setId,
-		name,
 		setName,
 		deleteData,
 		isAlert,
