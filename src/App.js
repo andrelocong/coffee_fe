@@ -18,7 +18,7 @@ import User from "./admin/users/user";
 import DetailUser from "./admin/users/user.detail";
 import MainCategory from "./admin/mainCategories/mainCategory";
 import Category from "./admin/categories/category";
-import SubCategory from "./admin/subCategories/SubCategory";
+import SubCategory from "./admin/subCategories/subCategory";
 import Quantity from "./admin/quantities/quantity";
 import Role from "./admin/roles/role";
 import DetailRole from "./admin/roles/role.detail";
