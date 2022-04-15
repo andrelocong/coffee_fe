@@ -13,7 +13,6 @@ function Category() {
 	const {
 		setId,
 		data,
-		name,
 		setName,
 		deleteData,
 		setIsCreateModal,
@@ -37,8 +36,6 @@ function Category() {
 			<CategoryEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				name={name}
-				setName={setName}
 				formik={formikUpdate}
 				isAlert={isAlert}
 			/>
