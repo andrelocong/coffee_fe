@@ -1,17 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useCreate } from "./quantity.hook";
 
 const QuantityCreate = (props) => {
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { formik, isAlert } = useCreate(setIsCreateModal, showData);
+	const formik = props.formik;
 
 	return (
 		<div className="create-quantity">
-			<SuccessAlert isAlert={isAlert} text="Quantity was created!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Quantity was created!"
+			/>
 
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>

@@ -1,24 +1,16 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useUpdate } from "./quantity.hook";
 
 const QuantityEdit = (props) => {
-	const setIsEditModal = props.setIsEditModal;
-	const showData = props.showData;
-	const quantity = props.quantity;
-	const id = props.id;
-
-	const { formik, isAlert } = useUpdate(
-		setIsEditModal,
-		showData,
-		quantity,
-		id
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="update-quantity">
-			<SuccessAlert isAlert={isAlert} text="Quantity was updated!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Quantity was updated!"
+			/>
 
 			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>

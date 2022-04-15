@@ -2,40 +2,47 @@ import React, { useState } from "react";
 import QuantityCreate from "./quantity.create";
 import QuantityEdit from "./quantity.edit";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch } from "./quantity.hook";
+import { useQuantity } from "./quantity.hook";
 
 function Quantity() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [quantity, setQuantity] = useState("");
-	const [isEditModal, setIsEditModal] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData, deleteData } = useFetch(id);
+	const {
+		data,
+		setId,
+		setQuantity,
+		isCreateModal,
+		setIsCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+		deleteData,
+	} = useQuantity();
 
 	return (
 		<div className="quantity">
 			<QuantityCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
 			/>
 
 			<QuantityEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				setQuantity={setQuantity}
-				quantity={quantity}
-				id={id}
-				showData={showData}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -102,7 +109,7 @@ function Quantity() {
 											<button
 												className="bg-red px-10 py-5 border-none cursor-pointer font-16 color-white mr-5 border-radius-5"
 												onClick={() => {
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

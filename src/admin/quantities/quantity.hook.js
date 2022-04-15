@@ -1,42 +1,50 @@
 import { useState, useEffect } from "react";
-import axios from "axios";
 import { useFormik } from "formik";
 import { validation } from "./quantity.validation";
+import {
+	findDataApi,
+	deleteDataApi,
+	storeDataApi,
+	updateDataApi,
+} from "../../api/quantity.api";
 
-export const useFetch = (id) => {
+export const useQuantity = () => {
 	const [data, setData] = useState([]);
+	const [id, setId] = useState("");
+	const [quantity, setQuantity] = useState("");
+	const [isCreateModal, setIsCreateModal] = useState(false);
+	const [isEditModal, setIsEditModal] = useState(false);
+	const [isAlert, setIsAlert] = useState(false);
 
+	//Show Data Start
 	const showData = async () => {
-		const quantity = await axios.get("http://localhost:5000/quantity");
+		const quantity = await findDataApi();
 
 		setData(quantity.data.data);
 	};
+	//Show Data End
 
 	useEffect(() => {
 		showData();
 	}, []);
 
+	//Delete Data Start
 	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/quantity/${id}`);
+		await deleteDataApi(id);
+
 		setTimeout(() => {
 			showData();
 		}, 200);
 	};
+	//Delete Data End
 
-	return { data, showData, deleteData };
-};
-
-export const useCreate = (setIsCreateModal, showData) => {
-	const [isAlert, setIsAlert] = useState(false);
-
+	//Store Data Start
 	const storeData = async (values) => {
-		await axios.post("http://localhost:5000/quantity", {
-			quantity: values.quantity,
-		});
+		await storeDataApi(values.quantity);
 
 		setIsCreateModal(false);
 		setTimeout(() => {
-			formik.resetForm();
+			formikStore.resetForm();
 			setIsAlert(true);
 			showData();
 		}, 200);
@@ -45,7 +53,7 @@ export const useCreate = (setIsCreateModal, showData) => {
 		}, 1500);
 	};
 
-	const formik = useFormik({
+	const formikStore = useFormik({
 		initialValues: {
 			quantity: "",
 		},
@@ -54,17 +62,11 @@ export const useCreate = (setIsCreateModal, showData) => {
 			storeData(values);
 		},
 	});
+	//Store Data End
 
-	return { formik, isAlert };
-};
-
-export const useUpdate = (setIsEditModal, showData, quantity, id) => {
-	const [isAlert, setIsAlert] = useState(false);
-
+	//Update Data Start
 	const UpdateQuantity = async (values) => {
-		await axios.patch(`http://localhost:5000/quantity/${id}`, {
-			quantity: values.quantity,
-		});
+		await updateDataApi(id, values.quantity);
 
 		setIsEditModal(false);
 		setTimeout(() => {
@@ -76,7 +78,7 @@ export const useUpdate = (setIsEditModal, showData, quantity, id) => {
 		}, 1500);
 	};
 
-	const formik = useFormik({
+	const formikUpdate = useFormik({
 		initialValues: {
 			quantity: quantity,
 		},
@@ -86,6 +88,19 @@ export const useUpdate = (setIsEditModal, showData, quantity, id) => {
 			UpdateQuantity(values);
 		},
 	});
+	//Update Data End
 
-	return { formik, isAlert };
+	return {
+		data,
+		setId,
+		setQuantity,
+		deleteData,
+		isCreateModal,
+		setIsCreateModal,
+		isEditModal,
+		setIsEditModal,
+		formikStore,
+		formikUpdate,
+		isAlert,
+	};
 };
