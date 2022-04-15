@@ -4,6 +4,7 @@ import Photo from "../../img/photo-1621464018467-305575564.jpeg";
 
 const NavBar = () => {
 	const [menu, setMenu] = useState(false);
+
 	return (
 		<div className="nav-bar width-full height-100 justify-end border-bottom-1">
 			<div className="p-20">

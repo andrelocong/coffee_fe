@@ -1,11 +1,12 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+import { findData } from "../../api/order.api";
 
 export const useFetch = () => {
 	const [data, setData] = useState([]);
 
 	const showData = async () => {
-		const order = await axios.get("http://localhost:5000/order");
+		const order = await findData();
 		setData(order.data.data);
 	};
 

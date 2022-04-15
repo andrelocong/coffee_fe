@@ -1,61 +1,51 @@
 import React from "react";
-import { Formik, Form } from "formik";
 import { TextField } from "../components/formField";
-import { validation } from "./login.validation";
-import axios from "axios";
+import { useLogin } from "./login.hook";
 
 const LoginForm = () => {
-	const storeData = async (values) => {
-		const data = {
-			username: values.username,
-			password: values.password,
-		};
-
-		await axios.post("http://localhost:5000/logins", data);
-	};
-
+	const { formik, error } = useLogin();
 	return (
-		<Formik
-			initialValues={{
-				username: "",
-				password: "",
-			}}
-			validationSchema={validation}
-			onSubmit={(values) => {
-				storeData(values);
-			}}
-		>
-			{(formik) => (
-				<div className="width-full">
-					<div className="px-20">
-						<div className="block">
-							<Form>
-								<TextField
-									name="username"
-									type="text"
-									placeholder="Username"
-									className="width-full pb-10"
-								/>
-								<TextField
-									name="password"
-									type="password"
-									placeholder="Password"
-									className="width-full pb-10"
-								/>
-								<div className="width-full justify-center mb-20">
-									<button
-										className="width-300 bg-orange border-none border-radius-20 font-16 color-white height-40 cursor-pointer outline-none"
-										type="submit"
-									>
-										Login
-									</button>
-								</div>
-							</Form>
+		<div className="width-full">
+			<div className="px-20">
+				<form onSubmit={formik.handleSubmit}>
+					<div className="block">
+						<div className="color-red text-center mb-10">
+							{error}
+						</div>
+						<TextField
+							name="username"
+							type="text"
+							placeholder="Username"
+							containerClassName="width-full pb-10"
+							onChange={formik.handleChange}
+							value={formik.values.username}
+							onBlur={formik.handleBlur}
+							errorMessage={formik.errors.username}
+							touched={formik.touched.username}
+						/>
+						<TextField
+							name="password"
+							type="password"
+							placeholder="Password"
+							containerClassName="width-full pb-10"
+							onChange={formik.handleChange}
+							value={formik.values.password}
+							onBlur={formik.handleBlur}
+							errorMessage={formik.errors.password}
+							touched={formik.touched.password}
+						/>
+						<div className="width-full justify-center mb-20">
+							<button
+								className="width-300 bg-orange border-none border-radius-20 font-16 color-white height-40 cursor-pointer outline-none"
+								type="submit"
+							>
+								Login
+							</button>
 						</div>
 					</div>
-				</div>
-			)}
-		</Formik>
+				</form>
+			</div>
+		</div>
 	);
 };
 
