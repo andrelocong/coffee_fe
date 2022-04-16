@@ -4,36 +4,58 @@ import TeamDetail from "./team.detail";
 import TeamEdit from "./team.edit";
 import TeamEditImage from "./team.editImage";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch, useDelete } from "./team.hook";
+import { useTeam } from "./team.hook";
 
 function Team() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [isEditModal, setIsEditModal] = useState(false);
-	const [isEditImageModal, setIsEditImageModal] = useState(false);
-	const [isDetailModal, setIsDetailModal] = useState(false);
-	const [imageUpload, setImageUpload] = useState("");
-	const [values, setValues] = useState({
-		id: "",
-		name: "",
-		position: "",
-		desc: "",
-		image: "",
-	});
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData } = useFetch();
-
-	const { deleteData } = useDelete(values.id, setIsDetailModal, showData);
+	const {
+		data,
+		deleteData,
+		isCreateModal,
+		setIsCreateModal,
+		isDetailModal,
+		setIsDetailModal,
+		setIsEditModal,
+		isEditModal,
+		setIsEditImageModal,
+		isEditImageModal,
+		values,
+		setValues,
+		formikStore,
+		formikUpdate,
+		formikUpdateImage,
+		isAlert,
+		imagePreview,
+		setImagePreview,
+		isShowImage,
+		setIsShowImage,
+		imageValue,
+		setImageValue,
+		setImageEditPreview,
+		imageEditPreview,
+		setImageEditValue,
+		imageEditValue,
+		setIsShowImageEdit,
+		isShowImageEdit,
+	} = useTeam();
 
 	return (
 		<div className="team-list">
 			<TeamCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
+				imagePreview={imagePreview}
+				setImagePreview={setImagePreview}
+				isShowImage={isShowImage}
+				setIsShowImage={setIsShowImage}
+				setImageValue={setImageValue}
+				imageValue={imageValue}
 			/>
 
 			<TeamDetail
@@ -42,29 +64,32 @@ function Team() {
 				setIsEditModal={setIsEditModal}
 				setIsEditImageModal={setIsEditImageModal}
 				values={values}
-				showData={showData}
+				deleteData={deleteData}
 			/>
 
 			<TeamEdit
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				setValues={setValues}
-				values={values}
-				showData={showData}
+				formik={formikUpdate}
+				isAlert={isAlert}
 			/>
 
 			<TeamEditImage
 				isEditImageModal={isEditImageModal}
-				imageUpload={imageUpload}
 				setIsEditImageModal={setIsEditImageModal}
-				setImageUpload={setImageUpload}
-				values={values}
-				showData={showData}
+				formik={formikUpdateImage}
+				isAlert={isAlert}
+				setIsShowImageEdit={setIsShowImageEdit}
+				isShowImageEdit={isShowImageEdit}
+				setImageEditPreview={setImageEditPreview}
+				imageEditPreview={imageEditPreview}
+				setImageEditValue={setImageEditValue}
+				imageEditValue={imageEditValue}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -174,7 +199,7 @@ function Team() {
 														position: "",
 														desc: "",
 													});
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

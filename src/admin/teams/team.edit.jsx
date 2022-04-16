@@ -1,18 +1,12 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField, TextAreaField } from "../components/formField";
-import { useUpdate } from "./team.hook";
 
 const TeamEdit = (props) => {
-	const setIsEditModal = props.setIsEditModal;
-	const showData = props.showData;
-	const values = props.values;
-
-	const { formik, isAlert } = useUpdate(setIsEditModal, showData, values);
-
+	const formik = props.formik;
 	return (
 		<div className="edit-team">
-			<SuccessAlert isAlert={isAlert} text="Data was updated!" />
+			<SuccessAlert isAlert={props.isAlert} text="Data was updated!" />
 
 			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>

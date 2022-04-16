@@ -1,38 +1,27 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField, TextAreaField } from "../components/formField";
-import { useCreate } from "./team.hook";
 
 const TeamCreate = (props) => {
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const {
-		formik,
-		isShowImage,
-		imagePreview,
-		isAlert,
-		setIsShowImage,
-		setImagePreview,
-	} = useCreate(setIsCreateModal, showData);
+	const formik = props.formik;
 
 	return (
 		<div className="create-team">
-			<SuccessAlert isAlert={isAlert} text="Team was created!" />
+			<SuccessAlert isAlert={props.isAlert} text="Team was created!" />
 
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
 					<div className="flex-center">
 						<div
 							className={
-								isShowImage
+								props.isShowImage
 									? "block height-488 mt-100 widht-auto mr-20 visibility-visible"
 									: "visibility-hidden"
 							}
 						>
 							<img
 								className="width-auto height-full object-fit-cover object-position-center border-radius-10"
-								src={imagePreview}
+								src={props.imagePreview}
 								alt="user"
 							/>
 						</div>
@@ -81,17 +70,19 @@ const TeamCreate = (props) => {
 									onBlur={formik.handleBlur}
 									errorMessage={formik.errors.image}
 									touched={formik.touched.image}
+									value={props.imageValue}
 									onChange={(e) => {
 										formik.setFieldValue(
 											"image",
 											e.target.files[0]
 										);
-										setImagePreview(
+										props.setImagePreview(
 											URL.createObjectURL(
 												e.target.files[0]
 											)
 										);
-										setIsShowImage(true);
+										props.setIsShowImage(true);
+										props.setImageValue(e.target.value);
 									}}
 								/>
 							</div>
@@ -108,9 +99,12 @@ const TeamCreate = (props) => {
 									type="button"
 									onClick={() => {
 										props.setIsCreateModal(false);
-										formik.resetForm();
-										setImagePreview("");
-										setIsShowImage(false);
+										setTimeout(() => {
+											formik.resetForm();
+											props.setImagePreview("");
+											props.setIsShowImage(false);
+											props.setImageValue("");
+										}, 200);
 									}}
 								>
 									Cancel

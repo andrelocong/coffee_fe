@@ -1,28 +1,13 @@
-import React, { useState } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useUpdateImage } from "./team.hook";
 
 const TeamEditImage = (props) => {
-	const [imagePreview, setImagePreview] = useState();
-	const [isShowImage, setIsShowImage] = useState(false);
-	const [imageValue, setImageValue] = useState("");
-	const setIsEditImageModal = props.setIsEditImageModal;
-	const showData = props.showData;
-	const id = props.values.id;
-
-	const { formik, isAlert } = useUpdateImage(
-		setIsEditImageModal,
-		showData,
-		id,
-		setImagePreview,
-		setIsShowImage,
-		setImageValue
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="edit-image-team">
-			<SuccessAlert isAlert={isAlert} text="Image was updated!" />
+			<SuccessAlert isAlert={props.isAlert} text="Image was updated!" />
 
 			<div className={props.isEditImageModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
@@ -30,14 +15,14 @@ const TeamEditImage = (props) => {
 						<div className="block width-auto height-auto bg-white border-radius-10 mt-80">
 							<div
 								className={
-									isShowImage
+									props.isShowImageEdit
 										? "width-auto height-200 p-20 visibility-visible justify-center"
 										: "visibility-hidden"
 								}
 							>
 								<img
 									className="width-auto height-full object-fit-cover object-position-center "
-									src={imagePreview}
+									src={props.imageEditPreview}
 									alt="user"
 								/>
 							</div>
@@ -54,13 +39,13 @@ const TeamEditImage = (props) => {
 										"image",
 										e.target.files[0]
 									);
-									setImagePreview(
+									props.setImageEditPreview(
 										URL.createObjectURL(e.target.files[0])
 									);
-									setIsShowImage(true);
-									setImageValue(e.target.value);
+									props.setIsShowImageEdit(true);
+									props.setImageEditValue(e.target.value);
 								}}
-								value={imageValue}
+								value={props.imageEditValue}
 							/>
 
 							<div className="px-20 pt-10 pb-20">
@@ -76,8 +61,9 @@ const TeamEditImage = (props) => {
 									onClick={() => {
 										props.setIsEditImageModal(false);
 										setTimeout(() => {
-											setIsShowImage(false);
-											setImagePreview("");
+											props.setIsShowImageEdit(false);
+											props.setImageEditPreview("");
+											props.setImageEditValue("");
 										}, 200);
 										formik.resetForm();
 									}}

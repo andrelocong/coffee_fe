@@ -96,7 +96,7 @@ export const TextAreaField = ({
 				}`}
 			>
 				<textarea
-					className="py-8 border-none outline-none font-16 width-95percen height-full resize-none overflow-hidden line-height-22"
+					className="py-8 border-none outline-none font-16 width-95percen height-auto resize-none overflow-hidden line-height-22"
 					onKeyUp={(e) => handleAutoRize(e)}
 					{...props}
 				></textarea>

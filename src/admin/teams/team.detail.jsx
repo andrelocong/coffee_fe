@@ -1,24 +1,18 @@
 import React, { useState } from "react";
 import DangerAlert from "../components/DangerAlert";
-import { useDelete } from "./team.hook";
 
 const TeamDetail = (props) => {
-	const id = props.values.id;
-	const setIsDetailModal = props.setIsDetailModal;
-	const showData = props.showData;
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { deleteData } = useDelete(id, setIsDetailModal, showData);
-
 	return (
 		<div className="detail-item">
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
-				deleteData={deleteData}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
+				deleteData={props.deleteData}
 			/>
 
 			<div className={props.isDetailModal ? "modal active" : "modal"}>
@@ -71,7 +65,7 @@ const TeamDetail = (props) => {
 									className="bg-red px-10 py-5 border-none border-radius-5 cursor-pointer font-16 mx-5 color-white"
 									type="button"
 									onClick={() => {
-										setIsAlert({
+										setIsDanger({
 											bgAlert: true,
 											dangerAlert: true,
 										});
