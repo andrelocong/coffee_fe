@@ -44,7 +44,7 @@ function SosmedList() {
 
 			<h1 className="my-40">Sosial Media</h1>
 
-			<div className="width-full bg-white border-radius-20 min-height-100vh pb-20">
+			<div className="width-full bg-white border-radius-20 min-height-590 mb-10">
 				<div className="p-30 flex">
 					<div className="width-150">
 						<button

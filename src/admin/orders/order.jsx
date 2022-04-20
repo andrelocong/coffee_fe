@@ -8,7 +8,7 @@ function OrderList() {
 		<div className="content width-full">
 			<h1 className="my-40">Order Lists</h1>
 
-			<div className="width-full bg-white border-radius-20 height-100vh mb-10">
+			<div className="width-full bg-white border-radius-20 min-height-590 mb-10">
 				<div className="p-30">
 					<div className="width-300 border-2 border-orange border-radius-5 flex-center">
 						<i className="fas fa-search px-20 py-9 mr-5 border-right-2 border-orange"></i>

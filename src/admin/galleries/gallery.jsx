@@ -66,7 +66,7 @@ function GalleryList() {
 
 			<h1 className="my-40">Gallery</h1>
 
-			<div className="widht-full bg-white border-radius-20 min-height-100vh max-height-auto mb-20">
+			<div className="widht-full bg-white border-radius-20 min-height-590 max-height-auto mb-10">
 				<div className="p-30 flex">
 					<div className="width-150">
 						<button
