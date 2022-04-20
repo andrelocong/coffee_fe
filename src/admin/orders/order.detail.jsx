@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { useFetchDetail } from "./order.hook";
+import { useFetchDetail } from "./order.detail.hook";
 
 function DetailOrder() {
 	const { id } = useParams();

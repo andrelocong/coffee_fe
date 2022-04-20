@@ -1,34 +1,5 @@
-import axios from "axios";
 import { useState, useEffect } from "react";
-import { findData } from "../../api/order.api";
-
-export const useFetch = () => {
-	const [data, setData] = useState([]);
-
-	const showData = async () => {
-		const order = await findData();
-		setData(order.data.data);
-	};
-
-	const formatter = new Intl.DateTimeFormat("en-GB", {
-		year: "numeric",
-		month: "long",
-		day: "2-digit",
-	});
-
-	useEffect(() => {
-		showData();
-	}, []);
-
-	const isStatus = (status) => {
-		if (status === 0) {
-			return true;
-		}
-		return false;
-	};
-
-	return { data, isStatus, formatter };
-};
+import { findDataByIdApi, updateStatusApi } from "../../api/order.api";
 
 export const useFetchDetail = (id) => {
 	const [values, setValues] = useState({
@@ -45,7 +16,7 @@ export const useFetchDetail = (id) => {
 	});
 
 	const showData = async () => {
-		let orders = await axios.get(`http://localhost:5000/order/${id}`);
+		let orders = await findDataByIdApi(id);
 		const order = orders.data.data;
 
 		setValues({
@@ -69,7 +40,7 @@ export const useFetchDetail = (id) => {
 
 	const updateStatus = async (e) => {
 		e.preventDefault();
-		await axios.patch(`http://localhost:5000/order/status/${id}`);
+		await updateStatusApi(id);
 
 		showData();
 	};
