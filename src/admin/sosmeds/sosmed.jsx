@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SosmedCreate from "./sosmed.create.jsx";
 import SosmedEdit from "./sosmed.edit.jsx";
 import DangerAlert from "../components/DangerAlert.jsx";
-import { useFetch } from "./sosmed.hook.jsx";
+import { useFetch } from "./sosmed.hook.js";
 
 function SosmedList() {
 	const [isCreateModal, setIsCreateModal] = useState(false);

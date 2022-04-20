@@ -2,12 +2,18 @@ import axios from "axios";
 import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { validation } from "./sosmed.validation";
+import {
+	deleteDataApi,
+	findDataApi,
+	storeDataApi,
+	updateDataApi,
+} from "../../api/sosmed.api";
 
 export const useFetch = (id) => {
 	const [data, setData] = useState([]);
 
 	const showData = async () => {
-		const sosmed = await axios.get("http://localhost:5000/sosmed");
+		const sosmed = await findDataApi();
 
 		setData(sosmed.data.data);
 	};
@@ -17,7 +23,7 @@ export const useFetch = (id) => {
 	}, []);
 
 	const deleteData = async () => {
-		await axios.delete(`http://localhost:5000/sosmed/${id}`);
+		await deleteDataApi(id);
 
 		showData();
 	};
@@ -29,10 +35,7 @@ export const useCreate = (setIsCreateModal, showData) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const storeData = async (values) => {
-		await axios.post("http://localhost:5000/sosmed", {
-			sosmed: values.sosmed,
-			address: values.address,
-		});
+		await storeDataApi(values.sosmed, values.address);
 
 		setIsCreateModal(false);
 		showData();
@@ -63,10 +66,7 @@ export const useUpdate = (setIsEditModal, showData, id, value) => {
 	const [isAlert, setIsAlert] = useState(false);
 
 	const updateSosmed = async (values) => {
-		await axios.patch(`http://localhost:5000/sosmed/${id}`, {
-			sosmed: values.sosmed,
-			address: values.address,
-		});
+		await updateDataApi(id, values.sosmed, values.address);
 
 		setIsEditModal(false);
 		showData();
