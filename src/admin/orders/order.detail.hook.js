@@ -19,18 +19,59 @@ export const useFetchDetail = (id) => {
 		let orders = await findDataByIdApi(id);
 		const order = orders.data.data;
 
-		setValues({
-			name: order.name,
-			phone: order.phone,
-			email: order.email,
-			product: order.product.name,
-			mainCategory: order.main_category.name,
-			category: order.category.name,
-			subCategory: order.sub_category.name,
-			quantity: order.quantity.quantity,
-			note: order.note,
-			status: order.status,
-		});
+		if (order.main_category === null) {
+			setValues({
+				name: order.name,
+				phone: order.phone,
+				email: order.email,
+				product: order.product.name,
+				mainCategory: null,
+				category: order.category.name,
+				subCategory: order.sub_category.name,
+				quantity: order.quantity.quantity,
+				note: order.note,
+				status: order.status,
+			});
+		} else if (order.category === null) {
+			setValues({
+				name: order.name,
+				phone: order.phone,
+				email: order.email,
+				product: order.product.name,
+				mainCategory: order.main_category.name,
+				category: null,
+				subCategory: order.sub_category.name,
+				quantity: order.quantity.quantity,
+				note: order.note,
+				status: order.status,
+			});
+		} else if (order.sub_category === null) {
+			setValues({
+				name: order.name,
+				phone: order.phone,
+				email: order.email,
+				product: order.product.name,
+				mainCategory: order.main_category.name,
+				category: order.category.name,
+				subCategory: null,
+				quantity: order.quantity.quantity,
+				note: order.note,
+				status: order.status,
+			});
+		} else {
+			setValues({
+				name: order.name,
+				phone: order.phone,
+				email: order.email,
+				product: order.product.name,
+				mainCategory: order.main_category.name,
+				category: order.category.name,
+				subCategory: order.sub_category.name,
+				quantity: order.quantity.quantity,
+				note: order.note,
+				status: order.status,
+			});
+		}
 	};
 
 	useEffect(() => {

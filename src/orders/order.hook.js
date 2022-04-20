@@ -35,7 +35,7 @@ export const useShowMainCategory = () => {
 
 		if (mainCategory.data.data.length === 0) {
 			setIsMainCategory(false);
-			formik.setFieldValue("mainCategory", 0);
+			formik.setFieldValue("mainCategory", "null");
 		} else if (mainCategory.data.data.length > 0) {
 			setIsMainCategory(true);
 			formik.setFieldValue("mainCategory", "");
@@ -55,7 +55,7 @@ export const useShowCategory = () => {
 
 		if (category.data.data.length === 0) {
 			setIsCategory(false);
-			formik.setFieldValue("category", 0);
+			formik.setFieldValue("category", "null");
 		} else if (category.data.data.length > 0) {
 			setIsCategory(true);
 			formik.setFieldValue("category", "");
@@ -75,7 +75,7 @@ export const useShowSubCategory = () => {
 
 		if (subCategory.data.data.length === 0) {
 			setIsSubCategory(false);
-			formik.setFieldValue("subCategory", 0);
+			formik.setFieldValue("subCategory", "null");
 		} else if (subCategory.data.data.length > 0) {
 			setIsSubCategory(true);
 			formik.setFieldValue("subCategory", "");
