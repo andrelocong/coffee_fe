@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import axios from "axios";
+import { findDataTeamApi } from "./home.api";
 
 const Team = () => {
 	const [isModal, setIsModal] = useState(false);
@@ -10,7 +10,7 @@ const Team = () => {
 	const [team, setTeam] = useState([]);
 
 	const showTeam = async () => {
-		const team = await axios.get("http://localhost:5000/team");
+		const team = await findDataTeamApi();
 
 		setTeam(team.data.data);
 	};
@@ -48,8 +48,12 @@ const Team = () => {
 							className="modal-right"
 							onClick={(e) => e.stopPropagation()}
 						>
-							<h3 className="team-name">{nameTmp}</h3>
-							<p className="team-position">{positionTmp}</p>
+							<h3 className="team-name text-capitalize">
+								{nameTmp}
+							</h3>
+							<p className="team-position text-capitalize">
+								{positionTmp}
+							</p>
 							<p className="team-desc">{descTmp}</p>
 						</div>
 					</div>
@@ -77,10 +81,10 @@ const Team = () => {
 									<img src={data.image} alt="team" />
 								</div>
 								<div className="text-left mt-22">
-									<h4 className="font-nunito font-20 mb-5">
+									<h4 className="font-nunito font-20 mb-5 text-capitalize">
 										{data.name}
 									</h4>
-									<p className="m-0 font-18 font-nunito">
+									<p className="m-0 font-18 font-nunito text-capitalize">
 										{data.position}
 									</p>
 								</div>

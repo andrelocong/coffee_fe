@@ -7,7 +7,7 @@ export const useFetch = () => {
 	const [images, setImages] = useState([]);
 
 	const showData = async () => {
-		const images = await axios.get("http://localhost:5000/gallery");
+		const images = await axios.get("http://localhost:5000/api/gallery");
 		setImages(images.data.data);
 	};
 

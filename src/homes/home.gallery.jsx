@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
-
+import { findDataImageApi } from "./home.api";
 const Gallery = () => {
 	const [isModal, setIsModal] = useState(false);
 	const [imgTmp, setImgTmp] = useState("");
 	const [image, setImage] = useState([]);
 
 	const showImage = async () => {
-		const image = await axios.get("http://localhost:5000/gallery/data");
+		const image = await findDataImageApi();
 		if (!image.data) {
 			console.log("image empty");
 		} else {
