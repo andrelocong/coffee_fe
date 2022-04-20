@@ -44,7 +44,7 @@ function ProductList() {
 
 			<h1 className="my-40">Product Lists</h1>
 
-			<div className="width-full bg-white border-radius-20 height-100vh mb-10">
+			<div className="width-full bg-white border-radius-20 min-height-590 mb-10">
 				<div className="p-30 flex">
 					<div className="width-150">
 						<button

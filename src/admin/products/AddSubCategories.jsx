@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import DangerAlert from "../components/DangerAlert";
 import { SelectField } from "../components/formField";
-import { useAddSubCategories } from "./product.hook";
+import { useAddSubCategories } from "./product.add.hook";
 
 const AddSubCategories = (props) => {
 	const [isDanger, setIsDanger] = useState({

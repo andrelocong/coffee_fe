@@ -513,6 +513,10 @@
 	min-height: 113px;
 }
 
+.min-height-590 {
+	min-height: 590px;
+}
+
 .min-height-full {
 	min-height: 100%;
 }

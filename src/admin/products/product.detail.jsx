@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import AddMainCategory from "./AddMainCategory";
 import AddCategories from "./AddCategories";
 import AddSubCategories from "./AddSubCategories";
-import { useFetchDetail } from "./product.hook";
+import { useFetchDetail } from "./product.detail.hook";
 
 function ProductDetail() {
 	const { id } = useParams();
@@ -45,9 +45,9 @@ function ProductDetail() {
 				showSubCategories={showSubCategories}
 			/>
 
-			<h1>Detail Product</h1>
+			<h1 className="my-40">Detail Product</h1>
 
-			<div className="width-full bg-white border-radius-20 height-100vh mb-10">
+			<div className="width-full bg-white border-radius-20 min-height-590 mb-10">
 				<div className="p-30">
 					<div className="flex">
 						<p className="my-10 width-150 font-weight-700">Id</p>
