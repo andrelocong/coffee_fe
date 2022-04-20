@@ -58,7 +58,7 @@ const OrderForm = (props) => {
 									title="Main Category"
 									name="mainCategory"
 									placeholder="Choose main category"
-									disabled={isMainCategory ? "" : "disabled"}
+									disabled={isMainCategory ? "" : `disabled`}
 									value={formik.values.mainCategory}
 									onChange={formik.handleChange}
 									onBlur={formik.handleBlur}
@@ -148,9 +148,15 @@ const OrderForm = (props) => {
 											"product",
 											e.target.value
 										);
-										showMainCategory(e.target.value);
-										showCategory(e.target.value);
-										showSubCategory(e.target.value);
+
+										showMainCategory(
+											e.target.value,
+											formik
+										);
+
+										showCategory(e.target.value, formik);
+
+										showSubCategory(e.target.value, formik);
 									}}
 									onBlur={formik.handleBlur}
 									errorMessage={formik.errors.product}

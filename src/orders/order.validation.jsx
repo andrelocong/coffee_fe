@@ -10,7 +10,7 @@ export const validation = Yup.object({
 		.required("Phone number is required"),
 	email: Yup.string().email("Must be a valid email"),
 	product: Yup.string().required("Product is required"),
-	mainCategory: Yup.string().required("Main category is required"),
+	mainCategory: Yup.string().nullable().required("Main category is required"),
 	category: Yup.string().required("Category is required"),
 	subCategory: Yup.string().required("Sub category is required"),
 	quantity: Yup.string().required("Quantity is required"),
