@@ -31,9 +31,11 @@ export const validationUpdateBio = Yup.object({
 		.max(15, "Must be 15 character or less")
 		.required("Username is required"),
 	email: Yup.string()
+		.nullable()
 		.email("Must be a valid email")
 		.required("Email is required"),
 	phone: Yup.string()
+		.nullable()
 		.matches(phoneRegExp, "Phone number is not valid")
 		.max(12, "Phone number is not valid")
 		.required("Phone number is required"),

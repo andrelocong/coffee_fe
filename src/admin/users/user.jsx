@@ -2,29 +2,40 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import UserCreate from "./user.create";
 import DangerAlert from "../components/DangerAlert";
-import { useFetch } from "./user.hook";
+import { useUser } from "./user.hook";
 
 function User() {
-	const [isCreateModal, setIsCreateModal] = useState(false);
-	const [id, setId] = useState("");
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, showData, deleteData } = useFetch(id);
+	const {
+		data,
+		setId,
+		deleteData,
+		showRoles,
+		formikStore,
+		errors,
+		isAlert,
+		isCreateModal,
+		setIsCreateModal,
+	} = useUser();
 
 	return (
 		<div className="user-list">
 			<UserCreate
 				isCreateModal={isCreateModal}
 				setIsCreateModal={setIsCreateModal}
-				showData={showData}
+				formik={formikStore}
+				isAlert={isAlert}
+				showRoles={showRoles}
+				errors={errors}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -96,7 +107,7 @@ function User() {
 											<div
 												onClick={() => {
 													setId(user.user_id);
-													setIsAlert({
+													setIsDanger({
 														bgAlert: true,
 														dangerAlert: true,
 													});

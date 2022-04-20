@@ -1,20 +1,13 @@
 import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField, SelectField } from "../components/formField";
-import { useCreate } from "./user.hook";
 
 const UserCreate = (props) => {
-	const setIsCreateModal = props.setIsCreateModal;
-	const showData = props.showData;
-
-	const { showRoles, formik, errors, isAlert } = useCreate(
-		setIsCreateModal,
-		showData
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="create-user">
-			<SuccessAlert isAlert={isAlert} text="User was created!" />
+			<SuccessAlert isAlert={props.isAlert} text="User was created!" />
 
 			<div className={props.isCreateModal ? "modal active" : "modal"}>
 				<div className="flex-center">
@@ -24,7 +17,9 @@ const UserCreate = (props) => {
 						</div>
 
 						<form onSubmit={formik.handleSubmit}>
-							<p className="color-red text-center">{errors}</p>
+							<p className="color-red text-center">
+								{props.errors}
+							</p>
 							<div className="border-bottom-1 border-grey justify-center">
 								<div className="block">
 									<TextField
@@ -80,16 +75,18 @@ const UserCreate = (props) => {
 										onBlur={formik.handleBlur}
 										errorMessage={formik.errors.role}
 										touched={formik.touched.role}
-										option={showRoles.map((role, index) => {
-											return (
-												<option
-													value={role.role_id}
-													key={index}
-												>
-													{role.name}
-												</option>
-											);
-										})}
+										option={props.showRoles.map(
+											(role, index) => {
+												return (
+													<option
+														value={role.role_id}
+														key={index}
+													>
+														{role.name}
+													</option>
+												);
+											}
+										)}
 									/>
 								</div>
 							</div>

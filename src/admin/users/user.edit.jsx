@@ -1,22 +1,13 @@
 import React from "react";
 import { TextField, SelectField } from "../components/formField";
-import { useUpdate } from "./user.hook";
 import SuccessAlert from "../components/SuccessAlert";
 
 const UserEdit = (props) => {
-	const setIsEditModal = props.setIsEditModal;
-	const showDataById = props.showDataById;
-	const id = props.id;
-
-	const { showRoles, formik, handleNumeric, isAlert } = useUpdate(
-		setIsEditModal,
-		showDataById,
-		id
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="edit-data-user">
-			<SuccessAlert isAlert={isAlert} text="Bio was updated!" />
+			<SuccessAlert isAlert={props.isAlert} text="Bio was updated!" />
 
 			<div className={props.isEditModal ? "modal active" : "modal"}>
 				<form onSubmit={formik.handleSubmit}>
@@ -86,7 +77,7 @@ const UserEdit = (props) => {
 										containerClassName="width-310 pb-10"
 										value={formik.values.phone}
 										onChange={(e) => {
-											handleNumeric(e);
+											props.handleNumeric(e);
 										}}
 										onBlur={formik.handleBlur}
 										errorMessage={formik.errors.phone}
@@ -102,16 +93,18 @@ const UserEdit = (props) => {
 										onBlur={formik.handleBlur}
 										errorMessage={formik.errors.role}
 										touched={formik.touched.role}
-										option={showRoles.map((role, index) => {
-											return (
-												<option
-													value={role.role_id}
-													key={index}
-												>
-													{role.name}
-												</option>
-											);
-										})}
+										option={props.showRoles.map(
+											(role, index) => {
+												return (
+													<option
+														value={role.role_id}
+														key={index}
+													>
+														{role.name}
+													</option>
+												);
+											}
+										)}
 									/>
 								</div>
 							</div>

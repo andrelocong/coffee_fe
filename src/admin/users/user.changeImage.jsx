@@ -1,28 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import SuccessAlert from "../components/SuccessAlert";
 import { TextField } from "../components/formField";
-import { useUpdateImage } from "./user.hook";
 
 const UserChangeImage = (props) => {
-	const [imagePreview, setImagePreview] = useState("");
-	const [isShowImage, setIsShowImage] = useState(false);
-	const [imageValue, setImageValue] = useState("");
-	const setIsChangeImageModal = props.setIsChangeImageModal;
-	const showDataById = props.showDataById;
-	const id = props.id;
-
-	const { formik, isAlert } = useUpdateImage(
-		setIsChangeImageModal,
-		showDataById,
-		id,
-		setImagePreview,
-		setImageValue,
-		setIsShowImage
-	);
+	const formik = props.formik;
 
 	return (
 		<div className="change-image">
-			<SuccessAlert isAlert={isAlert} text="Photo profil was changed!" />
+			<SuccessAlert
+				isAlert={props.isAlert}
+				text="Photo profil was changed!"
+			/>
 
 			<div
 				className={props.isChangeImageModal ? "modal active" : "modal"}
@@ -37,14 +25,14 @@ const UserChangeImage = (props) => {
 							</div>
 							<div
 								className={
-									isShowImage
+									props.isShowImage
 										? "width-auto height-200 pt-10 visibility-visible justify-center"
 										: "visibility-hidden"
 								}
 							>
 								<img
 									className="width-auto height-full object-fit-center object-posision-center"
-									src={imagePreview}
+									src={props.imagePreview}
 									alt="profile"
 								/>
 							</div>
@@ -55,7 +43,7 @@ const UserChangeImage = (props) => {
 									name="image"
 									containerClassName="width-400 px-10 mx-auto my-10"
 									onBlur={formik.handleBlur}
-									value={imageValue}
+									value={props.imageValue}
 									errorMessage={formik.errors.image}
 									touched={formik.touched.image}
 									onChange={(e) => {
@@ -63,13 +51,13 @@ const UserChangeImage = (props) => {
 											"image",
 											e.target.files[0]
 										);
-										setImagePreview(
+										props.setImagePreview(
 											URL.createObjectURL(
 												e.target.files[0]
 											)
 										);
-										setIsShowImage(true);
-										setImageValue(e.target.value);
+										props.setIsShowImage(true);
+										props.setImageValue(e.target.value);
 									}}
 								/>
 							</div>
@@ -86,9 +74,9 @@ const UserChangeImage = (props) => {
 									onClick={() => {
 										props.setIsChangeImageModal(false);
 										setTimeout(() => {
-											setImageValue("");
-											setIsShowImage(false);
-											setImagePreview("");
+											props.setImageValue("");
+											props.setIsShowImage(false);
+											props.setImagePreview("");
 										}, 200);
 									}}
 								>

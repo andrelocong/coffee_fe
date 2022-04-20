@@ -3,39 +3,64 @@ import { Link, useParams } from "react-router-dom";
 import EditDataUser from "./user.edit";
 import ChangeImage from "./user.changeImage";
 import DangerAlert from "../components/DangerAlert";
-import { useFetchDetail } from "./user.hook";
+import { useUserDetail } from "./user.detail.hook";
 
 function UserDetail() {
 	const { id } = useParams();
 
-	const [isEditModal, setIsEditModal] = useState(false);
-	const [isChangeImageModal, setIsChangeImageModal] = useState(false);
-	const [isAlert, setIsAlert] = useState({
+	const [isDanger, setIsDanger] = useState({
 		bgAlert: false,
 		dangerAlert: false,
 	});
 
-	const { data, image, deleteData, showDataById } = useFetchDetail(id);
+	const {
+		data,
+		image,
+		deleteData,
+		formikUpdate,
+		showRoles,
+		setIsEditModal,
+		isEditModal,
+		isAlert,
+		handleNumeric,
+		formikUpdateImage,
+		setIsChangeImageModal,
+		isChangeImageModal,
+		imageValue,
+		imagePreview,
+		isShowImage,
+		setImagePreview,
+		setImageValue,
+		setIsShowImage,
+	} = useUserDetail(id);
 
 	return (
 		<div className="detail-user">
 			<EditDataUser
-				id={id}
 				isEditModal={isEditModal}
 				setIsEditModal={setIsEditModal}
-				showDataById={showDataById}
+				formik={formikUpdate}
+				showRoles={showRoles}
+				isAlert={isAlert}
+				handleNumeric={handleNumeric}
 			/>
 
 			<ChangeImage
 				isChangeImageModal={isChangeImageModal}
 				setIsChangeImageModal={setIsChangeImageModal}
-				id={id}
-				showDataById={showDataById}
+				formik={formikUpdateImage}
+				imageValue={imageValue}
+				imagePreview={imagePreview}
+				isShowImage={isShowImage}
+				isAlert={isAlert}
+				setImagePreview={setImagePreview}
+				setImageValue={setImageValue}
+				setIsShowImage={setIsShowImage}
 			/>
 
 			<DangerAlert
-				isAlert={isAlert}
-				setIsAlert={setIsAlert}
+				isAlert={isDanger}
+				setIsAlert={setIsDanger}
 				deleteData={deleteData}
 			/>
 
@@ -80,7 +105,9 @@ function UserDetail() {
 						</div>
 						<div className="width-full border-bottom-1 border-grey">
 							<h2 className="font-20 ml-6">Role</h2>
-							<p className="ml-6 text-capitalize">{data.role}</p>
+							<p className="ml-6 text-capitalize">
+								{data.role.name}
+							</p>
 						</div>
 
 						<div className="width-full flex my-20">
@@ -104,7 +131,7 @@ function UserDetail() {
 							<button
 								className="bg-red px-10 py-5 border-none cursor-pointer font-16 mr-5 border-radius-5 color-white"
 								onClick={() => {
-									setIsAlert({
+									setIsDanger({
 										bgAlert: true,
 										dangerAlert: true,
 									});
@@ -114,7 +141,7 @@ function UserDetail() {
 							</button>
 							<Link
 								className="bg-grey px-10 py-5 border-none cursor-pointer font-16 mr-5 border-radius-5 color-white text-decoration-none"
-								to="/admin/user-list"
+								to="/admin/user"
 							>
 								Back
 							</Link>
