@@ -1,7 +1,44 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 const Footer = () => {
+	const [data, setData] = useState({
+		whatsapp: "",
+		facebook: "",
+		telegram: "",
+		instagram: "",
+	});
+
+	const showData = async () => {
+		const whatsapp = await axios.get(
+			"http://localhost:5000/api/sosmed?sosmed=whatsapp"
+		);
+
+		const facebook = await axios.get(
+			"http://localhost:5000/api/sosmed?sosmed=facebook"
+		);
+
+		const telegram = await axios.get(
+			"http://localhost:5000/api/sosmed?sosmed=telegram"
+		);
+
+		const instagram = await axios.get(
+			"http://localhost:5000/api/sosmed?sosmed=instagram"
+		);
+
+		setData({
+			whatsapp: whatsapp.data.data.address,
+			facebook: facebook.data.data.address,
+			telegram: telegram.data.data.address,
+			instagram: instagram.data.data.address,
+		});
+	};
+
+	useEffect(() => {
+		showData();
+	}, []);
+
 	return (
 		<div className="footer">
 			<div className="footer-body">
@@ -23,16 +60,40 @@ const Footer = () => {
 					</div>
 					<div className="sosmed flex mt-20">
 						<div className="bg-rounded bg-orange">
-							<i className="fab fa-instagram icon-brand"></i>
+							<a
+								href={data.instagram}
+								target="_blank"
+								rel="noreferrer"
+							>
+								<i className="fab fa-instagram icon-brand"></i>
+							</a>
 						</div>
 						<div className="bg-rounded bg-orange">
-							<i className="fab fa-telegram-plane icon-brand"></i>
+							<a
+								href={data.telegram}
+								target="_blank"
+								rel="noreferrer"
+							>
+								<i className="fab fa-telegram-plane icon-brand"></i>
+							</a>
 						</div>
 						<div className="bg-rounded bg-orange">
-							<i className="fab fa-whatsapp icon-brand"></i>
+							<a
+								href={data.whatsapp}
+								target="_blank"
+								rel="noreferrer"
+							>
+								<i className="fab fa-whatsapp icon-brand"></i>
+							</a>
 						</div>
 						<div className="bg-rounded bg-orange">
-							<i className="fab fa-facebook-f icon-brand"></i>
+							<a
+								href={data.facebook}
+								target="_blank"
+								rel="noreferrer"
+							>
+								<i className="fab fa-facebook-f icon-brand"></i>
+							</a>
 						</div>
 					</div>
 				</div>
