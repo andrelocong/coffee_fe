@@ -9,7 +9,7 @@ const data = [
 	{
 		id: 2,
 		question: "What is the standard packaging for the products?",
-		answer: "Our standard packaging is a sack a thickness of 0,8. Any request for special packaging such as a carton or a box can be discussed. Minimum packaging standard is 5kg for all products. Standard container packaging minimum is 40kg.",
+		answer: "Our standard packaging is a sack a thickness of 0,8. Any request for special packaging such as a carton or a box can be discussed. Minimum packaging standard is 5kg for all products.",
 		isShow: false,
 	},
 	{
@@ -58,7 +58,13 @@ const Question = () => {
 											handleShow(index);
 										}}
 									>
-										<i className="fas fa-caret-right"></i>
+										<i
+											className={
+												data.isShow
+													? "fas fa-caret-down mr-11"
+													: "fas fa-caret-right"
+											}
+										></i>
 										{data.question}
 									</h4>
 								</div>
@@ -69,7 +75,15 @@ const Question = () => {
 											: "question-answer"
 									}
 								>
-									<p className="m-0">{data.answer}</p>
+									<p
+										className={
+											data.isShow
+												? "question-answer-p active"
+												: "question-answer-p"
+										}
+									>
+										{data.answer}
+									</p>
 								</div>
 							</div>
 						);

@@ -243,6 +243,7 @@
 	margin-bottom: 20px;
 	border-bottom: 1px solid #cfcfcf;
 	padding-bottom: 10px;
+	position: relative;
 }
 
 .question-title {
@@ -250,10 +251,25 @@
 }
 
 .question-answer {
-	display: none;
+	visibility: hidden;
 	margin-top: 15px;
+	position: absolute;
 }
 
 .question-answer.active {
-	display: block;
+	visibility: visible;
+	position: relative;
+}
+
+.question-answer-p {
+	margin-left: 0;
+	/* margin-top: -70px; */
+	transform: translateX(-80px);
+	transition: 0ms ease-in-out;
+}
+
+.question-answer-p.active {
+	transform: translateX(30px);
+	/* margin-top: 0; */
+	transition: 600ms ease-in-out;
 }
