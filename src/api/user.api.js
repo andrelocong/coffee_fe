@@ -58,3 +58,7 @@ export const updateDataApi = (
 export const updateImageApi = (id, formData) => {
 	return instance.patch(`/admin/user/image/${id}`, formData);
 };
+
+export const findImageProfileApi = (id) => {
+	return instance.post(`/admin/user/image/profile/${id}`);
+};

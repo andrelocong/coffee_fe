@@ -24,6 +24,7 @@ import Role from "./admin/roles/role";
 import DetailRole from "./admin/roles/role.detail";
 import Login from "./admin/login/login";
 import Private from "./routes/private";
+import Profile from "./admin/profiles/profile";
 
 function App() {
 	return (
@@ -82,6 +83,7 @@ function App() {
 							path="/admin/role/detail/:id"
 							element={<DetailRole />}
 						/>
+						<Route path="/admin/profile" element={<Profile />} />
 					</Route>
 					<Route path="/login" element={<Login />} />
 				</Routes>
