@@ -59,42 +59,46 @@ const Footer = () => {
 						</p>
 					</div>
 					<div className="sosmed flex mt-20">
-						<div className="bg-rounded bg-orange">
-							<a
-								href={data.instagram}
-								target="_blank"
-								rel="noreferrer"
-							>
+						<a
+							href={data.instagram}
+							target="_blank"
+							rel="noreferrer"
+							className="text-decoration-none"
+						>
+							<div className="bg-rounded bg-orange">
 								<i className="fab fa-instagram icon-brand"></i>
-							</a>
-						</div>
-						<div className="bg-rounded bg-orange">
-							<a
-								href={data.telegram}
-								target="_blank"
-								rel="noreferrer"
-							>
+							</div>
+						</a>
+						<a
+							href={data.telegram}
+							target="_blank"
+							rel="noreferrer"
+							className="text-decoration-none"
+						>
+							<div className="bg-rounded bg-orange">
 								<i className="fab fa-telegram-plane icon-brand"></i>
-							</a>
-						</div>
-						<div className="bg-rounded bg-orange">
-							<a
-								href={data.whatsapp}
-								target="_blank"
-								rel="noreferrer"
-							>
+							</div>
+						</a>
+						<a
+							href={data.whatsapp}
+							target="_blank"
+							rel="noreferrer"
+							className="text-decoration-none"
+						>
+							<div className="bg-rounded bg-orange">
 								<i className="fab fa-whatsapp icon-brand"></i>
-							</a>
-						</div>
-						<div className="bg-rounded bg-orange">
-							<a
-								href={data.facebook}
-								target="_blank"
-								rel="noreferrer"
-							>
+							</div>
+						</a>
+						<a
+							href={data.facebook}
+							target="_blank"
+							rel="noreferrer"
+							className="text-decoration-none"
+						>
+							<div className="bg-rounded bg-orange">
 								<i className="fab fa-facebook-f icon-brand"></i>
-							</a>
-						</div>
+							</div>
+						</a>
 					</div>
 				</div>
 				<div className="footer-group">
