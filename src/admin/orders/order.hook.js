@@ -1,8 +1,9 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { findData } from "../../api/order.api";
 
 export const useFetch = () => {
 	const [data, setData] = useState([]);
+	let interval = useRef(null);
 
 	const showData = async () => {
 		const order = await findData();
@@ -17,6 +18,15 @@ export const useFetch = () => {
 
 	useEffect(() => {
 		showData();
+		interval.current = setInterval(() => {
+			showData();
+		}, 30000);
+
+		return () => {
+			if (interval.current) {
+				clearInterval(interval);
+			}
+		};
 	}, []);
 
 	const isStatus = (status) => {
