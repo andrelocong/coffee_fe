@@ -23,6 +23,7 @@ import Quantity from "./admin/quantities/quantity";
 import Role from "./admin/roles/role";
 import DetailRole from "./admin/roles/role.detail";
 import Login from "./admin/login/login";
+import Private from "./routes/private";
 
 function App() {
 	return (
@@ -34,7 +35,14 @@ function App() {
 					<Route path="/product" element={<Product />} />
 					<Route path="/gallery" element={<Gallery />} />
 					<Route path="/contact" element={<Contact />} />
-					<Route path="/admin" element={<Admin />}>
+					<Route
+						path="/admin"
+						element={
+							<Private>
+								<Admin />
+							</Private>
+						}
+					>
 						<Route path="/admin/order" element={<OrderList />} />
 						<Route
 							path="/admin/order-list/detail/:id"

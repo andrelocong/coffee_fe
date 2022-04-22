@@ -1,5 +1,5 @@
 import axios from "axios";
-import stores from "../../stores";
+import { store } from "../../stores";
 
 const instance = axios.create({
 	baseURL: "http://localhost:5000/api",
@@ -9,7 +9,7 @@ const instance = axios.create({
 instance.interceptors.request.use(
 	function (config) {
 		config.headers.authorization =
-			"Barer " + stores.getState().token.accessToken;
+			"Barer " + store.getState().token.accessToken;
 		return config;
 	},
 	function (error) {
