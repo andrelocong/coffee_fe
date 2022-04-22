@@ -1,10 +1,24 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import Photo from "../../img/photo-1621464018467-305575564.jpeg";
+import { useDispatch } from "react-redux";
+import { clearAccessToken } from "../../stores/reducers/token.reducer";
+import { useNavigate } from "react-router-dom";
 
 const NavBar = () => {
 	const [menu, setMenu] = useState(false);
 
+	const dispatch = useDispatch();
+
+	const navigate = useNavigate();
+
+	const handleLogout = () => {
+		dispatch(clearAccessToken());
+
+		navigate("/login");
+	};
+
+	
 	return (
 		<div className="nav-bar width-full height-100 justify-end border-bottom-1">
 			<div className="p-20">
@@ -35,13 +49,11 @@ const NavBar = () => {
 										Profil
 									</Link>
 								</li>
-								<li>
-									<Link
-										className="text-decoration-none"
-										to="#"
-									>
-										Logout
-									</Link>
+								<li
+									className="cursor-pointer"
+									onClick={() => handleLogout()}
+								>
+									Logout
 								</li>
 							</ul>
 						</div>
